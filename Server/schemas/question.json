@@ -1,0 +1,36 @@
+{
+  "type": "object",
+  "properties": {
+    "quiz_id": {
+      "type": "integer"
+    },
+    "question": {
+      "type": "string"
+    },
+    "answer1": {
+      "type": "string"
+    },
+    "answer2": {
+      "type": "string"
+    },
+    "answer3": {
+      "type": "string"
+    },
+    "answer4": {
+      "type": "string"
+    },
+    "correctAnswer": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "quiz_id",
+    "question",
+    "answer1",
+    "answer2",
+    "answer3",
+    "answer4",
+    "correctAnswer"
+  ],
+  "additionalProperties": false
+}
