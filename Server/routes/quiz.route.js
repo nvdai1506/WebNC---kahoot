@@ -19,7 +19,7 @@ router.get('/:id', async function (req, res) {
   res.json(quiz);
 })
 
-router.get('/:user_id', async function (req, res) {
+router.get('/user/:user_id', async function (req, res) {
   const user_id = req.params.user_id || 0;
   const quizs = await quizModel.findAllQuizsByUserId(user_id);
   if (quizs === null) {

@@ -18,7 +18,7 @@ router.get('/:id', async function (req, res) {
   }
   res.json(question);
 })
-router.get('/:quiz_id', async function (req, res) {
+router.get('/quiz/:quiz_id', async function (req, res) {
   const quiz_id = req.params.quiz_id || 0;
   const questions = await questionModel.findAllQuestionsByQuizId(quiz_id);
   if (questions === null) {
