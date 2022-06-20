@@ -1,11 +1,25 @@
 import express from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 
+import quizRouter from './routes/quiz.route.js';
 import questionRouter from './routes/question.route.js';
+import userRouter from './routes/users.route.js';
+import authRouter from './routes/auth.route.js';
+
+import auth from './middlewares/auth.mdw.js';
+
+// import socketServer from './ws.js'
+import io from './wsio.js';
+
 const app = express();
 
 app.use(express.json());
 app.use(morgan('dev'));
+// app.use(cors({
+//   origin: 'ws://localhost:3001',
+//   methods: 'GET,PATCH,POST,DELETE'
+// }));
 
 app.get('/', function (req, res) {
     res.json({
@@ -13,7 +27,10 @@ app.get('/', function (req, res) {
     });
 });
 
-app.use('/question', questionRouter);
+app.use('/quiz',auth, quizRouter);
+app.use('/question',auth, questionRouter);
+app.use('/api/users', userRouter);
+app.use('/api/auth', authRouter);
 
 app.post('/', function (req, res) {
     res.status(201).json({

@@ -1,9 +1,6 @@
 {
   "type": "object",
   "properties": {
-    "user_id": {
-      "type": "integer"
-    },
     "quiz_name": {
       "type": "string"
     },
@@ -12,7 +9,6 @@
     }
   },
   "required": [
-    "user_id",
     "quiz_name"
   ],
   "additionalProperties": false

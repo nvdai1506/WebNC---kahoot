@@ -1,2 +1,14 @@
 import generate from './generic.model.js';
-export default generate('quiz', 'id');
+import db from '../utils/db.js';
+
+let quizModel = generate('quiz', 'id');
+
+quizModel.findAllQuizsByUserId = async function(userId){
+    const rows = await db('quiz').where('user_id', userId);
+    if (rows.length === 0) {
+        return null;
+    }
+    return rows;
+}
+
+export default quizModel;

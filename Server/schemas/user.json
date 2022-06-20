@@ -17,7 +17,8 @@
   "required": [
     "username",
     "password",
-    "name"
+    "name",
+    "email"
   ],
   "additionalProperties": false
 }
