@@ -8,9 +8,11 @@ import { useEffect } from "react";
 
 import Header from "./components/Header";
 import HomeScreen from "./screens/HomeScreen";
-import PlayGameScreen from "./screens/PlayGameScreen";
+import LoginScreen from "./screens/LoginScreen";
 import CreateGameScreen from "./screens/CreateGameScreen";
 import DeployGameScreen from "./screens/DeployGameScreen";
+import WaitScreen from "./screens/WaitScreen";
+import PlayScreen from "./screens/PlayScreen";
 
 function App() {
   useEffect(() => {
@@ -27,7 +29,7 @@ function App() {
             <Switch>
               <Route path="/deploy" component={DeployGameScreen} />
               <Route path="/create" component={CreateGameScreen} />
-              <Route path="/play" component={PlayGameScreen} />
+              <Route path="/play" component={PlayScreen} />
               <Route path="/" component={HomeScreen} />
             </Switch>
           </div>
