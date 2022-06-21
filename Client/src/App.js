@@ -12,7 +12,6 @@ import PlayGameScreen from "./screens/PlayGameScreen";
 import CreateGameScreen from "./screens/CreateGameScreen";
 import DeployGameScreen from "./screens/DeployGameScreen";
 
-
 function App() {
   useEffect(() => {
     if (!localStorage._privateKey && window.location.pathname !== "/create") {
@@ -23,17 +22,16 @@ function App() {
     <AppProvider>
       <Router>
         <div className="App">
-			<Header />
-			<div className="container">
-				<Switch>
-					<Route path="/deploy" component={DeployGameScreen} />
-					<Route path="/create" component={CreateGameScreen} />
-					<Route path="/play" component={PlayGameScreen} />
-					<Route path="/" component={HomeScreen} />
-				</Switch>
-			</div>
+          <Header />
+          <div className="container">
+            <Switch>
+              <Route path="/deploy" component={DeployGameScreen} />
+              <Route path="/create" component={CreateGameScreen} />
+              <Route path="/play" component={PlayGameScreen} />
+              <Route path="/" component={HomeScreen} />
+            </Switch>
+          </div>
         </div>
-        
       </Router>
     </AppProvider>
   );
