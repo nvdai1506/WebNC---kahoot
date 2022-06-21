@@ -31,7 +31,7 @@ function App() {
               <Switch>
                 <Route path="/deploy" component={DeployGameScreen} />
                 <Route path="/create" component={CreateGameScreen} />
-                <Route path="/play" component={PlayScreen} />
+                <Route path="/play" component={WaitScreen} />
                 <Route path="/" component={HomeScreen} />
               </Switch>
             </div>
