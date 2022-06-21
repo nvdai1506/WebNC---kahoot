@@ -7,13 +7,13 @@ function WaitScreen() {
       className="container vh-100 d-flex flex-column justify-content-between"
     >
       <div></div>
-      <main className="row">
+      <main>
         <div>
           <h1 className="text-center">You're in!</h1>
           <h5 className="text-center">See your nickname on screen?</h5>
         </div>
       </main>
-      <footer className="row">
+      <footer>
         <div className="d-flex justify-content-between">
           <h1>Name</h1>
           <h1>0</h1>

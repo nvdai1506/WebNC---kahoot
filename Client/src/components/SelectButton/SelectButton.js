@@ -8,8 +8,8 @@ import {
 
 function SelectButton({ btnColor, shape }) {
   return (
-    <div>
-      <button type="button" className={`btn ${btnColor} w-100 p-5`}>
+    <>
+      <button type="button" className={`btn ${btnColor} w-100 h-100 p-5`}>
         {(() => {
           switch (shape) {
             case "triangle":
@@ -25,7 +25,7 @@ function SelectButton({ btnColor, shape }) {
           }
         })()}
       </button>
-    </div>
+    </>
   );
 }
 
