@@ -1,15 +1,52 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import {Modal, Button, Form } from 'react-bootstrap';
+import {Modal, Button, Form, ListGroup } from 'react-bootstrap';
+import './CreateGameScreen.scss'
 
 function CreateGameScreen(props) {
-    const [showModal, setShowModal] = useState(true)
+    const [showModal, setShowModal] = useState(false)
+
+    const [listQuestion, setListQuestion] = useState([]);
+
+    useEffect(()=>{
+        setListQuestion([
+            { name: 'Cras justo odio' },
+            { name: 'Dapibus ac facilisis in' },
+            { name: 'Morbi leo risus' },
+            { name: 'Porta ac consectetur ac' },
+            { name: 'Vestibulum at eros' },
+        ])
+    }, [setListQuestion])
+    
 
     function closeModal () {
         setShowModal(false)
     }
+
     return (
         <div id="create-game">
+            <div className='row'>
+                <div className='col-3'>
+                    <ListGroup className='list-question'>
+                        {listQuestion.map((item, index) =>{
+                            return  (
+                                <ListGroup.Item className='item-question row d-flex'>
+                                    <div className='col-3'>
+                                        <div className='item-index'>{index}</div>
+                                    </div>
+                                    <div className='col-9'>
+                                        <div className='item-name'>{item.name}</div>
+                                    </div>
+                                </ListGroup.Item>
+                            );
+                        })
+                        }
+                    </ListGroup>
+                </div>
+                <div className='col-9'>
+
+                </div>
+            </div>
             <Modal
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"

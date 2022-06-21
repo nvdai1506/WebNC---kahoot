@@ -23,7 +23,7 @@ function App() {
       <Router>
         <div className="App">
           <Header />
-          <div className="container">
+          <div className="main">
             <Switch>
               <Route path="/deploy" component={DeployGameScreen} />
               <Route path="/create" component={CreateGameScreen} />
