@@ -6,12 +6,8 @@ function WaitScreen() {
       <div>
         <main className="row mt-5">
           <div>
-            <h1 className="d-flex align-items-center justify-content-center">
-              You're in!
-            </h1>
-            <h5 className="d-flex align-items-center justify-content-center">
-              See your nickname on screen?
-            </h5>
+            <h1 className="text-center">You're in!</h1>
+            <h5 className="text-center">See your nickname on screen?</h5>
           </div>
         </main>
         <footer className="row mt-5">
