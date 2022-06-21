@@ -47,9 +47,11 @@ router.delete('/:id', async function (req, res) {
   const id = req.params.id || 0;
   const questionRows = await questionModel.findAllQuestionsByQuizId(id);
   let m = 0
-  for (let row of questionRows){
+  if(questionRows){
+    for (let row of questionRows){
       m+=1;
       await questionModel.del(row.id);
+    }
   }
   console.log('m: ', m);
   const n = await quizModel.del(id);

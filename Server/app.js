@@ -29,8 +29,8 @@ app.get('/', function (req, res) {
 
 app.use('/quiz',auth, quizRouter);
 app.use('/question',auth, questionRouter);
-app.use('/api/users', userRouter);
-app.use('/api/auth', authRouter);
+app.use('/users', userRouter);
+app.use('/auth', authRouter);
 
 app.post('/', function (req, res) {
     res.status(201).json({
