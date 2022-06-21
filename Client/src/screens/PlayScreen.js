@@ -6,21 +6,21 @@ function PlayScreen() {
     <div id="play-game">
       <div>
         <main>
-          <div class="d-grid gap-2">
-            <div class="row">
-              <div class="col">
-                <SelectButton btnColor="btn-danger" />
+          <div className="d-grid gap-2">
+            <div className="row">
+              <div className="col">
+                <SelectButton btnColor="btn-danger" shape="triangle" />
               </div>
-              <div class="col">
-                <SelectButton btnColor="btn-primary" />
+              <div className="col">
+                <SelectButton btnColor="btn-primary" shape="diamond" />
               </div>
             </div>
-            <div class="row">
-              <div class="col">
-                <SelectButton btnColor="btn-warning" />
+            <div className="row">
+              <div className="col">
+                <SelectButton btnColor="btn-warning" shape="circle" />
               </div>
-              <div class="col">
-                <SelectButton btnColor="btn-success" />
+              <div className="col">
+                <SelectButton btnColor="btn-success" shape="square" />
               </div>
             </div>
           </div>

@@ -13,6 +13,7 @@ import CreateGameScreen from "./screens/CreateGameScreen";
 import DeployGameScreen from "./screens/DeployGameScreen";
 import WaitScreen from "./screens/WaitScreen";
 import PlayScreen from "./screens/PlayScreen";
+import { IconContext } from "react-icons";
 
 function App() {
   useEffect(() => {
@@ -21,21 +22,23 @@ function App() {
     }
   }, []);
   return (
-    <AppProvider>
-      <Router>
-        <div className="App">
-          <Header />
-          <div className="container">
-            <Switch>
-              <Route path="/deploy" component={DeployGameScreen} />
-              <Route path="/create" component={CreateGameScreen} />
-              <Route path="/play" component={PlayScreen} />
-              <Route path="/" component={HomeScreen} />
-            </Switch>
+    <IconContext.Provider value={{ size: "3em", color: "white" }}>
+      <AppProvider>
+        <Router>
+          <div className="App">
+            <Header />
+            <div className="container">
+              <Switch>
+                <Route path="/deploy" component={DeployGameScreen} />
+                <Route path="/create" component={CreateGameScreen} />
+                <Route path="/play" component={PlayScreen} />
+                <Route path="/" component={HomeScreen} />
+              </Switch>
+            </div>
           </div>
-        </div>
-      </Router>
-    </AppProvider>
+        </Router>
+      </AppProvider>
+    </IconContext.Provider>
   );
 }
 
