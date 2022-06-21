@@ -2,7 +2,7 @@ import React from "react";
 
 function WaitScreen() {
   return (
-    <div id="wait-game">
+    <div id="wait-game" className="container vh-100">
       <div>
         <main className="row mt-5">
           <div>

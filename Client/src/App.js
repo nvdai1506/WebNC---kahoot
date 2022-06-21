@@ -27,7 +27,7 @@ function App() {
         <Router>
           <div className="App">
             <Header />
-            <div className="container">
+            <div className="container vh-100">
               <Switch>
                 <Route path="/deploy" component={DeployGameScreen} />
                 <Route path="/create" component={CreateGameScreen} />
