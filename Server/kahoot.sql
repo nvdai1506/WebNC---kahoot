@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 21, 2022 at 02:31 AM
+-- Generation Time: Jun 21, 2022 at 06:05 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `question` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `quiz_id` int(11) DEFAULT NULL,
+  `question_index` int(11) NOT NULL,
   `question` varchar(512) DEFAULT NULL,
   `answer1` varchar(128) DEFAULT NULL,
   `answer2` varchar(128) DEFAULT NULL,
@@ -42,8 +43,9 @@ CREATE TABLE `question` (
 -- Dumping data for table `question`
 --
 
-INSERT INTO `question` (`id`, `quiz_id`, `question`, `answer1`, `answer2`, `answer3`, `answer4`, `correctAnswer`) VALUES
-(5, 2, 'aa', 'bb', 'cc', 'dd', 'ee', 3);
+INSERT INTO `question` (`id`, `quiz_id`, `question_index`, `question`, `answer1`, `answer2`, `answer3`, `answer4`, `correctAnswer`) VALUES
+(5, 2, 0, 'aa', 'bb', 'cc', 'dd', 'ee', 3),
+(6, 2, 1, 'a', 'b', 'c', 'd', 'ee', 2);
 
 -- --------------------------------------------------------
 
@@ -63,7 +65,7 @@ CREATE TABLE `quiz` (
 --
 
 INSERT INTO `quiz` (`id`, `user_id`, `quiz_name`, `info`) VALUES
-(2, 1, 'second quiz', NULL);
+(2, 1, 'second quiz', 'edit');
 
 -- --------------------------------------------------------
 
@@ -86,7 +88,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `name`, `email`, `dob`, `rfToken`) VALUES
-(1, 'dai', '$2a$10$LAQCZjA9Utm6hd7CEnpO2.PBXXgVoE5MGYbZoAq88U4HtSn8WiSvS', 'dai', 'dai@gmail.com', NULL, '0pRwgmbFBMC8PzgXY8HyBAiSpPgLFxCiLb78YpRAY9ObTTroVw7I2i8XtjzKZhutAxN47MdpCDnSDLi2');
+(1, 'dai', '$2a$10$LAQCZjA9Utm6hd7CEnpO2.PBXXgVoE5MGYbZoAq88U4HtSn8WiSvS', 'dai', 'dai@gmail.com', NULL, 'SKIqpDX1N9AhCQKVl5B3m1625O6gP2P8QeMuRQstvMQUHayvv00RMDhqEK2VHztaDRyRVb03jsxvmJUK'),
+(2, 'dai2', '$2a$10$hLQPIr4KRHNHTSnSwY6gAu9E.U5.esoQjpSlpgqwhDuJI063qoV4y', 'dai2', 'dai2@gmail.com', NULL, 'MmCjXOXRc7Bh8oji9YMV9tKiDPUxjEzGmBK7328ancQYzV1o0S7kNfBzSYmM4Tka6KvePv7MpkE0tsAD');
 
 --
 -- Indexes for dumped tables
@@ -118,19 +121,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `quiz`
 --
 ALTER TABLE `quiz`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
