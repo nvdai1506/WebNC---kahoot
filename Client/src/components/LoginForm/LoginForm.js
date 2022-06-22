@@ -1,7 +1,7 @@
 import React, { useState, useReducer, useContext } from "react";
 import PlayContext from "../../context/PlayContext";
 import "./LoginForm.css";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const nameReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
@@ -14,6 +14,7 @@ const nameReducer = (state, action) => {
 };
 
 function LoginForm({ type, name, id, placeholder, buttonContent }) {
+  let history = useHistory();
   const ctx = useContext(PlayContext);
 
   const [nameState, dispatchName] = useReducer(nameReducer, {
@@ -27,7 +28,8 @@ function LoginForm({ type, name, id, placeholder, buttonContent }) {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    ctx.onLogin(nameState.value);
+    ctx.onLogin(nameState.isValid);
+    history.push(`${ctx.url}/instruction`);
 
     dispatchName({ type: "CLEAR_INPUT" });
   };
@@ -50,16 +52,14 @@ function LoginForm({ type, name, id, placeholder, buttonContent }) {
           />
         </div>
 
-        <Link to={`${ctx.url}/instruction`}>
-          <button
-            type="submit"
-            className={`btn ${
-              nameState.isValid ? "btn-primary" : "btn-dark"
-            } w-100`}
-          >
-            {buttonContent}
-          </button>
-        </Link>
+        <button
+          type="submit"
+          className={`btn ${
+            nameState.isValid ? "btn-primary" : "btn-dark"
+          } w-100`}
+        >
+          {buttonContent}
+        </button>
       </form>
     </div>
   );

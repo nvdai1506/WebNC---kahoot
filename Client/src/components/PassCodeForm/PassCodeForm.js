@@ -1,7 +1,7 @@
 import React, { useState, useReducer, useContext } from "react";
 import PlayContext from "../../context/PlayContext";
 import "./PassCodeForm.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const passReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
@@ -14,6 +14,7 @@ const passReducer = (state, action) => {
 };
 
 function PassCodeForm({ type, name, id, placeholder, buttonContent }) {
+  let history = useHistory();
   const ctx = useContext(PlayContext);
 
   const [passState, dispatchPass] = useReducer(passReducer, {
@@ -28,6 +29,7 @@ function PassCodeForm({ type, name, id, placeholder, buttonContent }) {
   const submitHandler = (event) => {
     event.preventDefault();
     ctx.onValidation(passState.isValid);
+    history.push(`${ctx.url}/join`);
 
     dispatchPass({ type: "CLEAR_INPUT" });
   };
@@ -49,16 +51,15 @@ function PassCodeForm({ type, name, id, placeholder, buttonContent }) {
             onChange={passChangeHandler}
           />
         </div>
-        <Link to={`${ctx.url}/join`}>
-          <button
-            type="submit"
-            className={`btn ${
-              passState.isValid ? "btn-primary" : "btn-dark"
-            } w-100`}
-          >
-            {buttonContent}
-          </button>
-        </Link>
+
+        <button
+          type="submit"
+          className={`btn ${
+            passState.isValid ? "btn-primary" : "btn-dark"
+          } w-100`}
+        >
+          {buttonContent}
+        </button>
       </form>
     </div>
   );

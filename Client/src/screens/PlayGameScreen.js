@@ -32,11 +32,10 @@ function PlayGameScreen() {
     }
   }, []);
 
-  const loginHandler = (username) => {
-    if (username.length > 5) {
+  const loginHandler = (isValid) => {
+    if (isValid) {
       localStorage.setItem("isLoggedIn", "1");
       setIsLoggedIn(true);
-      setUsername(username);
     }
   };
 
