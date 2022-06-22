@@ -6,7 +6,7 @@ import { AppProvider } from "./context/AppContext";
 
 import { useEffect } from "react";
 
-import Header from "./components/Header";
+import Header from "./components/layouts/Header";
 import HomeScreen from "./screens/HomeScreen";
 import CreateGameScreen from "./screens/CreateGameScreen";
 import DeployGameScreen from "./screens/DeployGameScreen";
@@ -20,19 +20,6 @@ function App() {
     }
   }, []);
   return (
-<<<<<<< HEAD
-    <AppProvider>
-      <Router>
-        <div className="App">
-          <Header />
-          <div className="main">
-            <Switch>
-              <Route path="/deploy" component={DeployGameScreen} />
-              <Route path="/create" component={CreateGameScreen} />
-              <Route path="/play" component={PlayGameScreen} />
-              <Route path="/" component={HomeScreen} />
-            </Switch>
-=======
     <IconContext.Provider value={{ size: "3em", color: "white" }}>
       <AppProvider>
         <Router>
@@ -46,7 +33,6 @@ function App() {
                 <Route path="/" component={HomeScreen} />
               </Switch>
             </div>
->>>>>>> cdaea794e71619fa9112c3c8df09d367c3c62604
           </div>
         </Router>
       </AppProvider>

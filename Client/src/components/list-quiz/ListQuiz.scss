@@ -1,0 +1,36 @@
+#list-quiz {
+    .list-content {
+        .quiz-item {
+            width: 90%;
+
+            .left-area {
+                position: relative;
+                .cover-img {
+                    width: 100%;
+                    height: 100%;
+                }
+                .tag-img {
+                    position: absolute;
+                    padding: 10px 20px;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background-color: rgba(51, 51, 51, 0.8);
+                    border-radius: 10px;
+                    color: #fff;
+                    font-size: 12px;
+                    font-weight: bold;
+                }
+
+            }
+            
+
+            .view-more {
+                width: 50px;
+                position: absolute;
+                right: 20px;
+                top: 5px;
+            }
+        }
+    }
+}

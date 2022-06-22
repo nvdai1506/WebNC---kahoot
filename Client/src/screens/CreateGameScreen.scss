@@ -47,6 +47,14 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
+
+            .iq-icon {
+                svg {
+                    width: 15px;
+                    height: 15px;
+                    color: #000 !important;
+                }
+            }
         }
 
         .button-add {
@@ -135,6 +143,24 @@
                 }
             }
             
+        }
+    }
+
+}
+
+.select-type {
+    align-items: center;
+    .item {
+        text-align: center;
+        .prev-img {
+            width: 80%;
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            border-radius: 8px;
+        }
+
+        input {
+            display: inline-block;
+            float: none !important;
         }
     }
 }

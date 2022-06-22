@@ -1,0 +1,66 @@
+import React, { useState } from 'react';
+import {Card, Dropdown} from 'react-bootstrap';
+import { CgMoreO } from "react-icons/cg";
+import "./ListQuiz.scss"
+
+import coverKahoot  from "../../static/image/placeholder-cover-kahoot.png"
+
+const THEME = [ 'Primary', 'Secondary', 'Success', 'Danger', 'Warning', 'Info', 'Light', 'Dark',]
+
+function ListQuiz(props) {
+    const [listQuiz, setListQuiz] = useState([
+        { name: 'Cras justo odio', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s' },
+        { name: 'Dapibus ac facilisis in', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s' },
+        { name: 'Morbi leo risus', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s' },
+        { name: 'Porta ac consectetur ac', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s' },
+        { name: 'Vestibulum at eros', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s' },
+    ]);
+
+
+    return (
+        <div id="list-quiz">
+            <div className='list-title mt-5'>
+                <h4>Games</h4>
+                
+            </div>
+            <div className='list-content row '>
+                {
+                    listQuiz.map((item, index) => {
+                        let _theme = THEME[index % THEME.length].toLowerCase();
+                        return (
+                            <Card border={_theme} className='quiz-item mx-5 my-3' key={index}>
+                                <Card.Body className='row'>
+                                    <div className='left-area col-3'>
+                                        <img className='cover-img' src={coverKahoot} alt=''/>
+                                        <div className='tag-img'>Quiz #{index + 1}</div>
+                                    </div>
+                                    <div className='col-9'>
+                                        <div className='header-title'>
+                                            <Card.Title className='col-10'>{item.name}</Card.Title>
+                                            <Dropdown className='view-more'>
+                                                <Dropdown.Toggle variant='' id="dropdown-basic">
+                                                   <CgMoreO style={{width: '20px', height: '20px', color: '#000'}}/>
+                                                </Dropdown.Toggle>
+                                                <Dropdown.Menu>
+                                                    <Dropdown.Item href={'/edit/' + item.id}>Edit</Dropdown.Item>
+                                                    <Dropdown.Item href={'/host/' + item.id}>Host</Dropdown.Item>
+                                                </Dropdown.Menu>
+                                            </Dropdown>
+                                        </div>
+                                        <Card.Text>
+                                            {item.description}
+                                        </Card.Text>
+                                    </div>
+                                    
+                                </Card.Body>
+                            </Card>
+                        );
+                    })
+                }
+            </div>
+            
+        </div>
+    );
+}
+
+export default ListQuiz;
