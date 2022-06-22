@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import PlayContext from "../context/PlayContext";
 
-function WaitScreen({ username, score }) {
+function WaitScreen() {
+  const ctx = useContext(PlayContext);
   return (
     <div
       id="wait-game"
@@ -15,8 +17,8 @@ function WaitScreen({ username, score }) {
       </main>
       <footer>
         <div className="d-flex justify-content-between">
-          <h1>{username}</h1>
-          <h1>{score}</h1>
+          <h1>{ctx.username}</h1>
+          <h1>{ctx.score}</h1>
         </div>
       </footer>
     </div>

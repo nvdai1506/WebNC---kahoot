@@ -1,8 +1,10 @@
-import React from "react";
-import SelectButton from "../components/SelectButton/SelectButton";
+import React, { useContext } from "react";
 import SelectGroup from "../components/SelectGroup/SelectGroup";
+import PlayContext from "../context/PlayContext";
 
-function PlayScreen({username, score}) {
+function PlayScreen() {
+  const ctx = useContext(PlayContext);
+
   return (
     <div
       id="play-game"
@@ -16,8 +18,8 @@ function PlayScreen({username, score}) {
       </main>
       <footer>
         <div className="d-flex justify-content-between">
-          <h1>{username}</h1>
-          <h1>{score}</h1>
+          <h1>{ctx.username}</h1>
+          <h1>{ctx.score}</h1>
         </div>
       </footer>
     </div>

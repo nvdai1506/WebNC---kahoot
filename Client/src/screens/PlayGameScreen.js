@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PlayContext from "../context/PlayContext";
 import LoginScreen from "./LoginScreen";
 import PlayScreen from "./PlayScreen";
 import WaitScreen from "./WaitScreen";
@@ -24,10 +25,17 @@ function PlayGameScreen() {
   };
 
   return (
-    <>
-      {!isLoggedIn && <LoginScreen onLogin={loginHandler} />}
-      {isLoggedIn && <PlayScreen username={username} score={score} />}
-    </>
+    <PlayContext.Provider
+      value={{
+        isLoggedIn: false,
+        username: username,
+        score: score,
+        onLogin: loginHandler,
+      }}
+    >
+      {!isLoggedIn && <LoginScreen />}
+      {isLoggedIn && <WaitScreen />}
+    </PlayContext.Provider>
   );
 }
 

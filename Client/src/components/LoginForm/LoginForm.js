@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useReducer, useContext } from "react";
+import PlayContext from "../../context/PlayContext";
 import "./LoginForm.css";
 
 const nameReducer = (state, action) => {
@@ -8,7 +9,9 @@ const nameReducer = (state, action) => {
   return { value: "", isValid: false };
 };
 
-function LoginForm({ type, name, id, placeholder, buttonContent, onLogin }) {
+function LoginForm({ type, name, id, placeholder, buttonContent }) {
+  const ctx = useContext(PlayContext);
+
   const [nameState, dispatchName] = useReducer(nameReducer, {
     value: "",
     isValid: false,
@@ -20,7 +23,7 @@ function LoginForm({ type, name, id, placeholder, buttonContent, onLogin }) {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    onLogin(nameState.value);
+    ctx.onLogin(nameState.value);
   };
 
   return (

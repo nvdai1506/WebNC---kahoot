@@ -2,7 +2,7 @@ import React from "react";
 import LoginForm from "../components/LoginForm/LoginForm";
 import imgKahootLogo from "../static/image/kahoot-logo.png";
 
-function LoginScreen({ onLogin }) {
+function LoginScreen() {
   return (
     <div id="login-game">
       <main>
@@ -24,7 +24,6 @@ function LoginScreen({ onLogin }) {
           id="game-input"
           placeholder="Nickname"
           buttonContent="OK, go!"
-          onLogin={onLogin}
         />
       </main>
     </div>
