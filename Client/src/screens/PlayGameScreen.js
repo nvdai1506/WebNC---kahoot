@@ -68,11 +68,13 @@ function PlayGameScreen() {
           path={`${path}/join`}
           component={LoginScreen}
           isAuthentication={isValidation}
+          redirect={url}
         />
         <ProtectedRoute
           path={`${path}/instruction`}
           component={WaitScreen}
           isAuthentication={isValidation && isLoggedIn}
+          redirect={`${url}/join`}
         />
       </Switch>
     </PlayContext.Provider>
