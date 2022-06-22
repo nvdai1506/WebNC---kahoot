@@ -1,7 +1,7 @@
 import React, { useState, useReducer, useContext } from "react";
 import PlayContext from "../../context/PlayContext";
 import "./PassCodeForm.css";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const passReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
@@ -27,7 +27,7 @@ function PassCodeForm({ type, name, id, placeholder, buttonContent }) {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    ctx.onValidation(passState.value);
+    ctx.onValidation(passState.isValid);
 
     dispatchPass({ type: "CLEAR_INPUT" });
   };

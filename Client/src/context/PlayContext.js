@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const PlayContext = React.createContext({
+  isValidation: false,
   isLoggedIn: false,
   username: "",
   score: 0,

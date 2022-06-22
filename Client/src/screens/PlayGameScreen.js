@@ -9,8 +9,8 @@ import {
   Switch,
   Route,
   useRouteMatch,
-  useParams,
 } from "react-router-dom";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 function PlayGameScreen() {
   let { path, url } = useRouteMatch();
@@ -40,8 +40,8 @@ function PlayGameScreen() {
     }
   };
 
-  const validationHandler = (passcode) => {
-    if (passcode === "123123") {
+  const validationHandler = (isValid) => {
+    if (isValid) {
       localStorage.setItem("isValidation", "1");
       setIsValidation(true);
     }
@@ -50,7 +50,8 @@ function PlayGameScreen() {
   return (
     <PlayContext.Provider
       value={{
-        isLoggedIn: false,
+        isValidation: isValidation,
+        isLoggedIn: isLoggedIn,
         username: username,
         score: score,
         onLogin: loginHandler,
@@ -63,37 +64,19 @@ function PlayGameScreen() {
       {isValidation && isLoggedIn && <WaitScreen />} */}
 
       <Switch>
-        <Route exact path={path}>
-          <PassCodeScreen />
-        </Route>
-        <Route path={`${path}/:screenId`}>
-          <Screen />
-        </Route>
+        <Route exact path={path} component={PassCodeScreen} />
+        <ProtectedRoute
+          path={`${path}/join`}
+          component={LoginScreen}
+          isAuthentication={isValidation}
+        />
+        <ProtectedRoute
+          path={`${path}/instruction`}
+          component={WaitScreen}
+          isAuthentication={isValidation && isLoggedIn}
+        />
       </Switch>
     </PlayContext.Provider>
-  );
-}
-
-function Screen() {
-  // The <Route> that rendered this component has a
-  // path of `/topics/:topicId`. The `:topicId` portion
-  // of the URL indicates a placeholder that we can
-  // get from `useParams()`.
-  let { screenId } = useParams();
-
-  return (
-    <>
-      {(() => {
-        switch (screenId) {
-          case "join":
-            return <LoginScreen />;
-          case "instruction":
-            return <WaitScreen />;
-          default:
-            return null;
-        }
-      })()}
-    </>
   );
 }
 
