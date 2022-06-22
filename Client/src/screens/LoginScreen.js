@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import LoginForm from "../components/LoginForm/LoginForm";
 import imgKahootLogo from "../static/image/kahoot-logo.png";
 
-function LoginScreen(props) {
+function LoginScreen({ onLogin }) {
   return (
     <div id="login-game">
       <main>
@@ -10,21 +10,22 @@ function LoginScreen(props) {
           <img src={imgKahootLogo} width="300px" alt="" />
         </div>
 
-        <LoginForm
+        {/* <LoginForm
           type="tel"
           name="gameId"
           id="game-input"
           placeholder="Game PIN"
           buttonContent="Enter"
-        />
+        /> */}
 
-        {/* <LoginForm
-              type="tel"
-              name="gameId"
-              id="game-input"
-              placeholder="Nickname"
-              buttonContent="OK, go!"
-            /> */}
+        <LoginForm
+          type="tel"
+          name="gameId"
+          id="game-input"
+          placeholder="Nickname"
+          buttonContent="OK, go!"
+          onLogin={onLogin}
+        />
       </main>
     </div>
   );

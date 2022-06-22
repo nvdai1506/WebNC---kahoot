@@ -1,6 +1,6 @@
 import React from "react";
 
-function WaitScreen() {
+function WaitScreen({ username, score }) {
   return (
     <div
       id="wait-game"
@@ -15,8 +15,8 @@ function WaitScreen() {
       </main>
       <footer>
         <div className="d-flex justify-content-between">
-          <h1>Name</h1>
-          <h1>0</h1>
+          <h1>{username}</h1>
+          <h1>{score}</h1>
         </div>
       </footer>
     </div>
