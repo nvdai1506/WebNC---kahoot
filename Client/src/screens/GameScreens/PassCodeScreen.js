@@ -1,8 +1,8 @@
 import React from "react";
-import LoginForm from "../../components/LoginForm/LoginForm";
+import PassCodeForm from "../../components/PassCodeForm/PassCodeForm";
 import imgKahootLogo from "../../static/image/kahoot-logo.png";
 
-function LoginScreen() {
+function PassCodeScreen() {
   return (
     <div id="login-game">
       <main>
@@ -10,16 +10,16 @@ function LoginScreen() {
           <img src={imgKahootLogo} width="300px" alt="" />
         </div>
 
-        <LoginForm
+        <PassCodeForm
           type="tel"
           name="gameId"
           id="game-input"
-          placeholder="Nickname"
-          buttonContent="OK, go!"
+          placeholder="Game PIN"
+          buttonContent="Enter"
         />
       </main>
     </div>
   );
 }
 
-export default LoginScreen;
+export default PassCodeScreen;

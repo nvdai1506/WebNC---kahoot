@@ -1,11 +1,11 @@
 import React, { useState, useReducer, useContext } from "react";
 import PlayContext from "../../context/PlayContext";
-import "./LoginForm.css";
+import "./PassCodeForm.css";
 import { Link, useRouteMatch } from "react-router-dom";
 
-const nameReducer = (state, action) => {
+const passReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
-    return { value: action.value, isValid: action.value.length > 5 };
+    return { value: action.value, isValid: action.value === "123123" };
   }
   if (action.type === "CLEAR_INPUT") {
     return { value: "", isValid: false };
@@ -13,23 +13,23 @@ const nameReducer = (state, action) => {
   return { value: "", isValid: false };
 };
 
-function LoginForm({ type, name, id, placeholder, buttonContent }) {
+function PassCodeForm({ type, name, id, placeholder, buttonContent }) {
   const ctx = useContext(PlayContext);
 
-  const [nameState, dispatchName] = useReducer(nameReducer, {
+  const [passState, dispatchPass] = useReducer(passReducer, {
     value: "",
     isValid: false,
   });
 
-  const nameChangeHandler = (event) => {
-    dispatchName({ type: "USER_INPUT", value: event.target.value });
+  const passChangeHandler = (event) => {
+    dispatchPass({ type: "USER_INPUT", value: event.target.value });
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
-    ctx.onLogin(nameState.value);
+    ctx.onValidation(passState.value);
 
-    dispatchName({ type: "CLEAR_INPUT" });
+    dispatchPass({ type: "CLEAR_INPUT" });
   };
 
   return (
@@ -45,16 +45,15 @@ function LoginForm({ type, name, id, placeholder, buttonContent }) {
             className="form-control text-center"
             id={id}
             placeholder={placeholder}
-            value={nameState.value}
-            onChange={nameChangeHandler}
+            value={passState.value}
+            onChange={passChangeHandler}
           />
         </div>
-
-        <Link to={`${ctx.url}/instruction`}>
+        <Link to={`${ctx.url}/join`}>
           <button
             type="submit"
             className={`btn ${
-              nameState.isValid ? "btn-primary" : "btn-dark"
+              passState.isValid ? "btn-primary" : "btn-dark"
             } w-100`}
           >
             {buttonContent}
@@ -65,4 +64,4 @@ function LoginForm({ type, name, id, placeholder, buttonContent }) {
   );
 }
 
-export default LoginForm;
+export default PassCodeForm;

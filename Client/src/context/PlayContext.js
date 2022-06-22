@@ -5,6 +5,8 @@ const PlayContext = React.createContext({
   username: "",
   score: 0,
   onLogin: () => {},
+  onValidation: () => {},
+  url: "",
 });
 
 // export const PlayContextProvider = (props) => {
