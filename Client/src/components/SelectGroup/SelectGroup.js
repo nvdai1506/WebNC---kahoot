@@ -3,8 +3,7 @@ import SelectButton from "../SelectButton/SelectButton";
 
 function SelectGroup() {
   const [answer, setAnswer] = useState("");
-
-  const buttonHandler = () => {};
+  console.log(answer);
 
   return (
     <>
@@ -13,28 +12,28 @@ function SelectGroup() {
           <SelectButton
             btnColor="btn-danger"
             shape="triangle"
-            onButtonHandler={buttonHandler}
+            onButtonHandler={setAnswer}
           />
         </div>
         <div className="col p-0">
           <SelectButton
             btnColor="btn-primary"
             shape="diamond"
-            onButtonHandler={buttonHandler}
+            onButtonHandler={setAnswer}
           />
         </div>
         <div className="col p-0">
           <SelectButton
             btnColor="btn-warning"
             shape="circle"
-            onButtonHandler={buttonHandler}
+            onButtonHandler={setAnswer}
           />
         </div>
         <div className="col p-0">
           <SelectButton
             btnColor="btn-success"
             shape="square"
-            onButtonHandler={buttonHandler}
+            onButtonHandler={setAnswer}
           />
         </div>
       </div>

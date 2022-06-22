@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useCallback } from "react";
+
 import {
   BsFillTriangleFill,
   BsFillCircleFill,
@@ -7,12 +8,19 @@ import {
 } from "react-icons/bs";
 
 function SelectButton({ btnColor, shape, onButtonHandler }) {
+  const clickHandler = useCallback(
+    (event) => {
+      onButtonHandler(shape);
+    },
+    [onButtonHandler]
+  );
+
   return (
     <>
       <button
         type="button"
         className={`btn ${btnColor} w-100 h-100 p-5`}
-        onClick={onButtonHandler}
+        onClick={clickHandler}
       >
         {(() => {
           switch (shape) {
