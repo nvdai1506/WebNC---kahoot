@@ -1,37 +1,41 @@
-import React, { useState } from "react";
-import LoginForm from "../components/LoginForm/LoginForm";
-import imgKahootLogo from "../static/image/kahoot-logo.png";
+import React, { useState, useEffect } from "react";
+import PlayContext from "../context/PlayContext";
+import LoginScreen from "./GameScreens/LoginScreen";
+import PlayScreen from "./GameScreens/PlayScreen";
+import WaitScreen from "./GameScreens/WaitScreen";
 
-function PlayGameScreen(props) {
-  const [flag, setFlag] = useState(true);
+function PlayGameScreen() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState("");
+  const [score, setScore] = useState(0);
+
+  useEffect(() => {
+    if (localStorage.getItem("isLoggedIn") === "1") {
+      setIsLoggedIn(true);
+      // localStorage.setItem("isLoggedIn", "1");
+      // setIsLoggedIn(true);
+      // localStorage.removeItem('isLoggedIn');
+    }
+  }, []);
+
+  const loginHandler = (username) => {
+    localStorage.setItem("isLoggedIn", "1");
+    setIsLoggedIn(true);
+    setUsername(username);
+  };
 
   return (
-    <div id="play-game">
-      <div>
-        <main>
-          <div class="mb-2 col-4 mx-auto">
-            <img src={imgKahootLogo} width="400px" alt="" />
-          </div>
-          {flag ? (
-            <LoginForm
-              type="tel"
-              name="gameId"
-              id="game-input"
-              placeholder="Game PIN"
-              buttonContent="Enter"
-            />
-          ) : (
-            <LoginForm
-              type="tel"
-              name="gameId"
-              id="game-input"
-              placeholder="Nickname"
-              buttonContent="OK, go!"
-            />
-          )}
-        </main>
-      </div>
-    </div>
+    <PlayContext.Provider
+      value={{
+        isLoggedIn: false,
+        username: username,
+        score: score,
+        onLogin: loginHandler,
+      }}
+    >
+      {!isLoggedIn && <LoginScreen />}
+      {isLoggedIn && <WaitScreen />}
+    </PlayContext.Provider>
   );
 }
 

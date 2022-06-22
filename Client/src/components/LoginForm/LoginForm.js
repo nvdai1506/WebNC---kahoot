@@ -1,28 +1,55 @@
-import React from "react";
+import React, { useState, useReducer, useContext } from "react";
+import PlayContext from "../../context/PlayContext";
 import "./LoginForm.css";
 
+const nameReducer = (state, action) => {
+  if (action.type === "USER_INPUT") {
+    return { value: action.value, isValid: action.value.length > 6 };
+  }
+  return { value: "", isValid: false };
+};
+
 function LoginForm({ type, name, id, placeholder, buttonContent }) {
-  const submitHandler = (e) => {
-    e.preventDefault();
+  const ctx = useContext(PlayContext);
+
+  const [nameState, dispatchName] = useReducer(nameReducer, {
+    value: "",
+    isValid: false,
+  });
+
+  const nameChangeHandler = (event) => {
+    dispatchName({ type: "USER_INPUT", value: event.target.value });
+  };
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+    ctx.onLogin(nameState.value);
   };
 
   return (
     <div>
       <form
-        class="d-grid gap-2 col-4 mx-auto border border-dark rounded p-3"
+        className="col-4 mx-auto border border-dark rounded p-3"
         onSubmit={submitHandler}
       >
-        <div class="mb-1">
+        <div className="mb-1">
           <input
             type={type}
             name={name}
-            class="form-control"
+            className="form-control text-center"
             id={id}
             placeholder={placeholder}
+            value={nameState.value}
+            onChange={nameChangeHandler}
           />
         </div>
 
-        <button type="submit" class="btn btn-dark">
+        <button
+          type="submit"
+          className={`btn ${
+            nameState.isValid ? "btn-primary" : "btn-dark"
+          } w-100`}
+        >
           {buttonContent}
         </button>
       </form>
