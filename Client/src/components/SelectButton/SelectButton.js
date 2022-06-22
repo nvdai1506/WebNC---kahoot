@@ -6,10 +6,14 @@ import {
   BsFillDiamondFill,
 } from "react-icons/bs";
 
-function SelectButton({ btnColor, shape }) {
+function SelectButton({ btnColor, shape, onButtonHandler }) {
   return (
     <>
-      <button type="button" className={`btn ${btnColor} w-100 h-100 p-5`}>
+      <button
+        type="button"
+        className={`btn ${btnColor} w-100 h-100 p-5`}
+        onClick={onButtonHandler}
+      >
         {(() => {
           switch (shape) {
             case "triangle":

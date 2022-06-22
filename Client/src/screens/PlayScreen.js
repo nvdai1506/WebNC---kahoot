@@ -1,30 +1,18 @@
 import React from "react";
 import SelectButton from "../components/SelectButton/SelectButton";
+import SelectGroup from "../components/SelectGroup/SelectGroup";
 
 function PlayScreen() {
   return (
     <div
       id="play-game"
-      className="container vh-100 d-flex flex-column justify-content-between"
+      className="h-100 d-flex flex-column justify-content-between"
     >
       <header>
         <h1>1 of 10</h1>
       </header>
-      <main class="container vh-100 d-flex flex-column justify-content-center">
-        <div class="row row-cols-2 h-100">
-          <div class="col p-0">
-            <SelectButton btnColor="btn-danger" shape="triangle" />
-          </div>
-          <div class="col p-0">
-            <SelectButton btnColor="btn-primary" shape="diamond" />
-          </div>
-          <div class="col p-0">
-            <SelectButton btnColor="btn-warning" shape="circle" />
-          </div>
-          <div class="col p-0">
-            <SelectButton btnColor="btn-success" shape="square" />
-          </div>
-        </div>
+      <main className="h-100 d-flex flex-column justify-content-center">
+        <SelectGroup />
       </main>
       <footer>
         <div className="d-flex justify-content-between">
