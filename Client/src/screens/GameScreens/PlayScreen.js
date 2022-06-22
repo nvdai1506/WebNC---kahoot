@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import SelectGroup from "../components/SelectGroup/SelectGroup";
-import PlayContext from "../context/PlayContext";
+import SelectGroup from "../../components/SelectGroup/SelectGroup";
+import PlayContext from "../../context/PlayContext";
 
 function PlayScreen() {
   const ctx = useContext(PlayContext);

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import PlayContext from "../context/PlayContext";
+import PlayContext from "../../context/PlayContext";
 
 function WaitScreen() {
   const ctx = useContext(PlayContext);

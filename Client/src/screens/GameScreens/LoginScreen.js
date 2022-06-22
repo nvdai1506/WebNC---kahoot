@@ -1,6 +1,6 @@
 import React from "react";
-import LoginForm from "../components/LoginForm/LoginForm";
-import imgKahootLogo from "../static/image/kahoot-logo.png";
+import LoginForm from "../../components/LoginForm/LoginForm";
+import imgKahootLogo from "../../static/image/kahoot-logo.png";
 
 function LoginScreen() {
   return (

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PlayContext from "../context/PlayContext";
-import LoginScreen from "./LoginScreen";
-import PlayScreen from "./PlayScreen";
-import WaitScreen from "./WaitScreen";
+import LoginScreen from "./GameScreens/LoginScreen";
+import PlayScreen from "./GameScreens/PlayScreen";
+import WaitScreen from "./GameScreens/WaitScreen";
 
 function PlayGameScreen() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
