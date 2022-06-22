@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import LoginScreen from "./LoginScreen";
+import PlayScreen from "./PlayScreen";
 import WaitScreen from "./WaitScreen";
 
 function PlayGameScreen() {
@@ -25,7 +26,7 @@ function PlayGameScreen() {
   return (
     <>
       {!isLoggedIn && <LoginScreen onLogin={loginHandler} />}
-      {isLoggedIn && <WaitScreen username={username} score={score} />}
+      {isLoggedIn && <PlayScreen username={username} score={score} />}
     </>
   );
 }

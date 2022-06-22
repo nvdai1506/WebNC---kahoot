@@ -2,7 +2,7 @@ import React from "react";
 import SelectButton from "../components/SelectButton/SelectButton";
 import SelectGroup from "../components/SelectGroup/SelectGroup";
 
-function PlayScreen() {
+function PlayScreen({username, score}) {
   return (
     <div
       id="play-game"
@@ -16,8 +16,8 @@ function PlayScreen() {
       </main>
       <footer>
         <div className="d-flex justify-content-between">
-          <h1>Name</h1>
-          <h1>0</h1>
+          <h1>{username}</h1>
+          <h1>{score}</h1>
         </div>
       </footer>
     </div>
