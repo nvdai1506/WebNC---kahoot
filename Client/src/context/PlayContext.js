@@ -4,10 +4,16 @@ const PlayContext = React.createContext({
   isValidation: false,
   isLoggedIn: false,
   isPlaying: false,
+  isCorrect: false,
+  answer: "",
+  answerScore: 0,
   username: "",
   score: 0,
   onLogin: () => {},
   onValidation: () => {},
+  onAnswer: () => {},
+  onUsername: () => {},
+  onScore: () => {},
   url: "",
 });
 

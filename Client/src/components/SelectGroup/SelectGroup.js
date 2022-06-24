@@ -1,9 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import SelectButton from "../SelectButton/SelectButton";
+import PlayContext from "../../context/PlayContext";
+import { Link, useHistory } from "react-router-dom";
 
 function SelectGroup() {
+  let history = useHistory();
+  const ctx = useContext(PlayContext);
+
   const [answer, setAnswer] = useState("");
-  console.log(answer);
+
+  useEffect(() => {
+    if (answer !== "") {
+      ctx.onAnswer(answer === ctx.answer);
+
+      setTimeout(() => {
+        history.push(`${ctx.url}/result`);
+      }, 2000);
+    }
+  }, [answer]);
 
   return (
     <>
