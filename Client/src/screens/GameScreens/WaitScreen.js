@@ -1,8 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import PlayContext from "../../context/PlayContext";
+import { Link, useHistory } from "react-router-dom";
 
 function WaitScreen() {
+  let history = useHistory();
   const ctx = useContext(PlayContext);
+
+  useEffect(() => {
+    if (ctx.isPlaying === true) {
+      setTimeout(() => {
+        history.push(`${ctx.url}/gameblock`);
+      }, 5000);
+    }
+  }, []);
+
   return (
     <div
       id="wait-game"

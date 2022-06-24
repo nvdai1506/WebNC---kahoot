@@ -17,6 +17,7 @@ function PlayGameScreen() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isValidation, setIsValidation] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [username, setUsername] = useState("");
   const [score, setScore] = useState(0);
 
@@ -51,6 +52,7 @@ function PlayGameScreen() {
       value={{
         isValidation: isValidation,
         isLoggedIn: isLoggedIn,
+        isPlaying: isPlaying,
         username: username,
         score: score,
         onLogin: loginHandler,
@@ -58,10 +60,6 @@ function PlayGameScreen() {
         url: url,
       }}
     >
-      {/* {!isValidation && !isLoggedIn && <PassCodeScreen />}
-      {isValidation && !isLoggedIn && <LoginScreen />}
-      {isValidation && isLoggedIn && <WaitScreen />} */}
-
       <Switch>
         <Route exact path={path} component={PassCodeScreen} />
         <ProtectedRoute
@@ -73,8 +71,14 @@ function PlayGameScreen() {
         <ProtectedRoute
           path={`${path}/instruction`}
           component={WaitScreen}
-          isAuthentication={isValidation && isLoggedIn}
+          isAuthentication={isLoggedIn}
           redirect={`${url}/join`}
+        />
+        <ProtectedRoute
+          path={`${path}/gameblock`}
+          component={PlayScreen}
+          isAuthentication={isPlaying}
+          redirect={`${url}/instruction`}
         />
       </Switch>
     </PlayContext.Provider>
