@@ -11,7 +11,7 @@ function PlayScreen() {
       className="h-100 d-flex flex-column justify-content-between"
     >
       <header>
-        <h1>1 of 10</h1>
+        <h1>{`${ctx.questionNumber} of ${ctx.totalQuestion}`}</h1>
       </header>
       <main className="h-100 d-flex flex-column justify-content-center">
         <SelectGroup />

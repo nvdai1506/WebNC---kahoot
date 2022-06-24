@@ -1,13 +1,18 @@
 import React, { useContext, useEffect } from "react";
 import PlayContext from "../../context/PlayContext";
 import { Link, useHistory } from "react-router-dom";
+import WrongAnswer from "../../components/WrongAnswer/WrongAnswer";
+import CorrectAnswer from "../../components/CorrectAnswer/CorrectAnswer";
 
-function WaitScreen() {
+function ResultScreen() {
   let history = useHistory();
   const ctx = useContext(PlayContext);
 
   useEffect(() => {
-    if (ctx.isPlaying === true) {
+    ctx.onScore(ctx.isCorrect);
+    ctx.onQuestion();
+
+    if (true) {
       setTimeout(() => {
         history.push(`${ctx.url}/gameblock`);
       }, 5000);
@@ -16,16 +21,11 @@ function WaitScreen() {
 
   return (
     <div
-      id="wait-game"
+      id="result-game"
       className="container vh-100 d-flex flex-column justify-content-between"
     >
       <div></div>
-      <main>
-        <div>
-          <h1 className="text-center">You're in!</h1>
-          <h5 className="text-center">See your nickname on screen?</h5>
-        </div>
-      </main>
+      <main>{ctx.isCorrect ? <CorrectAnswer /> : <WrongAnswer />}</main>
       <footer>
         <div className="d-flex justify-content-between">
           <h1>{ctx.username}</h1>
@@ -36,4 +36,4 @@ function WaitScreen() {
   );
 }
 
-export default WaitScreen;
+export default ResultScreen;

@@ -28,6 +28,7 @@ function LoginForm({ type, name, id, placeholder, buttonContent }) {
 
   const submitHandler = (event) => {
     event.preventDefault();
+    ctx.onUsername(nameState.value);
     ctx.onLogin(nameState.isValid);
     history.push(`${ctx.url}/instruction`);
 

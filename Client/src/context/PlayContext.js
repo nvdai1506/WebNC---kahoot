@@ -3,10 +3,20 @@ import React, { useState, useEffect } from "react";
 const PlayContext = React.createContext({
   isValidation: false,
   isLoggedIn: false,
+  isPlaying: false,
+  isCorrect: false,
+  answer: "",
+  answerScore: 0,
   username: "",
   score: 0,
+  questionNumber: 0,
+  totalQuestion: 10,
   onLogin: () => {},
   onValidation: () => {},
+  onAnswer: () => {},
+  onUsername: () => {},
+  onScore: () => {},
+  onQuestion: () => {},
   url: "",
 });
 
