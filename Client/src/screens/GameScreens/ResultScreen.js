@@ -10,6 +10,7 @@ function ResultScreen() {
 
   useEffect(() => {
     ctx.onScore(ctx.isCorrect);
+    ctx.onQuestion();
 
     if (true) {
       setTimeout(() => {

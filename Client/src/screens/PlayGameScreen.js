@@ -24,6 +24,8 @@ function PlayGameScreen() {
   const [isCorrect, setIsCorrect] = useState(false);
   const [username, setUsername] = useState("");
   const [score, setScore] = useState(0);
+  const [questionNumber, setQuestionNumber] = useState(1);
+  const [totalQuestion, setTotalQuestion] = useState(10);
 
   useEffect(() => {
     if (localStorage.getItem("isLoggedIn") === "1") {
@@ -67,6 +69,10 @@ function PlayGameScreen() {
     if (bonus) setScore(score + answerScore);
   };
 
+  const questionHandler = () => {
+    setQuestionNumber(questionNumber + 1);
+  };
+
   return (
     <PlayContext.Provider
       value={{
@@ -78,11 +84,14 @@ function PlayGameScreen() {
         answerScore: answerScore,
         username: username,
         score: score,
+        questionNumber: questionNumber,
+        totalQuestion: totalQuestion,
         onLogin: loginHandler,
         onValidation: validationHandler,
         onAnswer: answerHandler,
         onUsername: usernameHandler,
         onScore: scoreHandler,
+        onQuestion: questionHandler,
         url: url,
       }}
     >
