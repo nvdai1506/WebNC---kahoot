@@ -13,6 +13,19 @@ import {
 } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoute";
 
+const ANSWER_DATA = [
+  { question: "fuck you?", answer: "triangle" },
+  { question: "fuck you?", answer: "triangle" },
+  { question: "fuck you?", answer: "triangle" },
+  { question: "fuck you?", answer: "square" },
+  { question: "fuck you?", answer: "square" },
+  { question: "fuck you?", answer: "diamond" },
+  { question: "fuck you?", answer: "diamond" },
+  { question: "fuck you?", answer: "circle" },
+  { question: "fuck you?", answer: "circle" },
+  { question: "fuck you?", answer: "circle" },
+];
+
 function PlayGameScreen() {
   let { path, url } = useRouteMatch();
 
@@ -25,7 +38,7 @@ function PlayGameScreen() {
   const [username, setUsername] = useState("");
   const [score, setScore] = useState(0);
   const [questionNumber, setQuestionNumber] = useState(1);
-  const [totalQuestion, setTotalQuestion] = useState(10);
+  const [totalQuestion, setTotalQuestion] = useState(ANSWER_DATA.length);
 
   useEffect(() => {
     if (localStorage.getItem("isLoggedIn") === "1") {
@@ -37,7 +50,9 @@ function PlayGameScreen() {
     if (localStorage.getItem("isValidation") === "1") {
       setIsValidation(true);
     }
-  }, []);
+
+    setAnswer(ANSWER_DATA[questionNumber - 1].answer);
+  }, [questionNumber]);
 
   const loginHandler = (isLogin) => {
     if (isLogin) {

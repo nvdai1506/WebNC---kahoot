@@ -20,7 +20,7 @@ function App() {
     }
   }, []);
   return (
-    <IconContext.Provider value={{ size: "3em", color: "white" }}>
+    <IconContext.Provider value={{ size: "4em", color: "white" }}>
       <AppProvider>
         <Router>
           <div className="App">
