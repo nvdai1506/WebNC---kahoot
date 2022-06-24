@@ -41,6 +41,7 @@ router.post('/', validate(schema), async function (req, res) {
 
   res.json({
     authenticated: true,
+    userId: user.id,
     accessToken,
     refreshToken
   })

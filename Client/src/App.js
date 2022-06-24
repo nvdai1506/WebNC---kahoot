@@ -4,29 +4,27 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { AppProvider } from "./context/AppContext";
 
-import { useEffect } from "react";
-
 import Header from "./components/layouts/Header";
 import HomeScreen from "./screens/HomeScreen";
 import CreateGameScreen from "./screens/CreateGameScreen";
 import DeployGameScreen from "./screens/DeployGameScreen";
 import PlayGameScreen from "./screens/PlayGameScreen";
+import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
 import { IconContext } from "react-icons";
 
 function App() {
-  useEffect(() => {
-    if (!localStorage._privateKey && window.location.pathname !== "/create") {
-      window.location.replace("/create");
-    }
-  }, []);
+
   return (
-    <IconContext.Provider value={{ size: "4em", color: "white" }}>
-      <AppProvider>
-        <Router>
+    <Router>
+      <IconContext.Provider value={{ size: "4em", color: "white" }}>
+        <AppProvider>
           <div className="App">
             <Header />
             <div className="container vh-100">
               <Switch>
+                <Route path="/register" component={RegisterScreen} />
+                <Route path="/login" component={LoginScreen} />
                 <Route path="/deploy" component={DeployGameScreen} />
                 <Route path="/create" component={CreateGameScreen} />
                 <Route path="/play" component={PlayGameScreen} />
@@ -34,9 +32,9 @@ function App() {
               </Switch>
             </div>
           </div>
-        </Router>
-      </AppProvider>
-    </IconContext.Provider>
+        </AppProvider>
+      </IconContext.Provider>
+    </Router>
   );
 }
 

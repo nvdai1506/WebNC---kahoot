@@ -18,7 +18,7 @@ function ListQuestion(props) {
     let refLayout1;
 
     useEffect(()=>{
-        
+        setListQuestion([{type: 1, active: true}])
     },[])
 
 

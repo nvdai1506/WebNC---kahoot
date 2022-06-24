@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PlayContext from "../context/PlayContext";
 import LoginScreen from "./GameScreens/LoginScreen";
 import PlayScreen from "./GameScreens/PlayScreen";
@@ -12,6 +12,7 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoute";
+import { AppContext } from "../context/AppContext";
 
 const ANSWER_DATA = [
   { question: "fuck you?", answer: "triangle" },
@@ -29,6 +30,8 @@ const ANSWER_DATA = [
 function PlayGameScreen() {
   let { path, url } = useRouteMatch();
 
+  const { checkLogin } = useContext(AppContext);
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isValidation, setIsValidation] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -39,6 +42,10 @@ function PlayGameScreen() {
   const [score, setScore] = useState(0);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [totalQuestion, setTotalQuestion] = useState(ANSWER_DATA.length);
+
+  useEffect (()=>{
+    checkLogin();
+  }, [checkLogin]);
 
   useEffect(() => {
     if (localStorage.getItem("isLoggedIn") === "1") {

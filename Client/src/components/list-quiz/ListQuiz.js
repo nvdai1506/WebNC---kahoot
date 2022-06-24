@@ -1,20 +1,30 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {Card, Dropdown} from 'react-bootstrap';
 import { CgMoreO } from "react-icons/cg";
 import "./ListQuiz.scss"
+import Api from '../../service/api';
 
 import coverKahoot  from "../../static/image/placeholder-cover-kahoot.png"
+import { AppContext } from '../../context/AppContext';
 
 const THEME = [ 'Primary', 'Secondary', 'Success', 'Danger', 'Warning', 'Info', 'Light', 'Dark',]
 
 function ListQuiz(props) {
-    const [listQuiz, setListQuiz] = useState([
-        { name: 'Cras justo odio', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s' },
-        { name: 'Dapibus ac facilisis in', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s' },
-        { name: 'Morbi leo risus', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s' },
-        { name: 'Porta ac consectetur ac', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s' },
-        { name: 'Vestibulum at eros', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s' },
-    ]);
+
+    const {userId} = useContext(AppContext);
+
+    const [listQuiz, setListQuiz] = useState([]);
+
+    useEffect(()=>{
+        if (userId) {
+            Api.Quiz.getByUser(userId).then((res)=>{
+                if(res.status === 200) {
+                    setListQuiz(res.data);
+                }
+            })
+        }
+        
+    }, [userId])
 
 
     return (
@@ -36,7 +46,7 @@ function ListQuiz(props) {
                                     </div>
                                     <div className='col-9'>
                                         <div className='header-title'>
-                                            <Card.Title className='col-10'>{item.name}</Card.Title>
+                                            <Card.Title className='col-10'>{item.quiz_name}</Card.Title>
                                             <Dropdown className='view-more'>
                                                 <Dropdown.Toggle variant='' id="dropdown-basic">
                                                    <CgMoreO style={{width: '20px', height: '20px', color: '#000'}}/>
@@ -48,7 +58,7 @@ function ListQuiz(props) {
                                             </Dropdown>
                                         </div>
                                         <Card.Text>
-                                            {item.description}
+                                            {item.info}
                                         </Card.Text>
                                     </div>
                                     

@@ -1,22 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 
 import './CreateGameScreen.scss'
 import QuizHeader from './create-game/QuizHeader';
 import ListQuestion from './create-game/ListQuestion';
 import CurrentQuestion from './create-game/CurrentQuestion';
+import { AppContext } from '../context/AppContext';
 
 
 
 function CreateGameScreen(props) {
+
+    const { checkLogin } = useContext(AppContext);
 
     const [question, setQuestion] = useState({});
     const [listQuestion, setListQuestion] = useState([])
 
     
     useEffect (()=>{
-
-    }, []);
+        checkLogin();
+    }, [checkLogin]);
 
     function saveQuestion() {
         
