@@ -2,6 +2,7 @@ import React from 'react';
 import "./HomeScreen.scss"
 import {Button} from "react-bootstrap"
 import { Link } from "react-router-dom";
+import ListQuiz from '../components/list-quiz/ListQuiz';
 
 
 import imgPlayGame from "../static/image/play-game.png"
@@ -53,6 +54,9 @@ function HomeScreen(props) {
                 </div>
 
             </div>
+
+            <ListQuiz></ListQuiz>
+
         </div>
     );
 }

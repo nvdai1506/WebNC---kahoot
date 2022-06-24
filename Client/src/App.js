@@ -6,12 +6,12 @@ import { AppProvider } from "./context/AppContext";
 
 import { useEffect } from "react";
 
-import Header from "./components/Header";
+import Header from "./components/layouts/Header";
 import HomeScreen from "./screens/HomeScreen";
-import PlayGameScreen from "./screens/PlayGameScreen";
 import CreateGameScreen from "./screens/CreateGameScreen";
 import DeployGameScreen from "./screens/DeployGameScreen";
-
+import PlayGameScreen from "./screens/PlayGameScreen";
+import { IconContext } from "react-icons";
 
 function App() {
   useEffect(() => {
@@ -20,22 +20,23 @@ function App() {
     }
   }, []);
   return (
-    <AppProvider>
-      <Router>
-        <div className="App">
-			<Header />
-			<div className="container">
-				<Switch>
-					<Route path="/deploy" component={DeployGameScreen} />
-					<Route path="/create" component={CreateGameScreen} />
-					<Route path="/play" component={PlayGameScreen} />
-					<Route path="/" component={HomeScreen} />
-				</Switch>
-			</div>
-        </div>
-        
-      </Router>
-    </AppProvider>
+    <IconContext.Provider value={{ size: "4em", color: "white" }}>
+      <AppProvider>
+        <Router>
+          <div className="App">
+            <Header />
+            <div className="container vh-100">
+              <Switch>
+                <Route path="/deploy" component={DeployGameScreen} />
+                <Route path="/create" component={CreateGameScreen} />
+                <Route path="/play" component={PlayGameScreen} />
+                <Route path="/" component={HomeScreen} />
+              </Switch>
+            </div>
+          </div>
+        </Router>
+      </AppProvider>
+    </IconContext.Provider>
   );
 }
 

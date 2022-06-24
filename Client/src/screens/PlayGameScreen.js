@@ -1,32 +1,143 @@
-import React from "react";
-import imgKahootLogo from "../static/image/kahoot-logo.png";
+import React, { useState, useEffect } from "react";
+import PlayContext from "../context/PlayContext";
+import LoginScreen from "./GameScreens/LoginScreen";
+import PlayScreen from "./GameScreens/PlayScreen";
+import WaitScreen from "./GameScreens/WaitScreen";
+import PassCodeScreen from "./GameScreens/PassCodeScreen";
+import ResultScreen from "./GameScreens/ResultScreen";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useRouteMatch,
+} from "react-router-dom";
+import ProtectedRoute from "../components/ProtectedRoute";
 
-function PlayGameScreen(props) {
+const ANSWER_DATA = [
+  { question: "fuck you?", answer: "triangle" },
+  { question: "fuck you?", answer: "triangle" },
+  { question: "fuck you?", answer: "triangle" },
+  { question: "fuck you?", answer: "square" },
+  { question: "fuck you?", answer: "square" },
+  { question: "fuck you?", answer: "diamond" },
+  { question: "fuck you?", answer: "diamond" },
+  { question: "fuck you?", answer: "circle" },
+  { question: "fuck you?", answer: "circle" },
+  { question: "fuck you?", answer: "circle" },
+];
+
+function PlayGameScreen() {
+  let { path, url } = useRouteMatch();
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isValidation, setIsValidation] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [answer, setAnswer] = useState("triangle");
+  const [answerScore, setAnswerScore] = useState(500);
+  const [isCorrect, setIsCorrect] = useState(false);
+  const [username, setUsername] = useState("");
+  const [score, setScore] = useState(0);
+  const [questionNumber, setQuestionNumber] = useState(1);
+  const [totalQuestion, setTotalQuestion] = useState(ANSWER_DATA.length);
+
+  useEffect(() => {
+    if (localStorage.getItem("isLoggedIn") === "1") {
+      setIsLoggedIn(true);
+      // localStorage.setItem("isLoggedIn", "1");
+      // setIsLoggedIn(true);
+      // localStorage.removeItem('isLoggedIn');
+    }
+    if (localStorage.getItem("isValidation") === "1") {
+      setIsValidation(true);
+    }
+
+    setAnswer(ANSWER_DATA[questionNumber - 1].answer);
+  }, [questionNumber]);
+
+  const loginHandler = (isLogin) => {
+    if (isLogin) {
+      localStorage.setItem("isLoggedIn", "1");
+      setIsLoggedIn(true);
+    }
+  };
+
+  const validationHandler = (isValid) => {
+    if (isValid) {
+      localStorage.setItem("isValidation", "1");
+      setIsValidation(true);
+    }
+  };
+
+  const answerHandler = (isCorrect) => {
+    if (isCorrect) {
+      setIsCorrect(true);
+    } else {
+      setIsCorrect(false);
+    }
+  };
+
+  const usernameHandler = (username) => {
+    setUsername(username);
+  };
+
+  const scoreHandler = (bonus) => {
+    if (bonus) setScore(score + answerScore);
+  };
+
+  const questionHandler = () => {
+    setQuestionNumber(questionNumber + 1);
+  };
+
   return (
-    <div id="play-game">
-      <div>
-        <main>
-          <div class="mb-2 d-grid gap-2 col-4 mx-auto">
-            <img src={imgKahootLogo} width="400px" alt="" />
-          </div>
-          <form class="d-grid gap-2 col-4 mx-auto border border-dark rounded p-3">
-            <div class="mb-1">
-              <input
-                type="tel"
-                name="gameId"
-                class="form-control"
-                id="game-input"
-                placeholder="Game PIN"
-              />
-            </div>
-
-            <button type="submit" class="btn btn-dark">
-              Enter
-            </button>
-          </form>
-        </main>
-      </div>
-    </div>
+    <PlayContext.Provider
+      value={{
+        isValidation: isValidation,
+        isLoggedIn: isLoggedIn,
+        isPlaying: isPlaying,
+        isCorrect: isCorrect,
+        answer: answer,
+        answerScore: answerScore,
+        username: username,
+        score: score,
+        questionNumber: questionNumber,
+        totalQuestion: totalQuestion,
+        onLogin: loginHandler,
+        onValidation: validationHandler,
+        onAnswer: answerHandler,
+        onUsername: usernameHandler,
+        onScore: scoreHandler,
+        onQuestion: questionHandler,
+        url: url,
+      }}
+    >
+      <Switch>
+        <Route exact path={path} component={PassCodeScreen} />
+        <ProtectedRoute
+          path={`${path}/join`}
+          component={LoginScreen}
+          isAuthentication={isValidation}
+          redirect={url}
+        />
+        <ProtectedRoute
+          path={`${path}/instruction`}
+          component={WaitScreen}
+          isAuthentication={isLoggedIn}
+          redirect={`${url}/join`}
+        />
+        <ProtectedRoute
+          path={`${path}/gameblock`}
+          component={PlayScreen}
+          isAuthentication={isPlaying}
+          redirect={`${url}/instruction`}
+        />
+        <ProtectedRoute
+          path={`${path}/result`}
+          component={ResultScreen}
+          isAuthentication={true}
+          redirect={`${url}/gameblock`}
+        />
+      </Switch>
+    </PlayContext.Provider>
   );
 }
 
