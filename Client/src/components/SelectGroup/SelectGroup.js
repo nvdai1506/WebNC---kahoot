@@ -20,8 +20,6 @@ function SelectGroup() {
 
       ctx.onAnswer(answer === ctx.answer);
       ctx.onAnswerScore(responseTime);
-      console.log(startTime, endTime);
-      console.log(responseTime);
 
       history.push(`${ctx.url}/result`);
     }
