@@ -13,6 +13,8 @@ function QuizHeader(props) {
     const [showModal, setShowModal] = useState(false)
     const [quizInfo, setQuizInfo] = useState({});
     const [quizValidated, setQuizValidated] = useState(false);
+    const [titleQuiz, setTitleQuiz] = useState('');
+    const [descriptionQuiz, setDescriptionQuiz] = useState('');
 
     useEffect(()=>{
         if (!createGameSession) {
@@ -34,15 +36,27 @@ function QuizHeader(props) {
         } else {
             let data = Object.fromEntries(new FormData(form).entries());
 
-            Api.Quiz.add({
-                quiz_name: data.title,
-                info: data.description
-            }).then((res)=>{
-                console.log("Success");
-                setQuizInfo(data);
-                setCreateGameSession(data);
-                setShowModal(false)
-            })
+            if (!createGameSession) {
+                Api.Quiz.add({
+                    quiz_name: data.title,
+                    info: data.description
+                }).then((res)=>{
+                    console.log("Add Success");
+                    setQuizInfo(data);
+                    setCreateGameSession({...data, id: res.data.quiz_id});
+                    setShowModal(false)
+                })
+            } else {
+                Api.Quiz.update(createGameSession.id, {
+                    quiz_name: data.title,
+                    info: data.description
+                }).then((res)=>{
+                    console.log("Update Success");
+                    setQuizInfo(data);
+                    setCreateGameSession({...createGameSession, ...data});
+                    setShowModal(false)
+                })
+            }
 
         }
 
@@ -50,6 +64,8 @@ function QuizHeader(props) {
 
     function openModle () {
         setShowModal(true)
+        setTitleQuiz(quizInfo.title);
+        setDescriptionQuiz(quizInfo.description);
     }
     function complete() {
         setCreateGameSession(null);
@@ -87,11 +103,19 @@ function QuizHeader(props) {
                             <div className='col-7'>
                                 <Form.Group className="mb-3" controlId="formTitle">
                                     <Form.Label>Title</Form.Label>
-                                    <Form.Control required name="title" type="text" placeholder="Enter kahoot title..." />
+                                    <Form.Control required name="title" type="text" placeholder="Enter kahoot title..." 
+                                        value={titleQuiz}
+                                        onChange={()=>{}}
+                                        onChangeCapture={(e)=>setTitleQuiz(e.target.value)}
+                                    />
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="formDescription">
                                     <Form.Label>Description</Form.Label>
-                                    <Form.Control required name="description" as="textarea" rows={5} />
+                                    <Form.Control required name="description" as="textarea" rows={5} 
+                                        value={descriptionQuiz}
+                                        onChange={()=>{}}
+                                        onChangeCapture={(e)=>setDescriptionQuiz(e.target.value)}
+                                    />
                                 </Form.Group>
                             </div>
                             <div className='col-5'>

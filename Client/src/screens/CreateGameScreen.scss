@@ -1,7 +1,7 @@
 #create-game {
     .list-question {
         box-shadow:  3px 2px 2px rgba(0,0,0,.125);
-        height: 90vh;
+        height: 100vh;
         overflow-y: scroll;
         .item-question {
             padding: 15px 10px;
@@ -65,27 +65,24 @@
 
     .content-question {
         padding: 20px 10%;
-        margin: 50px 0;
+        margin: 25px 0;
         .question-title {
             margin: 0 15%;
-            .title {
-                font-size: 26px;
-                font-weight: 500;
-            }
+    
             .text-area {
-                height: 200px;
+                height: 150px;
                 font-size: 26px;
                 font-weight: 500;
             }
         }
         .question-answers {
-            margin: 50px 0;
+            margin: 40px 0;
             .list-answer {
                 justify-content: space-around;
                 .item-answer {
                     padding: 10px;
                     margin-top: 20px;
-                    height: 100px;
+                    height: 80px;
                     display: flex;
                     align-items: center;
                     border: 1px solid rgba(0, 0, 0, 0.125);

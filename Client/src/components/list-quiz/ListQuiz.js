@@ -22,6 +22,8 @@ function ListQuiz(props) {
                     setListQuiz(res.data);
                 }
             })
+        } else {
+            setListQuiz([]);
         }
         
     }, [userId])
