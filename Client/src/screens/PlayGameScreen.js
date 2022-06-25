@@ -33,7 +33,7 @@ function PlayGameScreen() {
   const [isValidation, setIsValidation] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [answer, setAnswer] = useState("triangle");
-  const [answerScore, setAnswerScore] = useState(500);
+  const [answerScore, setAnswerScore] = useState(1000);
   const [isCorrect, setIsCorrect] = useState(false);
   const [username, setUsername] = useState("");
   const [score, setScore] = useState(0);

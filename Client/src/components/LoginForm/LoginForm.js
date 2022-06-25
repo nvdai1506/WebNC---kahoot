@@ -5,7 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 
 const nameReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
-    return { value: action.value, isValid: action.value === "sy" };
+    return { value: action.value, isValid: action.value.length > 0 };
   }
   if (action.type === "CLEAR_INPUT") {
     return { value: "", isValid: false };

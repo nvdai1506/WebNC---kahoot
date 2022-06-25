@@ -15,7 +15,7 @@ function SelectGroup() {
 
       setTimeout(() => {
         history.push(`${ctx.url}/result`);
-      }, 2000);
+      }, 1000);
     }
   }, [answer]);
 
