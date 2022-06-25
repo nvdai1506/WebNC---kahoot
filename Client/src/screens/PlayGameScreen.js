@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PlayContext from "../context/PlayContext";
 import LoginScreen from "./GameScreens/LoginScreen";
 import PlayScreen from "./GameScreens/PlayScreen";
@@ -12,6 +12,7 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoute";
+import { AppContext } from "../context/AppContext";
 
 const ANSWER_DATA = [
   { question: "fuck you?", answer: "triangle" },
@@ -29,16 +30,22 @@ const ANSWER_DATA = [
 function PlayGameScreen() {
   let { path, url } = useRouteMatch();
 
+  const { checkLogin } = useContext(AppContext);
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isValidation, setIsValidation] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [answer, setAnswer] = useState("triangle");
-  const [answerScore, setAnswerScore] = useState(500);
+  const [answerScore, setAnswerScore] = useState(1000);
   const [isCorrect, setIsCorrect] = useState(false);
   const [username, setUsername] = useState("");
   const [score, setScore] = useState(0);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [totalQuestion, setTotalQuestion] = useState(ANSWER_DATA.length);
+
+  useEffect (()=>{
+    checkLogin();
+  }, [checkLogin]);
 
   useEffect(() => {
     if (localStorage.getItem("isLoggedIn") === "1") {
@@ -80,6 +87,10 @@ function PlayGameScreen() {
     setUsername(username);
   };
 
+  const answerScoreHandler = (responseTime) => {
+    setAnswerScore(Math.round((1 - responseTime / 30 / 2) * 1000));
+  };
+
   const scoreHandler = (bonus) => {
     if (bonus) setScore(score + answerScore);
   };
@@ -104,6 +115,7 @@ function PlayGameScreen() {
         onLogin: loginHandler,
         onValidation: validationHandler,
         onAnswer: answerHandler,
+        onAnswerScore: answerScoreHandler,
         onUsername: usernameHandler,
         onScore: scoreHandler,
         onQuestion: questionHandler,

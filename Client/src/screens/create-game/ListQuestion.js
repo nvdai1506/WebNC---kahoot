@@ -7,45 +7,77 @@ import {FiEdit} from 'react-icons/fi'
 import Answer4 from '../../static/image/4-answer.jpg';
 import Answer2 from '../../static/image/2-answer.jpg';
 
+const DEFAULT_Q = {type: 1, question: '', answer1: '', answer2: '', answer3: '', answer4: '', correctAnswer: null,};
 
 function ListQuestion(props) {
-    const {currentQuestion, setCurrentQuestion, saveCQ} = props;
+    const {listSavedQuestion, currentQuestion, setCurrentQuestion, saveListQuestion} = props;
 
     const [listQuestion, setListQuestion] = useState([]);
     const [showModalLayout, setShowModalLayout] = useState(false);
+    const [showModalError, setShowModalError] =useState(false);
 
 
     let refLayout1;
 
     useEffect(()=>{
+        setListQuestion([{...DEFAULT_Q, index: 0}]);
+        setCurrentQuestion({...DEFAULT_Q, index: 0});
+    },[setListQuestion, setCurrentQuestion])
+
+    useEffect(()=>{
+        listSavedQuestion.length && setListQuestion(listSavedQuestion);
+    }, [listSavedQuestion])
+
+    useEffect(()=>{
+        if(listQuestion.length && currentQuestion && listQuestion[currentQuestion.index].saved) {
+            try {
+                if (!isEqual(currentQuestion, listQuestion[currentQuestion.index])) {
+                    let _list = [...listQuestion];
+                    _list[currentQuestion.index] = {...currentQuestion, saved: false};
+                    setListQuestion(_list);
+                }
+                
+            } catch (error) {
+                
+            }
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentQuestion])
+
+    function isEqual(objA, objB) {
         
-    },[])
+        let arr = ['question', 'type','index', 'answer1', 'answer2', 'answer3', 'answer4', 'correctAnswer'];
+        for (let index = 0; index < arr.length; index++) {
+            if (objA[arr[index]] !== objB[arr[index]]) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 
     function activeQuestion(index) {
-        setListQuestion(listQuestion.map((_item, _index) => {
-            if (index === _index) {
-                return {..._item, active: true};
-            } else {
-                return {..._item, active: false};
-            }
-        }));
-        setCurrentQuestion(listQuestion[index]);
+        if(!listQuestion[currentQuestion.index].saved) {
+            setShowModalError(true);
+        } else {
+            setCurrentQuestion(listQuestion[index]);
+        }
+       
     }
 
-    function saveAndAdd () {
-        saveCQ();
-        let _list = [...listQuestion]
-
-        _list = _list.map((item)=>{
-            return {...item, active: false};
-        });
-        _list.push({type: 1, active: true, name: '', answer1: '', answer2: '', answer3: '', question4: ''});
-        setCurrentQuestion(_list[_list.length - 1]);
-
-        setListQuestion(_list);
-        openModalLayout();
+    function addQuestion () {
+        if (!listQuestion[currentQuestion.index].saved) {
+            setShowModalError(true);
+        } else {
+            let _list = [...listQuestion];
+            let _item = {...DEFAULT_Q, index: _list.length};
+            _list.push(_item);
+            setListQuestion(_list);
+            setCurrentQuestion(_item);
+            openModalLayout(true);
+        }
     }
+
 
     function openModalLayout () {
         setShowModalLayout(true);
@@ -66,6 +98,15 @@ function ListQuestion(props) {
 
         let _list = listQuestion.filter((_item, _index) => _index !== targetIndex);
         let _listResult = [..._list.slice(0, index), listQuestion[targetIndex], ..._list.slice(index)]
+        let arr = [];
+
+        for (let i = 0; i < _listResult.length; i++) {
+            if (_listResult[i].saved && _listResult[i].index !== i) {
+                arr.push({..._listResult[i], index: i});
+            }
+        }
+        saveListQuestion(arr);
+
         setListQuestion(_listResult);
     }
     function allowDrop(e) {
@@ -78,7 +119,7 @@ function ListQuestion(props) {
                 {listQuestion.map((item, index) =>{
                     return  (
                         <ListGroup.Item 
-                            className={'item-question row d-flex' + (item.active ? ' active' : '') + (item.saved ? ' saved' : '')} 
+                            className={'item-question row d-flex' + (item.index === currentQuestion.index ? ' active' : '') + (item.saved ? ' saved' : '')} 
                             key={index} 
                             draggable 
                             onDragStart={(e) => handleDrag(e, index)} 
@@ -90,17 +131,17 @@ function ListQuestion(props) {
                                 <div className='item-index'>{index}</div>
                             </div>
                             <div className='col-8'>
-                                <div className='item-name'>{item.name}</div>
+                                <div className='item-name'>{item.question}</div>
                             </div>
                             <div className='col-1 iq-icon'>
                                 <BsTrash />
-                                {item.active && <FiEdit onClick={openModalLayout}/>}
+                                {item.index === currentQuestion.index && <FiEdit onClick={openModalLayout}/>}
                             </div>
                         </ListGroup.Item>
                     );
                 })
                 }
-                <Button className='button-add' variant="primary" onClick={saveAndAdd}>Save & Add</Button>
+                <Button className='button-add' variant="primary" onClick={addQuestion}>Add question</Button>
             </ListGroup>
 
             <Modal
@@ -163,6 +204,25 @@ function ListQuestion(props) {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="success" onClick={saveModalLayout}>OK</Button>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal
+                size="md"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                show={showModalError}
+            >
+                <Modal.Header className="justify-content-center">
+                    <Modal.Title id="contained-modal-title-vcenter" style={{color: "red"}}>
+                        Error!
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <h4 className="text-center">Please save the question!</h4>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="danger" onClick={()=>setShowModalError(false)}>OK</Button>
                 </Modal.Footer>
             </Modal>
         </div>

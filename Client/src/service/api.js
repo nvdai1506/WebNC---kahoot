@@ -1,6 +1,6 @@
 import axios from "axios";
-const domain = 'http://localhost:8080/';
-const token = localStorage.getItem('accessToken');
+const domain = 'http://localhost:3000';
+const token = localStorage.getItem('x-access-token');
 
 let Api = {};
 
@@ -8,7 +8,7 @@ Api.User = {
     register: function (params) {
         return axios({
             method: 'post',
-            url: domain + '/users',
+            url: domain + '/api/users',
             data: params,
         });
     },
@@ -16,7 +16,7 @@ Api.User = {
     login: function (params) {
         return axios ({
             method: 'post',
-            url: domain + '/auth',
+            url: domain + '/api/auth',
             data: params,
         })
     },

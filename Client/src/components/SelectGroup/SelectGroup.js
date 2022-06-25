@@ -3,6 +3,8 @@ import SelectButton from "../SelectButton/SelectButton";
 import PlayContext from "../../context/PlayContext";
 import { Link, useHistory } from "react-router-dom";
 
+let startTime, endTime;
+
 function SelectGroup() {
   let history = useHistory();
   const ctx = useContext(PlayContext);
@@ -10,12 +12,16 @@ function SelectGroup() {
   const [answer, setAnswer] = useState("");
 
   useEffect(() => {
-    if (answer !== "") {
-      ctx.onAnswer(answer === ctx.answer);
+    if (answer === "") startTime = performance.now();
 
-      setTimeout(() => {
-        history.push(`${ctx.url}/result`);
-      }, 2000);
+    if (answer !== "") {
+      endTime = performance.now();
+      let responseTime = Math.round((endTime - startTime) / 1000);
+
+      ctx.onAnswer(answer === ctx.answer);
+      ctx.onAnswerScore(responseTime);
+
+      history.push(`${ctx.url}/result`);
     }
   }, [answer]);
 

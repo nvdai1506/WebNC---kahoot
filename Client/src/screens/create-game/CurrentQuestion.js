@@ -1,22 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {Button, Form, InputGroup } from 'react-bootstrap';
 
 // Question type: 1- 4 answer, 2- 2 answer
 
 function CurrentQuestion(props) {
-    const {listQuestion, setListQuestion} = props;
+    const {question, setQuestion, saveQuestion} = props;
 
-    const [currentQuestion, setCurrentQuestion] = useState({})
 
     const [cqValidated, setCqValidated] = useState(false);
 
-
-    useEffect(()=>{
-        setCurrentQuestion({type: 1, name: '', answer1: '', answer2: '', answer3: '', question4: ''})
-        setListQuestion([
-            { name: '', type: 1, active: true, saved: false },
-        ])
-    }, [setListQuestion])
 
 
     function saveCQ (event) {
@@ -26,37 +18,32 @@ function CurrentQuestion(props) {
         if (form.checkValidity() === false) {
             setCqValidated(true);
         } else {
-            let _list = [...listQuestion];
-            let _index = getActiveIndex();
 
-            _list[_index] = {..._list[_index], ...currentQuestion};
+            let data = Object.fromEntries(new FormData(form).entries());
 
-            if (currentQuestion.type === 2) {
-                _list[_index].answer3 = _list[_index].answer4 = '';
+            // setQuestion({...question, ...data});
+            if (question.type === 2) {
+                data.answer3 = data.answer4 = "";
             }
-
-            _list[_index].saved = true;
-            setListQuestion(_list);
+            saveQuestion({...question, ...data});
         }
         
     }
 
     function setCQName (value) {
-        setCurrentQuestion({
-            ...currentQuestion,
-            name: value
+        setQuestion({
+            ...question,
+            question: value
         })
     }
 
     function setCQAnswer (index ,value) {
-        let _q = {...currentQuestion};
+        let _q = {...question};
         _q["answer" + index] = value;
-        setCurrentQuestion(_q);
+        setQuestion(_q);
     }
 
-    function getActiveIndex () {
-        return listQuestion.findIndex(item => item.active);
-    }
+
 
     return (
         <div className='content-question container'>
@@ -65,12 +52,13 @@ function CurrentQuestion(props) {
                     <Form.Group>
                         <Form.Label className='title'>Question:</Form.Label>
                         <Form.Control
+                            name="question"
                             required
                             as="textarea"
                             placeholder="Typing your question here"
                             className='text-area'
                             onChange={()=>{}}
-                            value={currentQuestion.name}
+                            value={question.question}
                             onChangeCapture={(e)=>setCQName(e.target.value)}
                         />
                     </Form.Group>
@@ -85,11 +73,12 @@ function CurrentQuestion(props) {
                                     </svg>
                                 </div>
                                 <Form.Control
+                                    name="answer1"
                                     required
                                     id='input-answer-1'
                                     placeholder='Answer 1'
                                     onChange={()=>{}}
-                                    value={currentQuestion.answer1}
+                                    value={question.answer1}
                                     onChangeCapture={(e)=>setCQAnswer(1, e.target.value)}
                                 />
                             </InputGroup>
@@ -102,16 +91,17 @@ function CurrentQuestion(props) {
                                     </svg>
                                 </div>
                                 <Form.Control
+                                    name="answer2"
                                     required
                                     id='input-answer-2'
                                     placeholder='Answer 2'
                                     onChange={()=>{}}
-                                    value={currentQuestion.answer2}
+                                    value={question.answer2}
                                     onChangeCapture={(e)=>setCQAnswer(2, e.target.value)}
                                 />
                             </InputGroup>
                         </div>
-                        {currentQuestion.type === 1 && 
+                        {question.type === 1 && 
                         <div className='item-answer item-3 col-5'>
                             <InputGroup className="mb-3">
                                 <div className='icon-3 icon col-2'>
@@ -120,16 +110,17 @@ function CurrentQuestion(props) {
                                     </svg>
                                 </div>
                                 <Form.Control
+                                    name="answer3"
                                     required
                                     id='input-answer-3'
                                     placeholder='Answer 3'
                                     onChange={()=>{}}
-                                    value={currentQuestion.answer3}
+                                    value={question.answer3}
                                     onChangeCapture={(e)=>setCQAnswer(3, e.target.value)}
                                 />
                             </InputGroup>
                         </div>}
-                        {currentQuestion.type === 1 && 
+                        {question.type === 1 && 
                         <div className='item-answer item-4 col-5'>
                             <InputGroup className="mb-3">
                                 <div className='icon-4 icon col-2'>
@@ -138,11 +129,12 @@ function CurrentQuestion(props) {
                                     </svg>
                                 </div>
                                 <Form.Control
+                                    name="answer4"
                                     required
                                     id='input-answer-4'
                                     placeholder='Answer 4'
                                     onChange={()=>{}}
-                                    value={currentQuestion.answer4}
+                                    value={question.answer4}
                                     onChangeCapture={(e)=>setCQAnswer(4 , e.target.value)}
                                 />
                             </InputGroup>
@@ -151,11 +143,11 @@ function CurrentQuestion(props) {
                     <div className='answer'>
                         <div className='form-answer'>
                             <Form.Label className='title'>Answer:</Form.Label>
-                            <Form.Select required size="lg">
-                                <option>1</option>
-                                <option>2</option>
-                                {currentQuestion.type === 1 && <option>3</option>}
-                                {currentQuestion.type === 1 && <option>4</option>}
+                            <Form.Select name="correctAnswer" required size="lg">
+                                <option value={1}>1</option>
+                                <option value={2}>2</option>
+                                {question.type === 1 && <option value={3}>3</option>}
+                                {question.type === 1 && <option value={4}>4</option>}
                             </Form.Select>
                         </div>
                     </div>
