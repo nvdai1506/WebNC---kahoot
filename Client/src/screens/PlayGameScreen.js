@@ -36,7 +36,7 @@ function PlayGameScreen() {
   const [isValidation, setIsValidation] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [answer, setAnswer] = useState("triangle");
-  const [answerScore, setAnswerScore] = useState(500);
+  const [answerScore, setAnswerScore] = useState(1000);
   const [isCorrect, setIsCorrect] = useState(false);
   const [username, setUsername] = useState("");
   const [score, setScore] = useState(0);
@@ -87,6 +87,10 @@ function PlayGameScreen() {
     setUsername(username);
   };
 
+  const answerScoreHandler = (responseTime) => {
+    setAnswerScore(Math.round((1 - responseTime / 30 / 2) * 1000));
+  };
+
   const scoreHandler = (bonus) => {
     if (bonus) setScore(score + answerScore);
   };
@@ -111,6 +115,7 @@ function PlayGameScreen() {
         onLogin: loginHandler,
         onValidation: validationHandler,
         onAnswer: answerHandler,
+        onAnswerScore: answerScoreHandler,
         onUsername: usernameHandler,
         onScore: scoreHandler,
         onQuestion: questionHandler,
