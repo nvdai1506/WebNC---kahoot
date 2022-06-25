@@ -14,6 +14,7 @@ const PlayContext = React.createContext({
   onLogin: () => {},
   onValidation: () => {},
   onAnswer: () => {},
+  onAnswerScore: () => {},
   onUsername: () => {},
   onScore: () => {},
   onQuestion: () => {},
