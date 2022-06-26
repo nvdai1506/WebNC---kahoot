@@ -13,11 +13,9 @@ function ResultScreen(props) {
     ctx.onScore(props.history.location.state?.isCorrect);
     ctx.onQuestion();
 
-    if (true) {
-      setTimeout(() => {
-        history.push(`${ctx.url}/gameblock`);
-      }, 5000);
-    }
+    setTimeout(() => {
+      history.push(`${ctx.url}/getready`);
+    }, 3000);
   }, []);
 
   return (

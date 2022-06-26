@@ -11,7 +11,7 @@ function GetReadyScreen() {
     if (ctx.isPlaying === true) {
       setTimeout(() => {
         history.push(`${ctx.url}/gameblock`);
-      }, 10000);
+      }, 5000);
     }
   }, []);
 
