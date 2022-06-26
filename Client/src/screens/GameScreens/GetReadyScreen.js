@@ -1,16 +1,17 @@
-import React, { useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import RingLoader from "react-spinners/RingLoader";
 import PlayContext from "../../context/PlayContext";
 import { Link, useHistory } from "react-router-dom";
 
-function WaitScreen() {
+function GetReadyScreen() {
   let history = useHistory();
   const ctx = useContext(PlayContext);
 
   useEffect(() => {
     if (ctx.isPlaying === true) {
       setTimeout(() => {
-        history.push(`${ctx.url}/getready`);
-      }, 3000);
+        history.push(`${ctx.url}/gameblock`);
+      }, 10000);
     }
   }, []);
 
@@ -22,8 +23,16 @@ function WaitScreen() {
       <div></div>
       <main>
         <div>
-          <h1 className="text-center">You're in!</h1>
-          <h5 className="text-center">See your nickname on screen?</h5>
+          <h1 className="text-center">Get Ready!</h1>
+          <div className="text-center">
+            <RingLoader
+              color={"#000000"}
+              loading={true}
+              size={100}
+              cssOverride={{ margin: "0 auto" }}
+            />
+          </div>
+          <h2 className="text-center">Loading...</h2>
         </div>
       </main>
       <footer>
@@ -36,4 +45,4 @@ function WaitScreen() {
   );
 }
 
-export default WaitScreen;
+export default GetReadyScreen;

@@ -13,6 +13,7 @@ import {
 } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoute";
 import { AppContext } from "../context/AppContext";
+import GetReadyScreen from "./GameScreens/GetReadyScreen";
 
 const ANSWER_DATA = [
   { question: "fuck you?", answer: "triangle" },
@@ -75,8 +76,6 @@ function PlayGameScreen() {
     }
   };
 
-  
-
   const usernameHandler = (username) => {
     setUsername(username);
   };
@@ -128,6 +127,12 @@ function PlayGameScreen() {
           component={WaitScreen}
           isAuthentication={isLoggedIn}
           redirect={`${url}/join`}
+        />
+        <ProtectedRoute
+          path={`${path}/getready`}
+          component={GetReadyScreen}
+          isAuthentication={true}
+          redirect={`${url}/instruction`}
         />
         <ProtectedRoute
           path={`${path}/gameblock`}
