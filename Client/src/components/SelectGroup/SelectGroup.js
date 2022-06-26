@@ -18,10 +18,9 @@ function SelectGroup() {
       endTime = performance.now();
       let responseTime = Math.round((endTime - startTime) / 1000);
 
-      ctx.onAnswer(answer === ctx.answer);
       ctx.onAnswerScore(responseTime);
 
-      history.push(`${ctx.url}/result`);
+      history.push(`${ctx.url}/result`, { isCorrect: answer === ctx.answer });
     }
   }, [answer]);
 

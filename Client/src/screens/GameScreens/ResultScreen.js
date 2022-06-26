@@ -30,7 +30,13 @@ function ResultScreen(props) {
         {props.history.location.state?.isTimeup ? (
           <TimeUp />
         ) : (
-          <>{ctx.isCorrect ? <CorrectAnswer /> : <WrongAnswer />}</>
+          <>
+            {props.history.location.state?.isCorrect ? (
+              <CorrectAnswer />
+            ) : (
+              <WrongAnswer />
+            )}
+          </>
         )}
       </main>
 

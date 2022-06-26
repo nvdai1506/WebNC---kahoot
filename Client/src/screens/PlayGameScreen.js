@@ -37,7 +37,6 @@ function PlayGameScreen() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [answer, setAnswer] = useState("triangle");
   const [answerScore, setAnswerScore] = useState(1000);
-  const [isCorrect, setIsCorrect] = useState(false);
   const [username, setUsername] = useState("");
   const [score, setScore] = useState(0);
   const [questionNumber, setQuestionNumber] = useState(1);
@@ -76,13 +75,7 @@ function PlayGameScreen() {
     }
   };
 
-  const answerHandler = (isCorrect) => {
-    if (isCorrect) {
-      setIsCorrect(true);
-    } else {
-      setIsCorrect(false);
-    }
-  };
+  
 
   const usernameHandler = (username) => {
     setUsername(username);
@@ -106,7 +99,6 @@ function PlayGameScreen() {
         isValidation: isValidation,
         isLoggedIn: isLoggedIn,
         isPlaying: isPlaying,
-        isCorrect: isCorrect,
         answer: answer,
         answerScore: answerScore,
         username: username,
@@ -116,7 +108,6 @@ function PlayGameScreen() {
         questionTime: questionTime,
         onLogin: loginHandler,
         onValidation: validationHandler,
-        onAnswer: answerHandler,
         onAnswerScore: answerScoreHandler,
         onUsername: usernameHandler,
         onScore: scoreHandler,
