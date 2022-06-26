@@ -42,8 +42,9 @@ function PlayGameScreen() {
   const [score, setScore] = useState(0);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [totalQuestion, setTotalQuestion] = useState(ANSWER_DATA.length);
+  const [questionTime, setQuestionTime] = useState(30);
 
-  useEffect (()=>{
+  useEffect(() => {
     checkLogin();
   }, [checkLogin]);
 
@@ -88,7 +89,7 @@ function PlayGameScreen() {
   };
 
   const answerScoreHandler = (responseTime) => {
-    setAnswerScore(Math.round((1 - responseTime / 30 / 2) * 1000));
+    setAnswerScore(Math.round((1 - responseTime / questionTime / 2) * 1000));
   };
 
   const scoreHandler = (bonus) => {
@@ -112,6 +113,7 @@ function PlayGameScreen() {
         score: score,
         questionNumber: questionNumber,
         totalQuestion: totalQuestion,
+        questionTime: questionTime,
         onLogin: loginHandler,
         onValidation: validationHandler,
         onAnswer: answerHandler,
