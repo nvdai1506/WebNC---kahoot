@@ -72,6 +72,17 @@ function QuizHeader(props) {
         history.push("/");
     }
 
+    function deleteQuiz () {
+        Api.Quiz.delete(createGameSession.id).then(()=>{
+            setCreateGameSession(null);
+        });
+        history.replace('/');
+    }
+
+    function exitScreen () {
+        history.replace('/');
+    }
+
     
 
     return (
@@ -97,6 +108,7 @@ function QuizHeader(props) {
                         <Modal.Title id="contained-modal-title-vcenter">
                             Kahoot
                         </Modal.Title>
+                        <Button variant="primary" className='mx-4' type="button" onClick={exitScreen}>Exit</Button>
                     </Modal.Header>
                     <Modal.Body>
                         <div className='row justify-content-between'>
@@ -133,6 +145,10 @@ function QuizHeader(props) {
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
+                        {
+                            createGameSession &&
+                            <Button variant="danger" className='mx-4' type="button" onClick={deleteQuiz}>Delete</Button>
+                        }
                         <Button variant="success"  type="submit">Save</Button>
                     </Modal.Footer>
                 </Form>

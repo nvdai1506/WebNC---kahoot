@@ -10,7 +10,7 @@ import Answer2 from '../../static/image/2-answer.jpg';
 const DEFAULT_Q = {type: 1, question: '', answer1: '', answer2: '', answer3: '', answer4: '', correctAnswer: null,};
 
 function ListQuestion(props) {
-    const {listSavedQuestion, currentQuestion, setCurrentQuestion, saveListQuestion} = props;
+    const {listSavedQuestion, currentQuestion, setCurrentQuestion, pushQuestion, saveListQuestion, removeQuestion} = props;
 
     const [listQuestion, setListQuestion] = useState([]);
     const [showModalLayout, setShowModalLayout] = useState(false);
@@ -19,17 +19,19 @@ function ListQuestion(props) {
 
     let refLayout1;
 
-    useEffect(()=>{
-        setListQuestion([{...DEFAULT_Q, index: 0}]);
-        setCurrentQuestion({...DEFAULT_Q, index: 0});
-    },[setListQuestion, setCurrentQuestion])
 
     useEffect(()=>{
-        listSavedQuestion.length && setListQuestion(listSavedQuestion);
+        if (listSavedQuestion.length) {
+            setListQuestion(listSavedQuestion);
+        } else {
+            setListQuestion([{...DEFAULT_Q, index: 0}]);
+            setCurrentQuestion({...DEFAULT_Q, index: 0});
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [listSavedQuestion])
 
     useEffect(()=>{
-        if(listQuestion.length && currentQuestion && listQuestion[currentQuestion.index].saved) {
+        if(listQuestion.length && currentQuestion && listQuestion[currentQuestion.index] && listQuestion[currentQuestion.index].saved) {
             try {
                 if (!isEqual(currentQuestion, listQuestion[currentQuestion.index])) {
                     let _list = [...listQuestion];
@@ -57,7 +59,7 @@ function ListQuestion(props) {
 
 
     function activeQuestion(index) {
-        if(!listQuestion[currentQuestion.index].saved) {
+        if(!listQuestion[currentQuestion.index].saved && index !== currentQuestion.index) {
             setShowModalError(true);
         } else {
             setCurrentQuestion(listQuestion[index]);
@@ -90,6 +92,8 @@ function ListQuestion(props) {
     }
 
 
+    
+
     function handleDrag(e, index) {
         e.dataTransfer.setData("index", index);
     }
@@ -98,14 +102,21 @@ function ListQuestion(props) {
 
         let _list = listQuestion.filter((_item, _index) => _index !== targetIndex);
         let _listResult = [..._list.slice(0, index), listQuestion[targetIndex], ..._list.slice(index)]
-        let arr = [];
 
+        let arrSuccess = [];
         for (let i = 0; i < _listResult.length; i++) {
             if (_listResult[i].saved && _listResult[i].index !== i) {
-                arr.push({..._listResult[i], index: i});
+                pushQuestion({..._listResult[i], index: i}).then((res)=>{
+                    arrSuccess.push({..._listResult[i], index: i});
+
+                    if(i === _listResult.length - 1) {
+                        saveListQuestion(arrSuccess);
+                    }
+                })
             }
         }
-        saveListQuestion(arr);
+
+        
 
         setListQuestion(_listResult);
     }
@@ -121,7 +132,7 @@ function ListQuestion(props) {
                         <ListGroup.Item 
                             className={'item-question row d-flex' + (item.index === currentQuestion.index ? ' active' : '') + (item.saved ? ' saved' : '')} 
                             key={index} 
-                            draggable 
+                            draggable={currentQuestion.saved}
                             onDragStart={(e) => handleDrag(e, index)} 
                             onDrop={(e) => handleDrop(e, index)}
                             onDragOver={allowDrop}
@@ -134,7 +145,7 @@ function ListQuestion(props) {
                                 <div className='item-name'>{item.question}</div>
                             </div>
                             <div className='col-1 iq-icon'>
-                                <BsTrash />
+                                {(item.index === currentQuestion.index || currentQuestion.saved)&& <BsTrash onClick={()=>removeQuestion(index)}/>}
                                 {item.index === currentQuestion.index && <FiEdit onClick={openModalLayout}/>}
                             </div>
                         </ListGroup.Item>
