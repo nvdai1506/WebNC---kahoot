@@ -3,8 +3,9 @@ import PlayContext from "../../context/PlayContext";
 import { Link, useHistory } from "react-router-dom";
 import WrongAnswer from "../../components/WrongAnswer/WrongAnswer";
 import CorrectAnswer from "../../components/CorrectAnswer/CorrectAnswer";
+import TimeUp from "../../components/TimeUp/TimeUp";
 
-function ResultScreen() {
+function ResultScreen(props) {
   let history = useHistory();
   const ctx = useContext(PlayContext);
 
@@ -25,7 +26,14 @@ function ResultScreen() {
       className="container vh-100 d-flex flex-column justify-content-between"
     >
       <div></div>
-      <main>{ctx.isCorrect ? <CorrectAnswer /> : <WrongAnswer />}</main>
+      <main>
+        {props.history.location.state?.isTimeup ? (
+          <TimeUp />
+        ) : (
+          <>{ctx.isCorrect ? <CorrectAnswer /> : <WrongAnswer />}</>
+        )}
+      </main>
+
       <footer>
         <div className="d-flex justify-content-between">
           <h1>{ctx.username}</h1>

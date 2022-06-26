@@ -14,7 +14,7 @@ function PlayScreen() {
     }, 1000);
 
     if (questionTime === 0) {
-      history.push(`${ctx.url}/result`);
+      history.push(`${ctx.url}/result`, { isTimeup: true });
     }
   }, [questionTime]);
 
