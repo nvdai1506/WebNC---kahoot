@@ -10,7 +10,7 @@ function ResultScreen(props) {
   const ctx = useContext(PlayContext);
 
   useEffect(() => {
-    ctx.onScore(ctx.isCorrect);
+    ctx.onScore(props.history.location.state?.isCorrect);
     ctx.onQuestion();
 
     if (true) {
