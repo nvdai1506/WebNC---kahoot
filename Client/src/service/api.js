@@ -8,7 +8,7 @@ Api.User = {
     register: function (params) {
         return axios({
             method: 'post',
-            url: domain + '/api/users',
+            url: domain + '/users',
             data: params,
         });
     },
@@ -16,7 +16,7 @@ Api.User = {
     login: function (params) {
         return axios ({
             method: 'post',
-            url: domain + '/api/auth',
+            url: domain + '/auth',
             data: params,
         })
     },
