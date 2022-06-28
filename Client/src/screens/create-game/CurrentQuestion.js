@@ -1,53 +1,31 @@
-import React, { useState } from 'react';
-import {Button, Form, InputGroup } from 'react-bootstrap';
+import React from 'react';
+import {Form, InputGroup } from 'react-bootstrap';
 
 // Question type: 1- 4 answer, 2- 2 answer
 
 function CurrentQuestion(props) {
-    const {question, setQuestion, saveQuestion} = props;
+    const {question, setQuestion} = props;
 
-
-    const [cqValidated, setCqValidated] = useState(false);
-
-
-
-    function saveCQ (event) {
-        event.preventDefault();
-
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            setCqValidated(true);
-        } else {
-
-            let data = Object.fromEntries(new FormData(form).entries());
-
-            // setQuestion({...question, ...data});
-            if (question.type === 2) {
-                data.answer3 = data.answer4 = "";
-            }
-            saveQuestion({...question, ...data});
-        }
-        
-    }
+    let refForm;
 
     function setCQName (value) {
         setQuestion({
             ...question,
-            question: value
+            question: value,
+            isValid: refForm.checkValidity(),
         })
     }
 
     function setCQAnswer (index ,value) {
-        let _q = {...question};
+        let _q = {...question, isValid: refForm.checkValidity()};
         _q["answer" + index] = value;
         setQuestion(_q);
     }
 
 
-
     return (
         <div className='content-question container'>
-            <Form noValidate validated={cqValidated} onSubmit={saveCQ}>
+            <Form noValidate validated ref={(e) => {refForm = e}}>
                 <div className='question-title'>
                     <Form.Group>
                         <Form.Label className='title'>Question:</Form.Label>
@@ -151,7 +129,6 @@ function CurrentQuestion(props) {
                             </Form.Select>
                         </div>
                     </div>
-                    <Button className='button-add' variant="primary" style={{float: 'right'}} type="submit">Save</Button>
                 </div>
             </Form>
         </div>

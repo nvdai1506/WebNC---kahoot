@@ -8,12 +8,15 @@ import CurrentQuestion from './create-game/CurrentQuestion';
 import { AppContext } from '../context/AppContext';
 
 import Api from '../service/api';
+import { useParams } from 'react-router-dom';
+
+const DEFAULT_Q = {type: 1, question: '', answer1: '', answer2: '', answer3: '', answer4: '', correctAnswer: null,};
+
 
 function CreateGameScreen(props) {
-    // const {editor} = props;
-    const { createGameSession } = useContext(AppContext);
+    const {id} = useParams();
 
-    const { checkLogin } = useContext(AppContext);
+    const { checkLogin, createGameSession, setCreateGameSession } = useContext(AppContext);
 
     const [question, setQuestion] = useState({});
     const [listQuestion, setListQuestion] = useState([])
@@ -24,9 +27,17 @@ function CreateGameScreen(props) {
     }, [checkLogin]);
 
     useEffect (()=>{
-       if (createGameSession) {
-        Api.Question.getByQuiz(createGameSession.id).then((res)=>{
-            let _list = res.data.map((item)=>{
+        let quizId = id;
+        if (quizId) {
+            Api.Quiz.get(quizId).then((res) => {
+                setCreateGameSession({id: quizId, title: res.data.quiz_name, description: res.data.info});
+            })
+        } else if (createGameSession) {
+            quizId = createGameSession.id;
+        }
+       if (quizId) {
+        Api.Question.getByQuiz(quizId).then((res)=>{
+            let _list = res.data.map((item, index)=>{
                 return {
                     id: item.id,
                     type: item.answer3 === item.answer4 === '', 
@@ -36,8 +47,8 @@ function CreateGameScreen(props) {
                     answer3: item.answer3, 
                     answer4: item.answer4, 
                     correctAnswer: item.correctAnswer,
-                    index: item.question_index,
-                    saved: true,
+                    index: index,
+                    isValid: true,
                 }
             }).sort((a, b) => {
                 return a.index - b.index
@@ -46,22 +57,13 @@ function CreateGameScreen(props) {
             setListQuestion(_list);
             setQuestion(_list[0]);
         })
+       } else {
+        setListQuestion([{...DEFAULT_Q, index: 0}]);
+        setQuestion({...DEFAULT_Q, index: 0});
        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [id]);
 
-    function saveQuestion(q = question) {
-        pushQuestion(q).then((res)=>{
-            let _list = [...listQuestion];
-            _list[q.index] = {
-                ...q, 
-                saved: true, 
-                id: res.data.question_id, 
-                index: res.data.question_index
-            };
-            setListQuestion(_list);
-        })
-    }
 
 
     function pushQuestion(question) {
@@ -92,65 +94,38 @@ function CreateGameScreen(props) {
         }
     }
 
-    function saveListQuestion(arr) {
-        let _list = [...listQuestion];
-        for (let index = 0; index < arr.length; index++) {
-            _list = arr[index];
+    function saveCurrentQuestion () {
+        let _list = [...listQuestion]
+        _list[question.index] = question;
+        setListQuestion(_list)
+    }
+
+    async function complete () {
+        for (let i = 0; i < listQuestion.length; i++) {
+            await pushQuestion(listQuestion[i])
         }
-
-        setListQuestion(_list);
     }
 
-    function removeQuestion (index) {
-
-        Api.Question.delete(listQuestion[index].id).then((res)=>{
-            console.log(res.status);
-            if(res.status === 200) {
-
-                let _list = listQuestion.filter((_item, _index) => _index !== index);
-
-                console.log(_list);
-
-                let arrSuccess = [];
-                for (let i = 0; i < _list.length; i++) {
-                    if (_list[i].saved && _list[i].index !== i) {
-                        pushQuestion({..._list[i], index: i}).then((res)=>{
-                            arrSuccess.push({..._list[i], index: i});
-                            if(i === _list.length - 1) {
-                                console.log(arrSuccess);
-                                saveListQuestion(arrSuccess);
-                            }
-                        })
-                    }
-                }
-    
-            }
-        })
-
-        
 
     
-    }
-
     return (
         <div id="create-game">
             <div className='row'>
                 <div className='col-4'>
                     <ListQuestion
-                        listSavedQuestion={listQuestion}
+                        listQuestion={listQuestion}
+                        setListQuestion={setListQuestion}
                         currentQuestion={question}
                         setCurrentQuestion={setQuestion}
-                        pushQuestion={pushQuestion}
-                        saveListQuestion={saveListQuestion}
-                        removeQuestion={removeQuestion}
+                        saveCurrentQuestion={saveCurrentQuestion}
                     />
                 </div>
                 <div className='col-8'>
-                    <QuizHeader />
+                    <QuizHeader 
+                        complete={complete}
+                    />
                     <CurrentQuestion
-                        listQuestion={listQuestion}
                         question={question}
-                        saveQuestion={saveQuestion}
                         setQuestion={setQuestion}
                     />
                 </div>

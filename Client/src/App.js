@@ -23,6 +23,7 @@ function App() {
             <Header />
             <div className="container vh-100">
               <Switch>
+                <Route path="/edit/:id" component={CreateGameScreen} />
                 <Route path="/register" component={RegisterScreen} />
                 <Route path="/login" component={LoginScreen} />
                 <Route path="/deploy" component={DeployGameScreen} />
