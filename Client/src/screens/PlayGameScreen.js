@@ -12,7 +12,6 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoute";
-import { AppContext } from "../context/AppContext";
 import GetReadyScreen from "./GameScreens/GetReadyScreen";
 
 const ANSWER_DATA = [
@@ -31,7 +30,6 @@ const ANSWER_DATA = [
 function PlayGameScreen() {
   let { path, url } = useRouteMatch();
 
-  const { checkLogin } = useContext(AppContext);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isValidation, setIsValidation] = useState(false);
@@ -44,9 +42,6 @@ function PlayGameScreen() {
   const [totalQuestion, setTotalQuestion] = useState(ANSWER_DATA.length);
   const [questionTime, setQuestionTime] = useState(30);
 
-  useEffect(() => {
-    checkLogin();
-  }, [checkLogin]);
 
   useEffect(() => {
     if (localStorage.getItem("isLoggedIn") === "1") {

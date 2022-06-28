@@ -41,27 +41,33 @@ function CreateGameScreen(props) {
         }
        if (quizId) {
         Api.Question.getByQuiz(quizId).then((res)=>{
-            let _list = res.data.sort((a, b)=>{
-                return a.question_index - b.question_index;
-            }).map((item, index)=>{
-                return {
-                    id: item.id,
-                    type: item.answer3 === item.answer4 === '' ? 2 : 1, 
-                    question: item.question, 
-                    answer1: item.answer1, 
-                    answer2: item.answer2, 
-                    answer3: item.answer3, 
-                    answer4: item.answer4, 
-                    correctAnswer: item.correctAnswer,
-                    index: index,
-                    isValid: true,
-                }
-            }).sort((a, b) => {
-                return a.index - b.index
-            });
-
-            setListQuestion(_list);
-            setQuestion(_list[0]);
+            if (res.data.length) {
+                let _list = res.data.sort((a, b)=>{
+                    return a.question_index - b.question_index;
+                }).map((item, index)=>{
+                    return {
+                        id: item.id,
+                        type: item.answer3 === item.answer4 === '' ? 2 : 1, 
+                        question: item.question, 
+                        answer1: item.answer1, 
+                        answer2: item.answer2, 
+                        answer3: item.answer3, 
+                        answer4: item.answer4, 
+                        correctAnswer: item.correctAnswer,
+                        index: index,
+                        isValid: true,
+                    }
+                }).sort((a, b) => {
+                    return a.index - b.index
+                });
+    
+                setListQuestion(_list);
+                setQuestion(_list[0]);
+            } else {
+                setListQuestion([{...DEFAULT_Q, index: 0}]);
+                setQuestion({...DEFAULT_Q, index: 0});
+               }
+            
         })
        } else {
         setListQuestion([{...DEFAULT_Q, index: 0}]);
@@ -154,7 +160,7 @@ function CreateGameScreen(props) {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h4 className="text-center">Invalid question!</h4>
+                    <h4 className="text-center">There are some invalid questions!</h4>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="danger" onClick={()=>setShowModalError(false)}>OK</Button>
