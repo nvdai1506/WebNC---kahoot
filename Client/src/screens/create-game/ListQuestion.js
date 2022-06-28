@@ -14,9 +14,10 @@ function ListQuestion(props) {
     const {listQuestion, setListQuestion, currentQuestion, setCurrentQuestion, saveCurrentQuestion} = props;
 
     const [showModalLayout, setShowModalLayout] = useState(false);
-    const [showModalError, setShowModalError] =useState(false);
 
-    let refLayout1;
+    const [dropIndex, setDropIndex] = useState(-1);
+
+    let refLayout1, timerDrop;
 
 
 
@@ -64,8 +65,10 @@ function ListQuestion(props) {
     }
 
     function handleDrop(e, index) {
+        e.preventDefault();
+        setDropIndex(-1);
         let targetIndex = parseInt(e.dataTransfer.getData("index"));
-        console.log(targetIndex, index);
+        
         let _list = [...listQuestion].filter((_item, _index) => _index !== targetIndex);
         let _listResult = [..._list.slice(0, index), listQuestion[targetIndex], ..._list.slice(index)].map(( el, i)=>{
             if (el.index === currentQuestion.index) {
@@ -77,8 +80,20 @@ function ListQuestion(props) {
 
     }
 
-    function allowDrop(e) {
-        e.preventDefault();
+    function allowDrop(e, index) {
+        if (index !== dropIndex ) {
+            clearTimeout(timerDrop);
+            setDropIndex(index);
+        }
+        e.preventDefault(); 
+    }
+
+    function onDragLeave() {
+        if (dropIndex !== -1 ) {
+            timerDrop = setTimeout(()=>{
+                setDropIndex(-1);
+            }, 1000)
+        }
     }
 
     return (
@@ -87,15 +102,21 @@ function ListQuestion(props) {
                 {listQuestion.map((item, index) =>{
                     return  (
                         <ListGroup.Item 
-                            className={'item-question row d-flex' + (item.index === currentQuestion.index ? ' active' : '') + (item.isValid ? ' saved' : '')} 
+                            className={
+                                'item-question row d-flex mt-2' 
+                                + (item.index === currentQuestion.index ? ' active' : '') 
+                                + (item.isValid ? ' saved' : '')
+                                + (index === dropIndex ? ' borderTop' : '')
+                            } 
                             key={index} 
                             draggable
                             onDragStart={(e) => handleDrag(e, index)} 
                             onDrop={(e) => handleDrop(e, index)}
-                            onDragOver={allowDrop}
-                        >
+                            onDragOver={(e) => allowDrop(e, index)}
+                            onDragLeave={onDragLeave}
+                        > 
                             <div className='col-2'>
-                                <div className='item-index'>{index}</div>
+                                <div className='item-index'>{index + 1}</div>
                             </div>
                             
                             <div className='col-8' onClick={() => {activeQuestion(index)}}>
@@ -175,24 +196,6 @@ function ListQuestion(props) {
                 </Modal.Footer>
             </Modal>
 
-            <Modal
-                size="md"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-                show={showModalError}
-            >
-                <Modal.Header className="justify-content-center">
-                    <Modal.Title id="contained-modal-title-vcenter" style={{color: "red"}}>
-                        Error!
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <h4 className="text-center">Please save the question!</h4>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="danger" onClick={()=>setShowModalError(false)}>OK</Button>
-                </Modal.Footer>
-            </Modal>
         </div>
     );
 }

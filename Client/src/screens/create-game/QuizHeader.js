@@ -13,7 +13,8 @@ function QuizHeader(props) {
     const history = useHistory();
     const {id} = useParams();
 
-    const { createGameSession, setCreateGameSession, complete } = useContext(AppContext);
+    const { createGameSession, setCreateGameSession } = useContext(AppContext);
+    const {complete} = props;
 
     const [showModal, setShowModal] = useState(false)
     const [quizInfo, setQuizInfo] = useState({});
@@ -81,9 +82,7 @@ function QuizHeader(props) {
     }
 
     async function completeClick() {
-        await complete();
-        setCreateGameSession(null);
-        history.push("/");
+        complete();
     }
 
     function deleteQuiz () {

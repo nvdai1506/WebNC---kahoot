@@ -8,18 +8,22 @@ import CurrentQuestion from './create-game/CurrentQuestion';
 import { AppContext } from '../context/AppContext';
 
 import Api from '../service/api';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+import { Button, Modal } from 'react-bootstrap';
 
 const DEFAULT_Q = {type: 1, question: '', answer1: '', answer2: '', answer3: '', answer4: '', correctAnswer: null,};
 
 
 function CreateGameScreen(props) {
+    const history = useHistory();
     const {id} = useParams();
 
     const { checkLogin, createGameSession, setCreateGameSession } = useContext(AppContext);
 
     const [question, setQuestion] = useState({});
     const [listQuestion, setListQuestion] = useState([])
+
+    const [showModalError, setShowModalError] =useState(false);
 
     
     useEffect (()=>{
@@ -37,10 +41,12 @@ function CreateGameScreen(props) {
         }
        if (quizId) {
         Api.Question.getByQuiz(quizId).then((res)=>{
-            let _list = res.data.map((item, index)=>{
+            let _list = res.data.sort((a, b)=>{
+                return a.question_index - b.question_index;
+            }).map((item, index)=>{
                 return {
                     id: item.id,
-                    type: item.answer3 === item.answer4 === '', 
+                    type: item.answer3 === item.answer4 === '' ? 2 : 1, 
                     question: item.question, 
                     answer1: item.answer1, 
                     answer2: item.answer2, 
@@ -101,8 +107,14 @@ function CreateGameScreen(props) {
     }
 
     async function complete () {
-        for (let i = 0; i < listQuestion.length; i++) {
-            await pushQuestion(listQuestion[i])
+        if (listQuestion.some(item => !item.isValid)) {
+            setShowModalError(true);
+        } else {
+            for (let i = 0; i < listQuestion.length; i++) {
+                await pushQuestion(listQuestion[i])
+            }
+            setCreateGameSession(null);
+            history.push("/")
         }
     }
 
@@ -130,6 +142,24 @@ function CreateGameScreen(props) {
                     />
                 </div>
             </div>
+            <Modal
+                size="md"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                show={showModalError}
+            >
+                <Modal.Header className="justify-content-center">
+                    <Modal.Title id="contained-modal-title-vcenter" style={{color: "red"}}>
+                        Error!
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <h4 className="text-center">Invalid question!</h4>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="danger" onClick={()=>setShowModalError(false)}>OK</Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 }

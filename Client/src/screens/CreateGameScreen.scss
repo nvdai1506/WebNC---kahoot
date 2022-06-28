@@ -27,6 +27,19 @@
                 
             }
 
+            &.borderTop {
+                background-color: rgba(229, 233, 3, 0.05);
+                &::before {
+                    content: "";
+                    width: 100%;
+                    position: absolute;
+                    top: -10px;
+                    left: 0;
+                    border: 2px solid green;
+                    border-radius: 50%;
+                }
+            }
+
             .item-index {
                 display: flex;
                 width: 50px;
