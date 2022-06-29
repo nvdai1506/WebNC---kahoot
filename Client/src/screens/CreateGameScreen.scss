@@ -1,8 +1,36 @@
 #create-game {
     .list-question {
         box-shadow:  3px 2px 2px rgba(0,0,0,.125);
-        height: 100vh;
+        height: calc(100vh - 65px);
         overflow-y: scroll;
+        overflow-x: hidden;
+        margin-right: 30px;
+        padding-right: 30px;
+
+        &::-webkit-scrollbar {
+            width: 10px;
+            background-color: #F5F5F5;
+        }
+        &::-webkit-scrollbar-track {
+            border-radius: 10px;
+            background: rgba(0,0,0,0.1);
+            border: 1px solid #ccc;
+        }
+          
+        &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background: linear-gradient(left, #fff, #e4e4e4);
+            border: 1px solid #aaa;
+        }
+          
+        &::-webkit-scrollbar-thumb:hover {
+            background: #fff;
+        }
+          
+        &::-webkit-scrollbar-thumb:active {
+            background: linear-gradient(left, #22ADD4, #1E98BA);
+        }
+
         .item-question {
             padding: 15px 10px;
             margin: 5px 0 5px 10px;
@@ -28,16 +56,7 @@
             }
 
             &.borderTop {
-                background-color: rgba(229, 233, 3, 0.05);
-                &::before {
-                    content: "";
-                    width: 100%;
-                    position: absolute;
-                    top: -10px;
-                    left: 0;
-                    border: 2px solid green;
-                    border-radius: 50%;
-                }
+                background-color: rgba(3, 233, 72, 0.05);
             }
 
             .item-index {
@@ -77,7 +96,7 @@
     }
 
     .content-question {
-        padding: 20px 10%;
+        padding: 10px 10% 0;
         margin: 25px 0;
         .question-title {
             margin: 0 15%;

@@ -57,9 +57,7 @@ function CreateGameScreen(props) {
                         index: index,
                         isValid: true,
                     }
-                }).sort((a, b) => {
-                    return a.index - b.index
-                });
+                })
     
                 setListQuestion(_list);
                 setQuestion(_list[0]);

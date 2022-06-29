@@ -1,0 +1,93 @@
+#host-start {
+    .host-container {
+        .h-head {
+            width: 100%;
+            height: 25vh;
+            background-color: rgb(37, 7, 107);
+            position: relative;
+
+            .code-pin {
+                width: max-content;
+                padding: 10px 100px;
+                background-color: #fff;
+                border-radius: 10px;
+
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+
+                p {
+                    font-weight: bold;
+                }
+
+                h1 {
+                    font-weight: 900;
+                    font-size: 50px;
+                }
+            }
+        }
+        .h-main {
+            width: 100%;
+            height: calc(75vh - 65px);
+            background: rgb(70, 23, 143);
+            padding: 20px 40px;
+
+            .count-user {
+                svg {
+                    height: 40px;
+                    color: #000 !important;
+                }
+
+                span {
+                    font-size: 24px;
+                    font-weight: bold;
+                    color: #fff;
+                }
+                
+            }
+
+            .list-user {
+                width: 100%;
+                padding: 20px 20%;
+                
+                .player {
+                    padding: 10px;
+                    .content {
+                        background-color: #0E6251;
+                        padding: 20px 10px;
+                        border-radius: 10px;
+                        box-shadow: 2px 2px 2px 3px #2f4641;
+
+                        svg {
+                            height: 30px;
+                        }
+
+                        span {
+                            font-size: 20px;
+                            font-weight: bold;
+                            color: #000;
+                        }
+                    }
+                }
+            }
+
+            .buttons {
+                width: 100%;
+                margin-top: 50px;
+                position: relative;
+
+                button {
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    padding: 10px 30px;
+                    font-size: 24px;
+                    font-weight: bold;
+                    box-shadow: 2px 2px 3px 4px #2f4641;
+                    color: #000;
+                }
+            }
+        }
+    }
+}

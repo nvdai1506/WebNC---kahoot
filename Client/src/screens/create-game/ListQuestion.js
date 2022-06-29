@@ -90,6 +90,7 @@ function ListQuestion(props) {
 
     function onDragLeave() {
         if (dropIndex !== -1 ) {
+            clearTimeout(timerDrop);
             timerDrop = setTimeout(()=>{
                 setDropIndex(-1);
             }, 1000)

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {Card, Dropdown} from 'react-bootstrap';
+import {Button, Card, Dropdown} from 'react-bootstrap';
 import { CgMoreO } from "react-icons/cg";
 import "./ListQuiz.scss"
 import Api from '../../service/api';
@@ -12,6 +12,8 @@ const THEME = [ 'Primary', 'Secondary', 'Success', 'Danger', 'Warning', 'Info', 
 function ListQuiz(props) {
 
     const {userId} = useContext(AppContext);
+
+    const {isHost} = props;
 
     const [listQuiz, setListQuiz] = useState([]);
 
@@ -49,6 +51,8 @@ function ListQuiz(props) {
                                     <div className='col-9'>
                                         <div className='header-title'>
                                             <Card.Title className='col-10'>{item.quiz_name}</Card.Title>
+                                            {isHost ? 
+                                            <Button className='view-more' variant='warning' href={'/host/' + item.id} style={{width: '70px'}}>Host</Button> :
                                             <Dropdown className='view-more'>
                                                 <Dropdown.Toggle variant='' id="dropdown-basic">
                                                    <CgMoreO style={{width: '20px', height: '20px', color: '#000'}}/>
@@ -57,7 +61,7 @@ function ListQuiz(props) {
                                                     <Dropdown.Item href={'/edit/' + item.id}>Edit</Dropdown.Item>
                                                     <Dropdown.Item href={'/host/' + item.id}>Host</Dropdown.Item>
                                                 </Dropdown.Menu>
-                                            </Dropdown>
+                                            </Dropdown>}
                                         </div>
                                         <Card.Text>
                                             {item.info}

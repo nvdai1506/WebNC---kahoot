@@ -42,6 +42,9 @@ function PlayGameScreen() {
   const [totalQuestion, setTotalQuestion] = useState(ANSWER_DATA.length);
   const [questionTime, setQuestionTime] = useState(30);
 
+  useEffect(()=>{
+
+  },[])
 
   useEffect(() => {
     if (localStorage.getItem("isLoggedIn") === "1") {
