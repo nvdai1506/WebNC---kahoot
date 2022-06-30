@@ -47,7 +47,7 @@ function HomeScreen(props) {
                         </div>
                     </div>
                     <div className='button'>
-                        <Link to="deploy">
+                        <Link to="host">
                             <Button >Host game</Button>
                         </Link>
                     </div>

@@ -12,7 +12,7 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoute";
-import { AppContext } from "../context/AppContext";
+import GetReadyScreen from "./GameScreens/GetReadyScreen";
 
 const ANSWER_DATA = [
   { question: "fuck you?", answer: "triangle" },
@@ -30,22 +30,21 @@ const ANSWER_DATA = [
 function PlayGameScreen() {
   let { path, url } = useRouteMatch();
 
-  const { checkLogin } = useContext(AppContext);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isValidation, setIsValidation] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [answer, setAnswer] = useState("triangle");
   const [answerScore, setAnswerScore] = useState(1000);
-  const [isCorrect, setIsCorrect] = useState(false);
   const [username, setUsername] = useState("");
   const [score, setScore] = useState(0);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [totalQuestion, setTotalQuestion] = useState(ANSWER_DATA.length);
+  const [questionTime, setQuestionTime] = useState(30);
 
-  useEffect (()=>{
-    checkLogin();
-  }, [checkLogin]);
+  useEffect(()=>{
+
+  },[])
 
   useEffect(() => {
     if (localStorage.getItem("isLoggedIn") === "1") {
@@ -75,20 +74,12 @@ function PlayGameScreen() {
     }
   };
 
-  const answerHandler = (isCorrect) => {
-    if (isCorrect) {
-      setIsCorrect(true);
-    } else {
-      setIsCorrect(false);
-    }
-  };
-
   const usernameHandler = (username) => {
     setUsername(username);
   };
 
   const answerScoreHandler = (responseTime) => {
-    setAnswerScore(Math.round((1 - responseTime / 30 / 2) * 1000));
+    setAnswerScore(Math.round((1 - responseTime / questionTime / 2) * 1000));
   };
 
   const scoreHandler = (bonus) => {
@@ -105,16 +96,15 @@ function PlayGameScreen() {
         isValidation: isValidation,
         isLoggedIn: isLoggedIn,
         isPlaying: isPlaying,
-        isCorrect: isCorrect,
         answer: answer,
         answerScore: answerScore,
         username: username,
         score: score,
         questionNumber: questionNumber,
         totalQuestion: totalQuestion,
+        questionTime: questionTime,
         onLogin: loginHandler,
         onValidation: validationHandler,
-        onAnswer: answerHandler,
         onAnswerScore: answerScoreHandler,
         onUsername: usernameHandler,
         onScore: scoreHandler,
@@ -135,6 +125,12 @@ function PlayGameScreen() {
           component={WaitScreen}
           isAuthentication={isLoggedIn}
           redirect={`${url}/join`}
+        />
+        <ProtectedRoute
+          path={`${path}/getready`}
+          component={GetReadyScreen}
+          isAuthentication={true}
+          redirect={`${url}/instruction`}
         />
         <ProtectedRoute
           path={`${path}/gameblock`}

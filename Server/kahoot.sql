@@ -27,6 +27,8 @@ SET time_zone = "+00:00";
 -- Table structure for table `question`
 --
 
+DROP TABLE IF EXISTS `question`;
+
 CREATE TABLE `question` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `quiz_id` int(11) DEFAULT NULL,
@@ -52,6 +54,7 @@ INSERT INTO `question` (`id`, `quiz_id`, `question_index`, `question`, `answer1`
 --
 -- Table structure for table `quiz`
 --
+DROP TABLE IF EXISTS `quiz`;
 
 CREATE TABLE `quiz` (
   `id` bigint(20) UNSIGNED NOT NULL,
@@ -72,6 +75,7 @@ INSERT INTO `quiz` (`id`, `user_id`, `quiz_name`, `info`) VALUES
 --
 -- Table structure for table `users`
 --
+DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
   `id` int(11) UNSIGNED NOT NULL,

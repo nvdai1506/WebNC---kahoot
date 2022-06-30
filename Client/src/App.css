@@ -18,3 +18,17 @@ a {
 ::-webkit-input-placeholder {
     text-align: left !important;
 }
+
+.App > .header {
+    width: 100vw;
+    height: 65px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+}
+
+.App > .app-container {
+    height: 100vh;
+    padding-top: 65px;
+}

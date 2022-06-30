@@ -3,20 +3,19 @@ import PlayContext from "../../context/PlayContext";
 import { Link, useHistory } from "react-router-dom";
 import WrongAnswer from "../../components/WrongAnswer/WrongAnswer";
 import CorrectAnswer from "../../components/CorrectAnswer/CorrectAnswer";
+import TimeUp from "../../components/TimeUp/TimeUp";
 
-function ResultScreen() {
+function ResultScreen(props) {
   let history = useHistory();
   const ctx = useContext(PlayContext);
 
   useEffect(() => {
-    ctx.onScore(ctx.isCorrect);
+    ctx.onScore(props.history.location.state?.isCorrect);
     ctx.onQuestion();
 
-    if (true) {
-      setTimeout(() => {
-        history.push(`${ctx.url}/gameblock`);
-      }, 5000);
-    }
+    setTimeout(() => {
+      history.push(`${ctx.url}/getready`);
+    }, 3000);
   }, []);
 
   return (
@@ -25,7 +24,20 @@ function ResultScreen() {
       className="container vh-100 d-flex flex-column justify-content-between"
     >
       <div></div>
-      <main>{ctx.isCorrect ? <CorrectAnswer /> : <WrongAnswer />}</main>
+      <main>
+        {props.history.location.state?.isTimeup ? (
+          <TimeUp />
+        ) : (
+          <>
+            {props.history.location.state?.isCorrect ? (
+              <CorrectAnswer />
+            ) : (
+              <WrongAnswer />
+            )}
+          </>
+        )}
+      </main>
+
       <footer>
         <div className="d-flex justify-content-between">
           <h1>{ctx.username}</h1>

@@ -1,14 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ButtonGroup, Button, Modal, Form } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 
 import Api from '../../service/api';
 
+import {IoMdArrowRoundBack, IoIosCloudDone} from 'react-icons/io';
+import {AiFillEdit} from 'react-icons/ai';
+
+
 function QuizHeader(props) {
     const history = useHistory();
+    const {id} = useParams();
 
     const { createGameSession, setCreateGameSession } = useContext(AppContext);
+    const {complete} = props;
 
     const [showModal, setShowModal] = useState(false)
     const [quizInfo, setQuizInfo] = useState({});
@@ -17,14 +23,15 @@ function QuizHeader(props) {
     const [descriptionQuiz, setDescriptionQuiz] = useState('');
 
     useEffect(()=>{
-        if (!createGameSession) {
+        if (!createGameSession && !id) {
             setShowModal(true);
         } else {
-            setQuizInfo(createGameSession);
+            // setShowModal(false);
+            createGameSession && setQuizInfo(createGameSession);
         }
         
         
-    }, [createGameSession])
+    }, [createGameSession, id])
     
 
     function saveQuizInfo (event) {
@@ -46,7 +53,7 @@ function QuizHeader(props) {
                     setCreateGameSession({...data, id: res.data.quiz_id});
                     setShowModal(false)
                 })
-            } else {
+            } else if (data.title !== createGameSession.title || data.description !== createGameSession.description) {
                 Api.Quiz.update(createGameSession.id, {
                     quiz_name: data.title,
                     info: data.description
@@ -54,8 +61,10 @@ function QuizHeader(props) {
                     console.log("Update Success");
                     setQuizInfo(data);
                     setCreateGameSession({...createGameSession, ...data});
-                    setShowModal(false)
+                    setShowModal(false);
                 })
+            } else {
+                setShowModal(false);
             }
 
         }
@@ -67,21 +76,43 @@ function QuizHeader(props) {
         setTitleQuiz(quizInfo.title);
         setDescriptionQuiz(quizInfo.description);
     }
-    function complete() {
-        setCreateGameSession(null);
-        history.push("/");
+
+    function closeModle () {
+        setShowModal(false)
+    }
+
+    async function completeClick() {
+        complete();
+    }
+
+    function deleteQuiz () {
+        Api.Quiz.delete(createGameSession.id).then(()=>{
+            setCreateGameSession(null);
+        });
+        history.replace('/');
+    }
+
+    function exitScreen () {
+        setCreateGameSession(null)
+        history.replace('/');
     }
 
     
 
     return (
         <div className='quiz-header'>
+            <div className='back mt-2'>
+                    <IoMdArrowRoundBack style={{color: '#000', height: '2.5rem', cursor: 'pointer'}} onClick={exitScreen}/>
+                </div>
             <div className='quiz-header row my-4 mx-2'>
-                <h4 className='col-9'>{quizInfo.title}</h4>
+                <div className='col-1'></div>
+                <h4 className='col-8'>{quizInfo.title}</h4>
                 <div className='complete-button col-3'>
                     <ButtonGroup>
-                        <Button variant="outline-secondary" className='mx-4' onClick={openModle}>Edit</Button>
-                        <Button variant="success" onClick={complete}>Complete</Button>
+                        <AiFillEdit className='mx-4' onClick={openModle} style={{color: '#000', height: '2rem',  width: '2rem',cursor: 'pointer'}}/>
+                        <Button variant="success" className='d-flex' onClick={completeClick}>
+                            Complete<IoIosCloudDone style={{color: '#000', height: '1.5rem', width: '1.5rem', marginLeft: '1rem'}}/>
+                        </Button>
                     </ButtonGroup>
                 </div>
             </div>
@@ -91,9 +122,11 @@ function QuizHeader(props) {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
                 show={showModal}
+                onHide={closeModle}
+                backdrop='static'
             >
                 <Form noValidate validated={quizValidated} onSubmit={saveQuizInfo}>
-                    <Modal.Header>
+                    <Modal.Header closeButton={!!createGameSession}>
                         <Modal.Title id="contained-modal-title-vcenter">
                             Kahoot
                         </Modal.Title>
@@ -133,6 +166,10 @@ function QuizHeader(props) {
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
+                        {
+                            createGameSession &&
+                            <Button variant="danger" className='mx-4' type="button" onClick={deleteQuiz}>Delete</Button>
+                        }
                         <Button variant="success"  type="submit">Save</Button>
                     </Modal.Footer>
                 </Form>

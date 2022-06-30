@@ -9,8 +9,8 @@ function WaitScreen() {
   useEffect(() => {
     if (ctx.isPlaying === true) {
       setTimeout(() => {
-        history.push(`${ctx.url}/gameblock`);
-      }, 5000);
+        history.push(`${ctx.url}/getready`);
+      }, 3000);
     }
   }, []);
 
