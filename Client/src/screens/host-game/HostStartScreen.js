@@ -8,6 +8,8 @@ import { Button } from 'react-bootstrap';
 import { io } from "socket.io-client";
 import Api from '../../service/api';
 
+let socket;
+
 function HostStartScreen(props) {
     const id = useState();
 
@@ -33,7 +35,7 @@ function HostStartScreen(props) {
         let _pin = Math.round(Math.random() * 10000);
         setCode(_pin);
 
-        const socket = io("localhost:3001");
+        socket = io("localhost:3001");
         socket.on("connect", () => {
             console.log('Connect socket server success.', socket.id); 
 
