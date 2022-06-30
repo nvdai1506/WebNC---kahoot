@@ -3,6 +3,7 @@ import db from '../utils/db.js';
 
 let questionModel = generate('question', 'id');
 
+// find questions with QuizId
 questionModel.findAllQuestionsByQuizId = async function(quizId){
     const rows = await db('question').where('quiz_id', quizId);
     if (rows.length === 0) {

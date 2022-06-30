@@ -5,11 +5,13 @@ import questionModel from '../models/question.model.js';
 import quizModel from '../models/quiz.model.js';
 const router = express.Router();
 
+// get all questions
 router.get('/', async function (req, res) {
   const list = await questionModel.findAll();
   res.json(list);
 })
 
+// get question by id
 router.get('/:id', async function (req, res) {
   const id = req.params.id || 0;
   const question = await questionModel.findById(id);
@@ -18,6 +20,8 @@ router.get('/:id', async function (req, res) {
   }
   res.json(question);
 })
+
+// get questions by quiz_id
 router.get('/quiz/:quiz_id', async function (req, res) {
   const quiz_id = req.params.quiz_id || 0;
   const questions = await questionModel.findAllQuestionsByQuizId(quiz_id);
@@ -27,6 +31,7 @@ router.get('/quiz/:quiz_id', async function (req, res) {
   res.json(questions);
 })
 
+// add question
 router.post('/', async function (req, res) {
   // body: {id,quizid,question,ans1,ans2,ans3,ans4,correctans}
   let question = req.body;
@@ -47,6 +52,7 @@ router.post('/', async function (req, res) {
   }
 })
 
+// delete
 router.delete('/:id', async function (req, res) {
   const id = req.params.id || 0;
   const n = await questionModel.del(id);
@@ -56,6 +62,7 @@ router.delete('/:id', async function (req, res) {
   });
 })
 
+// update
 router.patch('/:id', async function (req, res) {
   const id = req.params.id || 0;
   const question = req.body;

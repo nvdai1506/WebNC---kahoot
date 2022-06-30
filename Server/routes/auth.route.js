@@ -48,15 +48,18 @@ router.post('/', validate(schema), async function (req, res) {
 })
 
 router.post('/refresh', validate(rfSchema), async function (req, res) {
+  // get accessToken & refreshToken from request
   const { accessToken, refreshToken } = req.body;
   try {
     const opts = {
       ignoreExpiration: true
     };
+    // decode to get userID
     const { userId } = jwt.verify(accessToken, 'SECRET_KEY', opts);
     const ret = await userModel.isValidRefreshToken(userId, refreshToken);
     if (ret === true) {
-      const newAccessToken = jwt.sign({ userId }, 'SECRET_KEY', { expiresIn: 600 });
+      // generate new accesstoken
+      const newAccessToken = jwt.sign({ userId }, 'SECRET_KEY', { expiresIn: 24 * 60 * 60 });
       return res.json({
         accessToken: newAccessToken
       })
