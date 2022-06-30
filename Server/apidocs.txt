@@ -1,0 +1,138 @@
+	purpose	request	method	data	reponse	success code	err code
+Users	Register	/users	post	"{
+    ""username"":""dai2"",
+    ""password"":""123456"",
+    ""name"":""dai2"",
+    ""email"":""dai2@gmail.com""
+}"	"{
+  ""id"": 2,
+  ""username"": ""dai2"",
+  ""name"": ""dai2"",
+  ""email"": ""dai2@gmail.com""
+}"	201	
+	Login	/auth	post	"{
+    ""username"":""dai2"",
+    ""password"":""123456""
+}"	"{
+  ""authenticated"": true,
+  ""accessToken"": ""eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY1NTc3Mzc1OCwiZXhwIjoxNjU1Nzc0MzU4fQ.DcvbFC35En2C39zZDh33jqGInO-YlDaKWeTALgOA9dw"",
+  ""refreshToken"": ""MmCjXOXRc7Bh8oji9YMV9tKiDPUxjEzGmBK7328ancQYzV1o0S7kNfBzSYmM4Tka6KvePv7MpkE0tsAD""
+}"	200	
+	Refresh Token	/auth/refresh	post	"{
+    ""accessToken"": ""eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY1NTc3Mzc1OCwiZXhwIjoxNjU1Nzc0MzU4fQ.DcvbFC35En2C39zZDh33jqGInO-YlDaKWeTALgOA9dw"",
+  ""refreshToken"": ""MmCjXOXRc7Bh8oji9YMV9tKiDPUxjEzGmBK7328ancQYzV1o0S7kNfBzSYmM4Tka6KvePv7MpkE0tsAD""
+}"	"{
+  ""accessToken"": ""eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY1NTc3Mzg4MywiZXhwIjoxNjU1Nzc0NDgzfQ.Ex0RX8YfDpKVVO7Aa1cKef4M_sctQ9G5et0BK1bYxj0""
+}"	200	
+Quiz	Get all	/quiz	get	Header: {x-access-token:""}	"[
+  {
+    ""id"": 2,
+    ""user_id"": 1,
+    ""quiz_name"": ""second quiz"",
+    ""info"": null
+  }
+]"	200	401
+	Get quiz by quiz_Id	/quiz/:id	get	Header: {x-access-token:""}	"{
+  ""id"": 2,
+  ""user_id"": 1,
+  ""quiz_name"": ""second quiz"",
+  ""info"": null
+}"	200	204,401
+	Get quizs by user_id	/quiz/user/:user_id	get	Header: {x-access-token:""}	"[
+  {
+    ""id"": 2,
+    ""user_id"": 1,
+    ""quiz_name"": ""second quiz"",
+    ""info"": null
+  }
+]"	200	204,401
+	Add quiz	/quiz	post	"Header: {x-access-token:""""}
+Body:{
+    ""quiz_name"":""third quiz""
+}"	"{
+  ""quiz_id"": 3,
+  ""quiz_name"": ""third quiz"",
+  ""user_id"": 1
+}"	201	401
+	Delete	/quiz/:id	delete	Header: {x-access-token:""}	"{
+  ""affected"": 1
+}"	200	401
+	Update	/quiz/:id	patch	"Header: {x-access-token:""""}
+Body:{
+    ""id"": 2,
+    ""user_id"": 1,
+    ""quiz_name"": ""second quiz"",
+    ""info"": ""edit""
+  }"	"{
+  ""affected"": 1
+}"	200	401
+Question	Get all	/question	get	Header: {x-access-token:""}	"[
+  {
+    ""id"": 5,
+    ""quiz_id"": 2,
+    ""question"": ""aa"",
+    ""answer1"": ""bb"",
+    ""answer2"": ""cc"",
+    ""answer3"": ""dd"",
+    ""answer4"": ""ee"",
+    ""correctAnswer"": 3
+  }
+]"	200	401
+	Get question by question_Id	/question/:id	get	Header: {x-access-token:""}	"[
+  {
+    ""id"": 5,
+    ""quiz_id"": 2,
+    ""question"": ""aa"",
+    ""answer1"": ""bb"",
+    ""answer2"": ""cc"",
+    ""answer3"": ""dd"",
+    ""answer4"": ""ee"",
+    ""correctAnswer"": 3
+  }
+]"	200	204,401
+	Get questions by user_id	/question/quiz/:quiz_id	get	Header: {x-access-token:""}	"[
+  {
+    ""id"": 5,
+    ""quiz_id"": 2,
+    ""question"": ""aa"",
+    ""answer1"": ""bb"",
+    ""answer2"": ""cc"",
+    ""answer3"": ""dd"",
+    ""answer4"": ""ee"",
+    ""correctAnswer"": 3
+  }
+]"	200	204,401
+	Add question	/question	post	"Header: {x-access-token:""""}
+Body:{
+    ""quiz_id"":2, 
+    ""question"":""a"", 
+    ""answer1"":""b"", 
+    ""answer2"":""c"", 
+    ""answer3"":""d"", 
+    ""answer4"":""e"", 
+    ""correctAnswer"":2
+}"	"{
+  ""question_id"": 6,
+  ""quiz_id"": 2,
+  ""question"": ""a"",
+  ""answer1"": ""b"",
+  ""answer2"": ""c"",
+  ""answer3"": ""d"",
+  ""answer4"": ""e"",
+  ""correctAnswer"": 2
+}"	201	400,401
+	Delete	/question/:id	delete	Header: {x-access-token:""}	"{
+  ""affected"": 1
+}"	200	401
+	Update	/question/:id	patch	"Header: {x-access-token:""""}
+Body:{
+    ""quiz_id"":2, 
+    ""question"":""a"", 
+    ""answer1"":""b"", 
+    ""answer2"":""c"", 
+    ""answer3"":""d"", 
+    ""answer4"":""ee"", 
+    ""correctAnswer"":2
+}"	"{
+  ""affected"": 1
+}"	200	401
