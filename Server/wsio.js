@@ -23,22 +23,26 @@ io.on('connection',(socket)=>{
     })
     //Player Join Room
     socket.on('player-joined', (data) => {
-       socket.join(data) 
+       socket.join(data.pin) 
     })
     //Add player to Quiz Object
     socket.on('player-add', (data) => {
-        socket.to(`${data.selectedPin}`).emit('room-joined', {name: data.nickname, id: socket.id});
+        console.log('player-add', data);
+        socket.to(`${data.pin}`).emit('room-joined', {name: data.name, id: data.id});
     })
 
     socket.on('question-over', (data) => {
-        socket.to(`${data.pin}`).emit('question-over')
+        socket.to(`${data.pin}`).emit('question-over', data)
     })
+
     socket.on('next-question', (data) => {
-        socket.to(`${data.pin}`).emit('next-question')
+        console.log('next-question', data.pin);
+        socket.to(data.pin).emit('question-start', {data: data.question});
 
     })
+
     socket.on('question-answered', (data) => {
-        socket.to(data.pin).emit('player-answer', {id : data.id, answer: data.answer})
+        socket.to(`${data.pin}`).emit('player-answer', {id : data.id, answer: data.answer})
     })
    
     socket.on('sent-info', (data) => {

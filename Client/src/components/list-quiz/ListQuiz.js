@@ -6,10 +6,12 @@ import Api from '../../service/api';
 
 import coverKahoot  from "../../static/image/placeholder-cover-kahoot.png"
 import { AppContext } from '../../context/AppContext';
+import { useHistory } from 'react-router-dom';
 
 const THEME = [ 'Primary', 'Secondary', 'Success', 'Danger', 'Warning', 'Info', 'Light', 'Dark',]
 
 function ListQuiz(props) {
+    const history = useHistory();
 
     const {userId} = useContext(AppContext);
 
@@ -52,14 +54,14 @@ function ListQuiz(props) {
                                         <div className='header-title'>
                                             <Card.Title className='col-10'>{item.quiz_name}</Card.Title>
                                             {isHost ? 
-                                            <Button className='view-more' variant='warning' href={'/host/' + item.id} style={{width: '70px'}}>Host</Button> :
+                                            <Button className='view-more mt-3' variant='warning' onClick={()=>{history.push(`/host/${item.id}/start`)}} style={{width: '70px'}}>Host</Button> :
                                             <Dropdown className='view-more'>
                                                 <Dropdown.Toggle variant='' id="dropdown-basic">
                                                    <CgMoreO style={{width: '20px', height: '20px', color: '#000'}}/>
                                                 </Dropdown.Toggle>
                                                 <Dropdown.Menu>
                                                     <Dropdown.Item href={'/edit/' + item.id}>Edit</Dropdown.Item>
-                                                    <Dropdown.Item href={'/host/' + item.id}>Host</Dropdown.Item>
+                                                    <Dropdown.Item onClick={()=>{history.push(`/host/${item.id}/start`)}}>Host</Dropdown.Item>
                                                 </Dropdown.Menu>
                                             </Dropdown>}
                                         </div>

@@ -7,11 +7,12 @@ import { Button } from 'react-bootstrap';
 
 import { io } from "socket.io-client";
 import Api from '../../service/api';
+import { useParams } from 'react-router-dom';
 
 let socket;
 
 function HostStartScreen(props) {
-    const id = useState();
+    const {id} = useParams();
 
     const [code, setCode] = useState();
     const [players, setPlayers] = useState([]);
@@ -28,35 +29,52 @@ function HostStartScreen(props) {
                 let _list = res.data.sort((a, b)=>{
                     return a.question_index - b.question_index;
                 })
-                setListQuestion(res.data);
+                setListQuestion(_list);
             } 
         })
 
-        let _pin = Math.round(Math.random() * 10000);
+        let _pin = (Math.round(Math.random() * 10000) + 10000).toString().slice(1);
         setCode(_pin);
 
         socket = io("localhost:3001");
         socket.on("connect", () => {
             console.log('Connect socket server success.', socket.id); 
 
+            let newPlayers = [...players];
+
             socket.emit('host-join', {pin: _pin})
 
             socket.on('room-joined', (data) => {
-                setPlayers([...players].push({...data, score: 0}));
+                console.log('room-joined', data);
+                newPlayers.push({...data, score: 0});
+                setPlayers([...newPlayers]);
             })
 
             socket.on('player-answer', (data) => {
                 if (data.answer === listQuestion[currentQuestion].correctAnswer) {
-                    let _index = players.findIndex(item => item.id === data.id);
-                    let _players = [...players];
+                    let _index = newPlayers.findIndex(item => item.id === data.id);
+                    let _players = [...newPlayers];
                     _players[_index].score += 10;
                     setPlayers(_players);
                 }
 
             })
+
+
           });
+
+
+        return () => {
+            socket.close();
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
+
+
+    function nextQuestion(index = 0) {
+        setCurrentQuestion(index);
+        socket.emit('next-question', {pin: code, question: listQuestion[index]});
+    }
 
     return (
         <div id="host-start">
@@ -85,7 +103,7 @@ function HostStartScreen(props) {
                         </div>
                     </div>
                     <div className='buttons'>
-                        <Button variant='primary'>Start</Button>
+                        {players.length && <Button variant='primary' onClick={() => nextQuestion()}>Start</Button>}
                     </div>
                 </div>
             </div>

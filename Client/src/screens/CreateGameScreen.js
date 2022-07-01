@@ -47,7 +47,7 @@ function CreateGameScreen(props) {
                 }).map((item, index)=>{
                     return {
                         id: item.id,
-                        type: item.answer3 === item.answer4 === '' ? 2 : 1, 
+                        type: item.answer3 && item.answer4  ? 1 : 2, 
                         question: item.question, 
                         answer1: item.answer1, 
                         answer2: item.answer2, 

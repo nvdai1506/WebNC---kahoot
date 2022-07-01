@@ -11,7 +11,6 @@ import HostGameScreen from "./screens/HostGameScreen";
 import PlayGameScreen from "./screens/PlayGameScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
-import HostStartScreen from "./screens/host-game/HostStartScreen";
 import { IconContext } from "react-icons";
 
 function App() {
@@ -27,7 +26,6 @@ function App() {
                 <Route path="/edit/:id" component={CreateGameScreen} />
                 <Route path="/register" component={RegisterScreen} />
                 <Route path="/login" component={LoginScreen} />
-                <Route path="/host/:id" component={HostStartScreen} />
                 <Route path="/host" component={HostGameScreen} />
                 <Route path="/create" component={CreateGameScreen} />
                 <Route path="/play" component={PlayGameScreen} />

@@ -10,9 +10,13 @@ import {
   Switch,
   Route,
   useRouteMatch,
+  useHistory,
 } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoute";
 import GetReadyScreen from "./GameScreens/GetReadyScreen";
+
+import { io } from "socket.io-client";
+let socket;
 
 const ANSWER_DATA = [
   { question: "fuck you?", answer: "triangle" },
@@ -29,6 +33,7 @@ const ANSWER_DATA = [
 
 function PlayGameScreen() {
   let { path, url } = useRouteMatch();
+  const history = useHistory();
 
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -42,8 +47,17 @@ function PlayGameScreen() {
   const [totalQuestion, setTotalQuestion] = useState(ANSWER_DATA.length);
   const [questionTime, setQuestionTime] = useState(30);
 
-  useEffect(()=>{
+  const [pin, setPin] = useState();
+  const [playerId, setPlayerId] = useState();
 
+  useEffect(()=>{
+    console.log('Playgame mounted');
+
+    return () => {
+      if (socket) {
+        socket.close();
+      }
+    }
   },[])
 
   useEffect(() => {
@@ -60,17 +74,52 @@ function PlayGameScreen() {
     setAnswer(ANSWER_DATA[questionNumber - 1].answer);
   }, [questionNumber]);
 
-  const loginHandler = (isLogin) => {
-    if (isLogin) {
+
+  function ioJoinRoom(value) {
+    setPin(value);
+
+    socket = io("localhost:3001");
+    socket.on("connect", () => {
+      console.log('Connect socket server success.', socket.id); 
+      setPlayerId(socket.id);
+
+      socket.emit('player-join', {pin: value})
+
+      history.push(`${url}/join`);
+
+    });
+  }
+
+  function ioAddPlayer(data) {
+    socket.emit('player-add', data);
+    ioOnNextQuestion();
+    history.push(`${url}/instruction`);
+  }
+
+  function ioOnNextQuestion() {
+    console.log('on question', socket);
+    socket.io.on('question-start', (data) => {
+      console.log(data);
+      history.push(`${url}/gameblock`)
+    })
+  }
+
+  const loginHandler = (obj) => {
+    if (obj.isValid) {
       localStorage.setItem("isLoggedIn", "1");
       setIsLoggedIn(true);
+      setUsername(obj.value);
+      
+      ioAddPlayer({pin: pin, name: obj.value, id: playerId});
     }
   };
 
-  const validationHandler = (isValid) => {
-    if (isValid) {
+  const validationHandler = (obj) => {
+
+    if (obj.isValid) {
       localStorage.setItem("isValidation", "1");
       setIsValidation(true);
+      ioJoinRoom(obj.value);
     }
   };
 
@@ -89,6 +138,8 @@ function PlayGameScreen() {
   const questionHandler = () => {
     setQuestionNumber(questionNumber + 1);
   };
+
+ 
 
   return (
     <PlayContext.Provider

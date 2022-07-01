@@ -5,7 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 
 const passReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
-    return { value: action.value, isValid: action.value === "123123" };
+    return { value: action.value, isValid: action.value.match(/[0-9]{4}/) };
   }
   if (action.type === "CLEAR_INPUT") {
     return { value: "", isValid: false };
@@ -28,8 +28,7 @@ function PassCodeForm({ type, name, id, placeholder, buttonContent }) {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    ctx.onValidation(passState.isValid);
-    history.push(`${ctx.url}/join`);
+    ctx.onValidation(passState);
 
     dispatchPass({ type: "CLEAR_INPUT" });
   };
