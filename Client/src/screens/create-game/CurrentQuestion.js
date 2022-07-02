@@ -22,6 +22,14 @@ function CurrentQuestion(props) {
         setQuestion(_q);
     }
 
+    function setCorrectAnswer (value) {
+        setQuestion({
+            ...question,
+            correctAnswer: value,
+            isValid: refForm.checkValidity(),
+        })
+    }
+
 
     return (
         <div className='content-question container'>
@@ -121,7 +129,12 @@ function CurrentQuestion(props) {
                     <div className='answer'>
                         <div className='form-answer'>
                             <Form.Label className='title'>Answer:</Form.Label>
-                            <Form.Select name="correctAnswer" required size="lg">
+                            <Form.Select
+                                name="correctAnswer" required size="lg"
+                                value={question.correctAnswer || 1}
+                                onChangeCapture={(e)=>setCorrectAnswer(e.target.value)}
+                                onChange={()=>{}}
+                            >
                                 <option value={1}>1</option>
                                 <option value={2}>2</option>
                                 {question.type === 1 && <option value={3}>3</option>}

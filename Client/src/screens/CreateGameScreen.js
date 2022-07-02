@@ -11,7 +11,7 @@ import Api from '../service/api';
 import { useHistory, useParams } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
 
-const DEFAULT_Q = {type: 1, question: '', answer1: '', answer2: '', answer3: '', answer4: '', correctAnswer: null,};
+const DEFAULT_Q = {type: 1, question: '', answer1: '', answer2: '', answer3: '', answer4: '', correctAnswer: 1,};
 
 
 function CreateGameScreen(props) {

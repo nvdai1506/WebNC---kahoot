@@ -20,41 +20,45 @@ function SelectGroup() {
 
       ctx.onAnswerScore(responseTime);
 
-      history.push(`${ctx.url}/result`, { isCorrect: answer === ctx.answer });
+      // history.push(`${ctx.url}/result`, { isCorrect: answer === ctx.answer });
+
+      ctx.onAnswerQuestion(answer);
     }
   }, [answer]);
 
   return (
     <>
-      <div className="row row-cols-2 h-100">
-        <div className="col p-0">
+      <div className={`row row-cols-2 h-100 ${answer ? 'no-pointer' : ''}`}>
+        <div className={`col p-0 ${answer && answer !== 1 ? 'item-disable' : ''}`}>
           <SelectButton
             btnColor="btn-danger"
             shape="triangle"
-            onButtonHandler={setAnswer}
+            onButtonHandler={() => setAnswer(1)}
           />
         </div>
-        <div className="col p-0">
+        <div className={`col p-0 ${answer && answer !== 2 ? 'item-disable' : ''}`}>
           <SelectButton
             btnColor="btn-primary"
             shape="diamond"
-            onButtonHandler={setAnswer}
+            onButtonHandler={() => setAnswer(2)}
           />
         </div>
-        <div className="col p-0">
+        {ctx.questionType === 1 &&
+        <div className={`col p-0 ${answer && answer !== 3 ? 'item-disable' : ''}`}>
           <SelectButton
             btnColor="btn-warning"
             shape="circle"
-            onButtonHandler={setAnswer}
+            onButtonHandler={() => setAnswer(3)}
           />
-        </div>
-        <div className="col p-0">
+        </div>}
+        {ctx.questionType === 1 &&
+          <div className={`col p-0 ${answer && answer !== 4 ? 'item-disable' : ''}`}>
           <SelectButton
             btnColor="btn-success"
             shape="square"
-            onButtonHandler={setAnswer}
+            onButtonHandler={() => setAnswer(4)}
           />
-        </div>
+        </div>}
       </div>
     </>
   );

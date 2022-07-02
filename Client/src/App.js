@@ -26,7 +26,7 @@ function App() {
                 <Route path="/edit/:id" component={CreateGameScreen} />
                 <Route path="/register" component={RegisterScreen} />
                 <Route path="/login" component={LoginScreen} />
-                <Route path="/host" component={HostGameScreen} />
+                <Route path="/host/:id" component={HostGameScreen} />
                 <Route path="/create" component={CreateGameScreen} />
                 <Route path="/play" component={PlayGameScreen} />
                 <Route path="/" component={HomeScreen} />

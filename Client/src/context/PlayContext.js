@@ -11,12 +11,14 @@ const PlayContext = React.createContext({
   questionNumber: 0,
   totalQuestion: 10,
   questionTime: 0,
+  questionType: 1,
   onLogin: () => {},
   onValidation: () => {},
   onAnswerScore: () => {},
   onUsername: () => {},
   onScore: () => {},
   onQuestion: () => {},
+  onAnswerQuestion: () => {},
   url: "",
 });
 

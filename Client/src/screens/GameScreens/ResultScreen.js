@@ -11,17 +11,18 @@ function ResultScreen(props) {
 
   useEffect(() => {
     ctx.onScore(props.history.location.state?.isCorrect);
-    ctx.onQuestion();
+    // ctx.onQuestion();
 
-    setTimeout(() => {
-      history.push(`${ctx.url}/getready`);
-    }, 3000);
+    // setTimeout(() => {
+    //   history.push(`${ctx.url}/getready`);
+    // }, 3000);
   }, []);
 
   return (
     <div
       id="result-game"
-      className="container vh-100 d-flex flex-column justify-content-between"
+      className="container d-flex flex-column justify-content-between"
+      style={{height: 'calc(100vh - 65px)'}}
     >
       <div></div>
       <main>

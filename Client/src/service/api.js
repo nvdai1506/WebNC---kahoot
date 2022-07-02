@@ -4,31 +4,31 @@ const token = localStorage.getItem("x-access-token");
 
 let Api = {};
 
-function request(params) {
-  return new Promise(async (resolve, reject) => {
-    let apiPromise = axios(params);
-    let resError = await apiPromise.catch();
-    const refreshToken = localStorage.getItem("x-refresh-token");
-    if (res.status === 401 && token && refreshToken) {
-      let refresh = await axios({
-        method: "post",
-        url: domain + "/auth/refresh",
-        data: {
-          accessToken: token,
-          refreshToken: refreshToken
-        },
-      });
+// function request(params) {
+//   return new Promise(async (resolve, reject) => {
+//     let apiPromise = axios(params);
+//     let resError = await apiPromise.catch();
+//     const refreshToken = localStorage.getItem("x-refresh-token");
+//     if (res.status === 401 && token && refreshToken) {
+//       let refresh = await axios({
+//         method: "post",
+//         url: domain + "/auth/refresh",
+//         data: {
+//           accessToken: token,
+//           refreshToken: refreshToken
+//         },
+//       });
 
-      if (refresh) {
-        localStorage.setItem("x-refresh-token", refresh.data.refreshToken);
-        return resolve(refresh(params));
-      } else {
-        return reject(refresh.catch(e => e));
-      }
-    }
+//       if (refresh) {
+//         localStorage.setItem("x-refresh-token", refresh.data.refreshToken);
+//         return resolve(refresh(params));
+//       } else {
+//         return reject(refresh.catch(e => e));
+//       }
+//     }
      
-  })
-}
+//   })
+// }
 
 Api.User = {
     register: function (params) {

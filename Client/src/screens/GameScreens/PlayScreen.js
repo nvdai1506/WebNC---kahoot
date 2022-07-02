@@ -3,13 +3,15 @@ import SelectGroup from "../../components/SelectGroup/SelectGroup";
 import PlayContext from "../../context/PlayContext";
 import { Link, useHistory } from "react-router-dom";
 
+let timer =null;
+
 function PlayScreen() {
   let history = useHistory();
   const ctx = useContext(PlayContext);
   const [questionTime, setQuestionTime] = useState(ctx.questionTime);
 
   useEffect(() => {
-    setTimeout(() => {
+    timer = setTimeout(() => {
       setQuestionTime(questionTime - 1);
     }, 1000);
 
@@ -17,6 +19,12 @@ function PlayScreen() {
       history.push(`${ctx.url}/result`, { isTimeup: true });
     }
   }, [questionTime]);
+
+  useEffect(()=>{
+    return () => {
+      clearTimeout(timer);
+    }
+  }, [])
 
   return (
     <div

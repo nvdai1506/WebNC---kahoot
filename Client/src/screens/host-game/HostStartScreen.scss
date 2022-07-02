@@ -91,3 +91,296 @@
         }
     }
 }
+
+#host-question {
+    .col-left {
+        position: relative;
+        .timer {
+            position: relative;
+            height: 100%;
+
+            .timeout {
+                width: 70px;
+                height: 70px;
+                border: 3px solid #000;
+                border-radius: 50%;
+                position: absolute;
+                top: 45%;
+                left: 100%;
+                transform: translate(-50%, -50%);
+
+                font-size: 30px;
+                font-weight: bold;
+                text-align: center;
+                padding-top: 8px;
+            }
+        }
+    }
+    .content-question {
+        padding: 10px 5%px 0;
+
+        .question-title {
+            margin: 0 15%;
+            background-color: rgb(255, 255, 255);
+            box-shadow: rgb(0 0 0 / 20%) 0px 2px 4px;
+            border-radius: 2px;
+    
+            .text-area {
+                height: 150px;
+                font-size: 35px;
+                font-weight: bold;
+            }
+        }
+
+        .statistic {
+            .statistic-wrap {
+                height: 200px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .result-answer {
+                    text-align: center;
+                    margin-top: 50px;
+                    .item {
+                        height: 200px;
+                        width: 100px;
+
+                        .item-wrap {
+                            height: 100px;
+                            position: relative;
+
+                            .item-col {
+                                width: 100%;
+                                position: absolute;
+                                bottom: 0;
+                            }
+    
+                            .item-col-1 {
+                                background-color: red;
+                            }
+                            .item-col-2 {
+                                background-color: blue;
+                            }
+                            .item-col-3 {
+                                background-color: yellow;
+                            }
+                            .item-col-4 {
+                                background-color: green;
+                            }
+                        }
+
+                        
+                    }  
+                }
+            }
+        }
+
+        .question-answers {
+            margin: 40px 0;
+            .list-answer {
+                justify-content: space-around;
+                .item-answer {
+                    padding: 10px;
+                    margin-top: 20px;
+                    height: 80px;
+                    display: flex;
+                    align-items: center;
+                    border: 1px solid rgba(0, 0, 0, 0.125);
+                    border-radius: 8px;
+                    box-shadow: rgb(0 0 0 / 15%) 0px 2px 2px 2px;
+
+                    &.active {
+                        background-color: #0F9D58;
+                    }
+
+                    .icon {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin-right: 5px;
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 10px;
+                        
+                    }
+
+                    &.item-1 {
+                        border: 2px solid red;
+
+                    }
+                    &.item-2 {
+                        border: 2px solid blue;
+                        svg {
+                            transform: rotate(45deg);
+                        }
+                    }
+                    &.item-3 {
+                        border: 2px solid yellow;
+                    }
+                    &.item-4 {
+                        border: 2px solid green;
+                    }
+
+                    input, input:focus {
+                        border: none;
+                        outline: none;
+                        box-shadow: none;
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+
+#count-down {
+    * , *::before, *::after {
+        padding: 0;
+        margin: 0 auto;
+        box-sizing: border-box;
+      }
+      
+      body {
+        background-color: #777;
+        height: 100vh;
+        background-image:
+          linear-gradient(black, transparent 10%, transparent calc(50% - 1px), #aaa calc(50% - 1px), #aaa calc(50% + 1px), transparent calc(50% + 1px), transparent 90%, black),
+          linear-gradient(90deg, black, transparent 10%, transparent calc(50% - 1px), #aaa calc(50% - 1px), #aaa calc(50% + 1px), transparent calc(50% + 1px), transparent 90%, black);
+      }
+      
+      .cont {
+        width: 250px;
+        height: 250px;
+        position: fixed;
+        text-align: center;
+        font-weight: bold;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 2px solid #aaa;
+        border-radius: 50%;
+        overflow: hidden;
+        
+        &::after {
+          content: '';
+          width: 200px;
+          height: 200px;
+          position: absolute;
+          top: 23px;
+          left: 23px;
+          border: 1px solid #aaa;
+          border-radius: 50%;
+          background: #777;
+          background-image:
+            linear-gradient(transparent calc(50% - 1px), #aaa calc(50% - 1px), #aaa calc(50% + 1px), transparent calc(50% + 1px)),
+            linear-gradient(90deg, transparent calc(50% - 1px), #aaa calc(50% - 1px), #aaa calc(50% + 1px), transparent calc(50% + 1px));
+      
+        }  
+      }
+      
+      .spinner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 125px;
+        height: 100px;
+        transform-origin: 0 0;
+        background-image: linear-gradient(black, transparent);
+        animation: spin 1s infinite linear;
+        
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(-360deg); }
+        }
+      }
+      
+      .number {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 2;
+        transform: translate(-50%, -50%);
+        width: 250px;
+        height: 250px;
+        
+        &::after {
+          content: '';
+          width: 250px;
+          height: 250px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          font-size: 150px;
+          line-height: 250px;
+          animation: count 4s steps(3, start);
+      
+          @keyframes count {
+            0% { content: ''; }
+            25% { content: '3'; }
+            50% { content: '2'; }
+            75% { content: '1'; }
+            100% { content: '0'; }
+          }
+        }
+      }
+      
+}
+
+#host-over {
+    padding: 20px 30%;
+    overflow-y: scroll;
+
+    .over-wrap {
+        border: 2px solid #000;
+        border-radius: 5px;
+        box-shadow: 4px 8px 4px 2px rgb(0 0 0 / 15%);
+        th, td {
+            padding: 30px;
+
+        }
+        svg {
+            height: 30px;
+            color: #000 !important;
+        }
+
+        .user {
+            font-size: 22px;
+            font-weight: bold;
+        }
+    }
+}
+
+
+$font: 'Montserrat', sans-serif;
+$blue: #4285F4;
+$red:  #DB4437;
+$yellow: #F4B400;
+$green: #0F9D58;
+$colors-list: $red $blue $yellow $green;
+
+.google-loader {
+	span {
+		display: inline-block;
+		margin-top: 10px;
+		height: 20px;
+		width: 20px;
+		border-radius: 50%;
+		&:not(:first-child) { margin-left: 10px; }
+	}
+	@each $current-color in $colors-list {
+		$i: index($colors-list, $current-color);
+		$t: $i * -0.25;
+		span:nth-child(#{$i}) {
+			background: $current-color;
+			animation: move 1s ease-in-out (#{$t}s) infinite alternate;
+		}
+	}
+}
+
+@keyframes move {
+	from { transform: translateY(-10px); }
+	to { transform: translateY(5px); }
+}
+

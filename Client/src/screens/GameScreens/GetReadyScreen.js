@@ -1,19 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import RingLoader from "react-spinners/RingLoader";
 import PlayContext from "../../context/PlayContext";
-// import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 function GetReadyScreen() {
-  // let history = useHistory();
+  let history = useHistory();
   const ctx = useContext(PlayContext);
 
-  // useEffect(() => {
-  //   if (ctx.isPlaying === true) {
-  //     setTimeout(() => {
-  //       history.push(`${ctx.url}/gameblock`);
-  //     }, 5000);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (ctx.isPlaying === true) {
+      setTimeout(() => {
+        history.push(`${ctx.url}/gameblock`);
+      }, 4000);
+    }
+  }, []);
 
   return (
     <div

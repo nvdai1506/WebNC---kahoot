@@ -8,7 +8,7 @@ import {FiEdit} from 'react-icons/fi'
 import Answer4 from '../../static/image/4-answer.jpg';
 import Answer2 from '../../static/image/2-answer.jpg';
 
-const DEFAULT_Q = {type: 1, question: '', answer1: '', answer2: '', answer3: '', answer4: '', correctAnswer: null,};
+const DEFAULT_Q = {type: 1, question: '', answer1: '', answer2: '', answer3: '', answer4: '', correctAnswer: 1,};
 
 function ListQuestion(props) {
     const {listQuestion, setListQuestion, currentQuestion, setCurrentQuestion, saveCurrentQuestion} = props;

@@ -35,10 +35,11 @@ function ListQuiz(props) {
 
     return (
         <div id="list-quiz">
+            {!isHost && 
             <div className='list-title mt-5'>
                 <h4>Games</h4>
                 
-            </div>
+            </div>}
             <div className='list-content row '>
                 {
                     listQuiz.map((item, index) => {
@@ -54,14 +55,14 @@ function ListQuiz(props) {
                                         <div className='header-title'>
                                             <Card.Title className='col-10'>{item.quiz_name}</Card.Title>
                                             {isHost ? 
-                                            <Button className='view-more mt-3' variant='warning' onClick={()=>{history.push(`/host/${item.id}/start`)}} style={{width: '70px'}}>Host</Button> :
+                                            <Button className='view-more mt-3' variant='warning' onClick={()=>{history.push(`/host/${item.id}`)}} style={{width: '70px'}}>Host</Button> :
                                             <Dropdown className='view-more'>
                                                 <Dropdown.Toggle variant='' id="dropdown-basic">
                                                    <CgMoreO style={{width: '20px', height: '20px', color: '#000'}}/>
                                                 </Dropdown.Toggle>
                                                 <Dropdown.Menu>
                                                     <Dropdown.Item href={'/edit/' + item.id}>Edit</Dropdown.Item>
-                                                    <Dropdown.Item onClick={()=>{history.push(`/host/${item.id}/start`)}}>Host</Dropdown.Item>
+                                                    <Dropdown.Item onClick={()=>{history.push(`/host/${item.id}`)}}>Host</Dropdown.Item>
                                                 </Dropdown.Menu>
                                             </Dropdown>}
                                         </div>

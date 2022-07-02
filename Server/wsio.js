@@ -32,12 +32,13 @@ io.on('connection',(socket)=>{
     })
 
     socket.on('question-over', (data) => {
+        console.log('question-over', data);
         socket.to(`${data.pin}`).emit('question-over', data)
     })
 
     socket.on('next-question', (data) => {
-        console.log('next-question', data.pin);
-        socket.to(data.pin).emit('question-start', {data: data.question});
+        console.log('next-question', data);
+        socket.to(data.pin).emit('question-start', data);
 
     })
 
@@ -47,6 +48,10 @@ io.on('connection',(socket)=>{
    
     socket.on('sent-info', (data) => {
         io.to(data.id).emit('sent-info', {answeredCorrect: data.answeredCorrect, score: data.score});
+    })
+
+    socket.on('game-over', (data) => {
+        socket.to(`${data.pin}`).emit('game-over', {players: data.players})
     })
 })
 console.log(`WebSocket Server is running at ws://localhost:${WS_PORT}`);

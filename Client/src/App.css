@@ -19,16 +19,26 @@ a {
     text-align: left !important;
 }
 
+.no-pointer, .no-pointer button {
+    pointer-events: none;
+}
+
+.item-disable {
+    opacity: 0.6;
+}
+
 .App > .header {
     width: 100vw;
     height: 65px;
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 9999;
+    z-index: 1000;
 }
 
 .App > .app-container {
     height: 100vh;
     padding-top: 65px;
+    overflow-x: hidden;
 }
+

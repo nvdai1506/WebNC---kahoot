@@ -1,6 +1,6 @@
 import React from 'react';
 import "./HomeScreen.scss"
-import {Button} from "react-bootstrap"
+import {Button, Modal} from "react-bootstrap"
 import { Link } from "react-router-dom";
 import ListQuiz from '../components/list-quiz/ListQuiz';
 
@@ -11,6 +11,8 @@ import imgDeployGame from "../static/image/deploy-game.jpg"
 
 
 function HomeScreen(props) {
+    const [modalShow, setModalShow] = React.useState(false);
+
     return (
         <div id='home-screen'>
             <div className='row justify-content-between mt-5'>
@@ -47,9 +49,9 @@ function HomeScreen(props) {
                         </div>
                     </div>
                     <div className='button'>
-                        <Link to="host">
-                            <Button >Host game</Button>
-                        </Link>
+                        
+                        <Button onClick={() => setModalShow(true)}>Host game</Button>
+                       
                     </div>
                 </div>
 
@@ -57,6 +59,25 @@ function HomeScreen(props) {
 
             <ListQuiz></ListQuiz>
 
+            <Modal
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        Games: 
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <ListQuiz isHost={true} />
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant='danger' onClick={() => setModalShow(false)}>Close</Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 }
