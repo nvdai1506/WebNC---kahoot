@@ -31,9 +31,10 @@ function HostStartScreen(props) {
                         <div className='row'>
                             {players.map((item, index) => {
                                 return (
-                                    <div className='player col-3' key={index}>
-                                        <div className="content">
-                                            <FiUserCheck /> <span>{item.name}</span>
+                                    <div className='player col-3 align-items-center' key={index}>
+                                        <div className="content row">
+                                            <FiUserCheck className="col-3" /> 
+                                            <span className="col-9">{item.name}</span>
                                         </div>
                                     </div>
                                 )

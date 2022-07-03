@@ -52,7 +52,7 @@ function CurrentQuestion(props) {
                 <div className='question-answers'>
                     <div className='list-answer row'>
                         <div className='item-answer item-1 col-5'>
-                            <InputGroup className="mb-3">
+                            <InputGroup className="">
                                 <div className='icon-1 icon col-2'>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-triangle-fill" viewBox="0 0 16 16">
                                         <path fillRule="evenodd" d="M7.022 1.566a1.13 1.13 0 0 1 1.96 0l6.857 11.667c.457.778-.092 1.767-.98 1.767H1.144c-.889 0-1.437-.99-.98-1.767L7.022 1.566z"/>
@@ -70,7 +70,7 @@ function CurrentQuestion(props) {
                             </InputGroup>
                         </div>
                         <div className='item-answer item-2 col-5'>
-                            <InputGroup className="mb-3">
+                            <InputGroup className="">
                                 <div className='icon-2 icon col-2'>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-square-fill" viewBox="0 0 16 16">
                                         <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2z"/>
@@ -89,7 +89,7 @@ function CurrentQuestion(props) {
                         </div>
                         {question.type === 1 && 
                         <div className='item-answer item-3 col-5'>
-                            <InputGroup className="mb-3">
+                            <InputGroup className="">
                                 <div className='icon-3 icon col-2'>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-circle-fill" viewBox="0 0 16 16">
                                         <circle cx="8" cy="8" r="8"/>
@@ -108,7 +108,7 @@ function CurrentQuestion(props) {
                         </div>}
                         {question.type === 1 && 
                         <div className='item-answer item-4 col-5'>
-                            <InputGroup className="mb-3">
+                            <InputGroup className="">
                                 <div className='icon-4 icon col-2'>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-square-fill" viewBox="0 0 16 16">
                                         <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2z"/>

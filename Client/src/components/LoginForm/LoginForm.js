@@ -46,6 +46,7 @@ function LoginForm({ type, name, id, placeholder, buttonContent }) {
             placeholder={placeholder}
             value={nameState.value}
             onChange={nameChangeHandler}
+            maxLength={9}
           />
         </div>
 

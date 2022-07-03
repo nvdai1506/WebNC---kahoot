@@ -33,14 +33,14 @@ function SelectGroup() {
           <SelectButton
             btnColor="btn-danger"
             shape="triangle"
-            onButtonHandler={() => setAnswer(1)}
+            onButtonHandler={!answer && (() => setAnswer(1))}
           />
         </div>
         <div className={`col p-0 ${answer && answer !== 2 ? 'item-disable' : ''}`}>
           <SelectButton
             btnColor="btn-primary"
             shape="diamond"
-            onButtonHandler={() => setAnswer(2)}
+            onButtonHandler={!answer && (() => setAnswer(2))}
           />
         </div>
         {ctx.questionType === 1 &&
@@ -48,7 +48,7 @@ function SelectGroup() {
           <SelectButton
             btnColor="btn-warning"
             shape="circle"
-            onButtonHandler={() => setAnswer(3)}
+            onButtonHandler={!answer && (() => setAnswer(3))}
           />
         </div>}
         {ctx.questionType === 1 &&
@@ -56,7 +56,7 @@ function SelectGroup() {
           <SelectButton
             btnColor="btn-success"
             shape="square"
-            onButtonHandler={() => setAnswer(4)}
+            onButtonHandler={!answer && (() => setAnswer(4))}
           />
         </div>}
       </div>

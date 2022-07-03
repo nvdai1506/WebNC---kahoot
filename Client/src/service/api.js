@@ -1,38 +1,55 @@
 import axios from "axios";
 const domain = "http://localhost:3000";
-const token = localStorage.getItem("x-access-token");
+let token = localStorage.getItem("x-access-token");
 
 let Api = {};
 
-// function request(params) {
-//   return new Promise(async (resolve, reject) => {
-//     let apiPromise = axios(params);
-//     let resError = await apiPromise.catch();
-//     const refreshToken = localStorage.getItem("x-refresh-token");
-//     if (res.status === 401 && token && refreshToken) {
-//       let refresh = await axios({
-//         method: "post",
-//         url: domain + "/auth/refresh",
-//         data: {
-//           accessToken: token,
-//           refreshToken: refreshToken
-//         },
-//       });
+function request(params) {
+  return new Promise(async (resolve, reject) => {
+    let apiPromise = axios(params);
+    let res = await apiPromise.catch(res => ({ 
+        ...res.response, 
+        error: res.message
+    }));
 
-//       if (refresh) {
-//         localStorage.setItem("x-refresh-token", refresh.data.refreshToken);
-//         return resolve(refresh(params));
-//       } else {
-//         return reject(refresh.catch(e => e));
-//       }
-//     }
+    if (res && (res.status >= 200 && res.status < 300)) {
+      return resolve(res);
+    } else if (res && res.status === 401) {
+      let refreshToken = localStorage.getItem("x-refresh-token");
+
+      if (token && refreshToken) {
+        let refresh = await axios({
+          method: "post",
+          url: domain + "/auth/refresh",
+          data: {
+            accessToken: token,
+            refreshToken: refreshToken
+          },
+        }).catch(res => ({ 
+            ...res.response, 
+            error: res.message
+        }));
+  
+        if (refresh && refresh.status === 200) {
+          token = refresh.data.accessToken;
+          localStorage.setItem("x-access-token", token);
+          params.headers["x-access-token"] = token;
+          return resolve(axios(params));
+        } else {
+          return reject(refresh);
+        }
+
+      } else {
+        return reject(res);
+      }
+    }
      
-//   })
-// }
+  })
+}
 
 Api.User = {
     register: function (params) {
-        return axios({
+        return request({
             method: 'post',
             url: domain + '/users',
             data: params,
@@ -40,7 +57,7 @@ Api.User = {
     },
 
     login: function (params) {
-        return axios ({
+        return request ({
             method: 'post',
             url: domain + '/auth',
             data: params,
@@ -48,7 +65,7 @@ Api.User = {
     },
 
   refreshToken: function (params) {
-    return axios({
+    return request({
       method: "post",
       url: domain + "/auth/refresh",
       data: params,
@@ -58,7 +75,7 @@ Api.User = {
 
 Api.Quiz = {
   getList: function () {
-    return axios({
+    return request({
       method: "get",
       url: domain + "/quiz",
       headers: { "x-access-token": token },
@@ -66,7 +83,7 @@ Api.Quiz = {
   },
 
   get: function (id) {
-    return axios({
+    return request({
       method: "get",
       url: domain + "/quiz/" + id,
       headers: { "x-access-token": token },
@@ -74,7 +91,7 @@ Api.Quiz = {
   },
 
   getByUser: function (id) {
-    return axios({
+    return request({
       method: "get",
       url: domain + "/quiz/user/" + id,
       headers: { "x-access-token": token },
@@ -82,7 +99,7 @@ Api.Quiz = {
   },
 
   add: function (params) {
-    return axios({
+    return request({
       method: "post",
       url: domain + "/quiz",
       headers: { "x-access-token": token },
@@ -91,7 +108,7 @@ Api.Quiz = {
   },
 
   delete: function (id) {
-    return axios({
+    return request({
       method: "delete",
       url: domain + "/quiz/" + id,
       headers: { "x-access-token": token },
@@ -99,7 +116,7 @@ Api.Quiz = {
   },
 
   update: function (id, params) {
-    return axios({
+    return request({
       method: "patch",
       url: domain + "/quiz/" + id,
       headers: { "x-access-token": token },
@@ -110,7 +127,7 @@ Api.Quiz = {
 
 Api.Question = {
   getList: function () {
-    return axios({
+    return request({
       method: "get",
       url: domain + "/question",
       headers: { "x-access-token": token },
@@ -118,7 +135,7 @@ Api.Question = {
   },
 
   get: function (id) {
-    return axios({
+    return request({
       method: "get",
       url: domain + "/question/" + id,
       headers: { "x-access-token": token },
@@ -126,7 +143,7 @@ Api.Question = {
   },
 
   getByQuiz: function (id) {
-    return axios({
+    return request({
       method: "get",
       url: domain + "/question/quiz/" + id,
       headers: { "x-access-token": token },
@@ -134,7 +151,7 @@ Api.Question = {
   },
 
   getByUser: function (id) {
-    return axios({
+    return request({
       method: "get",
       url: domain + "/question/user/" + id,
       headers: { "x-access-token": token },
@@ -142,7 +159,7 @@ Api.Question = {
   },
 
   add: function (params) {
-    return axios({
+    return request({
       method: "post",
       url: domain + "/question",
       headers: { "x-access-token": token },
@@ -151,7 +168,7 @@ Api.Question = {
   },
 
   delete: function (id) {
-    return axios({
+    return request({
       method: "delete",
       url: domain + "/question/" + id,
       headers: { "x-access-token": token },
@@ -159,7 +176,7 @@ Api.Question = {
   },
 
   update: function (id, params) {
-    return axios({
+    return request({
       method: "patch",
       url: domain + "/question/" + id,
       headers: { "x-access-token": token },

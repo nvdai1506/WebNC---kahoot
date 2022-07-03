@@ -52,10 +52,10 @@
                 padding: 20px 20%;
                 
                 .player {
-                    padding: 10px;
+                    padding: 10px 20px;
                     .content {
                         background-color: #0E6251;
-                        padding: 20px 10px;
+                        padding: 20px 5px;
                         border-radius: 10px;
                         box-shadow: 2px 2px 2px 3px #2f4641;
 
@@ -93,6 +93,15 @@
 }
 
 #host-question {
+    .question-index {
+        margin-top: 20px;
+        margin-left: 20px;
+        .index {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    }
     .col-left {
         position: relative;
         .timer {
@@ -106,7 +115,7 @@
                 border-radius: 50%;
                 position: absolute;
                 top: 45%;
-                left: 100%;
+                left: 80%;
                 transform: translate(-50%, -50%);
 
                 font-size: 30px;
@@ -329,27 +338,69 @@
 }
 
 #host-over {
-    padding: 20px 30%;
-    overflow-y: scroll;
+    
+    .loading {
+        .finish {
+            height: 300px;
+            width: 300px;
+            background: url(../../static/finish.gif);
+            background-size: contain;
 
-    .over-wrap {
-        border: 2px solid #000;
-        border-radius: 5px;
-        box-shadow: 4px 8px 4px 2px rgb(0 0 0 / 15%);
-        th, td {
-            padding: 30px;
-
-        }
-        svg {
-            height: 30px;
-            color: #000 !important;
-        }
-
-        .user {
-            font-size: 22px;
-            font-weight: bold;
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
     }
+
+    .result {
+        padding: 20px 30%;
+        overflow-y: scroll;
+        background: url(../../static/congratulation.gif);
+
+        .title {
+            text-align: center;
+            color: red;
+            font-size: 40px;
+            font-weight: bold;
+    
+            svg {
+                color: red !important;
+                height: 70px;
+                width: 80px;
+            }
+        }
+    
+        .over-wrap {
+            border: 2px solid #000;
+            border-radius: 5px;
+            box-shadow: 4px 8px 4px 2px rgb(0 0 0 / 15%);
+            th, td {
+                padding: 30px;
+    
+            }
+            svg {
+                height: 30px;
+                color: #000 !important;
+            }
+    
+            table {
+                margin-bottom: 0!important;
+            }
+    
+            .active-player {
+                td, svg {
+                    color: red !important;
+                }
+            }
+    
+            .user {
+                font-size: 22px;
+                font-weight: bold;
+            }
+        }
+    }
+    
 }
 
 

@@ -165,6 +165,7 @@ function HostGameScreen(props) {
                         timeout={TIME_PLAY}
                         overQuestion={overQuestion}
                         nextQuestion={nextQuestion}  
+                        total={listQuestion.length}
                     />
                 </Route>
 

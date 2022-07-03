@@ -24,6 +24,8 @@ function CreateGameScreen(props) {
     const [listQuestion, setListQuestion] = useState([])
 
     const [showModalError, setShowModalError] =useState(false);
+    const [showModalComplete, setShowModalComplete] =useState(false);
+    const [showLoading, setShowLoading] =useState(false);
 
     
     useEffect (()=>{
@@ -71,6 +73,7 @@ function CreateGameScreen(props) {
         setListQuestion([{...DEFAULT_Q, index: 0}]);
         setQuestion({...DEFAULT_Q, index: 0});
        }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
@@ -114,12 +117,22 @@ function CreateGameScreen(props) {
         if (listQuestion.some(item => !item.isValid)) {
             setShowModalError(true);
         } else {
+            setShowLoading(true);
+
             for (let i = 0; i < listQuestion.length; i++) {
                 await pushQuestion(listQuestion[i])
             }
-            setCreateGameSession(null);
-            history.push("/")
+            
+            setTimeout(() => {
+                setShowLoading(false);
+                setShowModalComplete(true);
+            }, 1000);
         }
+    }
+
+    function exit() {
+        setCreateGameSession(null);
+        history.push("/");
     }
 
 
@@ -164,6 +177,35 @@ function CreateGameScreen(props) {
                     <Button variant="danger" onClick={()=>setShowModalError(false)}>OK</Button>
                 </Modal.Footer>
             </Modal>
+
+            <Modal
+                size="md"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                show={showModalComplete}
+                onHide={()=>{setShowModalComplete(false)}}
+            >
+                <Modal.Header className="justify-content-center">
+                </Modal.Header>
+                <Modal.Body>
+                    <h4 className="text-center">Save success</h4>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="warning" href={`/host/${id}`}>Host</Button>
+                    <Button variant="danger" onClick={exit}>Exit</Button>
+                </Modal.Footer>
+            </Modal>
+
+            {showLoading && 
+            <div className='loading-screen'>
+                <div className='icon-loading'>
+                    <div className='lds-facebook'>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>}
         </div>
     );
 }

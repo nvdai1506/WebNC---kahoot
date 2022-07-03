@@ -56,7 +56,7 @@ function ListQuiz(props) {
                                             <Card.Title className='col-10'>{item.quiz_name}</Card.Title>
                                             {isHost ? 
                                             <Button className='view-more mt-3' variant='warning' onClick={()=>{history.push(`/host/${item.id}`)}} style={{width: '70px'}}>Host</Button> :
-                                            <Dropdown className='view-more'>
+                                            <Dropdown className='view-more' drop='start'>
                                                 <Dropdown.Toggle variant='' id="dropdown-basic">
                                                    <CgMoreO style={{width: '20px', height: '20px', color: '#000'}}/>
                                                 </Dropdown.Toggle>

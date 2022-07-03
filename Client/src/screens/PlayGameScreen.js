@@ -241,7 +241,10 @@ function PlayGameScreen() {
           path={`${path}/over`}
           isAuthentication={true}
         > 
-          <HostOver players={players}/>
+          <HostOver
+            players={players}
+            playerId={playerId}
+          />
         </ProtectedRoute>
       </Switch>
     </PlayContext.Provider>
