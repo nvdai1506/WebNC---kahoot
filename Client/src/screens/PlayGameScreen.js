@@ -114,7 +114,7 @@ function PlayGameScreen() {
     socket.on("question-start", (data) => {
       console.log('Question start ---', data);
       setTotalQuestion(data.total);
-      questionHandler();
+      setQuestionNumber(data.index);
       setQuestionTime(data.timeout);
       setQuestionType(data.type);
       setAnswer('');

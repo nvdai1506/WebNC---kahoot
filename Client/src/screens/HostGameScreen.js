@@ -23,7 +23,7 @@ let qStatistic = {
 
 
 
-const TIME_PLAY = 30;
+const TIME_PLAY = 20;
 
 function HostGameScreen(props) {
     const {id} = useParams();
@@ -35,6 +35,7 @@ function HostGameScreen(props) {
     const [listQuestion, setListQuestion] = useState(qList);
     const [currentQuestion, setCurrentQuestion] = useState(qIndex);
     const [statistic, setStatistic] = useState(qStatistic);
+    const [timePlay, setTimePlay] = useState(TIME_PLAY);
 
     useEffect(()=>{
        
@@ -109,14 +110,14 @@ function HostGameScreen(props) {
 
         return () => {
             socket.close();
-        }
+        }   
     },[id])
 
     function startQuestion(index) {
         setCurrentQuestion(index);
         qIndex = index;
 
-        socket.emit('next-question', {pin: code, type: listQuestion[index].type, total: listQuestion.length,timeout: TIME_PLAY});
+        socket.emit('next-question', {pin: code, type: listQuestion[index].type, index: index + 1, total: listQuestion.length, timeout: timePlay});
         // history.push(`/host/${id}/question`);
         history.push(`/host/${id}/countdown?redirect=/host/${id}/question`);
 
@@ -162,7 +163,7 @@ function HostGameScreen(props) {
                         currentQuestion={currentQuestion}
                         startQuestion={startQuestion}
                         statistic={statistic}
-                        timeout={TIME_PLAY}
+                        timeout={timePlay}
                         overQuestion={overQuestion}
                         nextQuestion={nextQuestion}  
                         total={listQuestion.length}
@@ -174,6 +175,8 @@ function HostGameScreen(props) {
                         code={code}
                         players={players}
                         startQuestion={startQuestion}
+                        timePlay={timePlay}
+                        setTimePlay={setTimePlay}
                     />
                 </Route>
 

@@ -61,7 +61,7 @@ function HostQuestion (props) {
                 </div>
             </div>
             <div className='content-question col-10'>
-                <Form >
+                <Form className="mt-3" >
                     <div className='question-title'>
                         <Form.Group className="text-center">
                             <Form.Label className='text-area'>{question.question}</Form.Label>

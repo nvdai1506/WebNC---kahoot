@@ -3,12 +3,12 @@ import React from 'react';
 import "./HostStartScreen.scss"
 import {FaUser} from "react-icons/fa";
 import {FiUserCheck} from "react-icons/fi"
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 
 
 function HostStartScreen(props) {
 
-    const { code, players, startQuestion } = props;
+    const { code, players, startQuestion, timePlay, setTimePlay } = props;
 
     function handleNextQuestion() {
         startQuestion(0);
@@ -28,6 +28,17 @@ function HostStartScreen(props) {
                         <FaUser /> <span>{players.length}</span>
                     </div>
                     <div className='list-user'>
+                        <Form.Group className="time-input"> 
+                            <Form.Label>Seconds per question:</Form.Label>
+                            <Form.Control 
+                                type='number'
+                                min={1} 
+                                className="form-control"
+                                onChange={()=>{}}
+                                value={timePlay}
+                                onChangeCapture={(e)=>setTimePlay(e.target.value)}
+                            />
+                        </Form.Group>
                         <div className='row'>
                             {players.map((item, index) => {
                                 return (
@@ -42,7 +53,7 @@ function HostStartScreen(props) {
                         </div>
                     </div>
                     <div className='buttons'>
-                        {players.length && <Button variant='primary' onClick={handleNextQuestion}>Start</Button>}
+                        {players.length ? <Button variant='primary' onClick={handleNextQuestion}>Start</Button> : ''}
                     </div>
                 </div>
             </div>

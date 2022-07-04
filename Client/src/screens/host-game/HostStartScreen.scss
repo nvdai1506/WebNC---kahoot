@@ -50,6 +50,22 @@
             .list-user {
                 width: 100%;
                 padding: 20px 20%;
+                position: relative;
+
+                .time-input {
+                    position: absolute;
+                    width: 200px;
+                    left: 0;
+
+                    label {
+                        font-size: 12px;
+                        color:#000;
+                        font-weight: bold;
+                    }
+                    input {
+                        width: 80px;
+                    }
+                }
                 
                 .player {
                     padding: 10px 20px;
@@ -376,9 +392,10 @@
             border-radius: 5px;
             box-shadow: 4px 8px 4px 2px rgb(0 0 0 / 15%);
             th, td {
-                padding: 30px;
-    
+                text-align: center;
+                padding: 20px 0;
             }
+            
             svg {
                 height: 30px;
                 color: #000 !important;
