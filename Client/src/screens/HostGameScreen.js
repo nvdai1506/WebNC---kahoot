@@ -10,6 +10,8 @@ import HostQuestion from './host-game/HostQuestion';
 import CountDown from './host-game/CountDown';
 import HostOver from './host-game/HostOver';
 
+import api from "../service/api"
+
 let socket;
 let qList = [];
 let qIndex = 0;
@@ -74,7 +76,7 @@ function HostGameScreen(props) {
         let _pin = (Math.round(Math.random() * 10000) + 10000).toString().slice(1);
         setCode(_pin);
 
-        socket = io("localhost:3001");
+        socket = io(api.socketDomain);
         socket.on("connect", () => {
             console.log('Connect socket server success.', socket.id); 
 

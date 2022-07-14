@@ -17,6 +17,7 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import GetReadyScreen from "./GameScreens/GetReadyScreen";
 
 import { io } from "socket.io-client";
+import api from "../service/api"
 
 let socket;
 let myAnswer = null;
@@ -84,7 +85,7 @@ function PlayGameScreen() {
   function ioJoinRoom(value) {
     setPin(value);
 
-    socket = io("localhost:3001");
+    socket = io(api.socketDomain);
     socket.on("connect", () => {
       console.log('Connect socket server success.', socket.id); 
       setPlayerId(socket.id);

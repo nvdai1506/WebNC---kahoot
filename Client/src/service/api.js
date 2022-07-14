@@ -2,7 +2,10 @@ import axios from "axios";
 const domain = "http://localhost:3000";
 let token = localStorage.getItem("x-access-token");
 
-let Api = {};
+let Api = {
+  apiDomain: domain,
+  socketDomain: 'http://localhost:3001'
+};
 
 function request(params) {
   return new Promise(async (resolve, reject) => {
