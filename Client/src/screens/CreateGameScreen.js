@@ -156,6 +156,7 @@ function CreateGameScreen(props) {
                     <CurrentQuestion
                         question={question}
                         setQuestion={setQuestion}
+                        saveCurrentQuestion={saveCurrentQuestion}
                     />
                 </div>
             </div>

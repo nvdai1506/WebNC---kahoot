@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Form, InputGroup } from 'react-bootstrap';
 
-// Question type: 1- 4 answer, 2- 2 answer
+// Question type: 1: 4 answer, 2: 2 answer
+
+let timerSave = null;
 
 function CurrentQuestion(props) {
-    const {question, setQuestion} = props;
+    const {question, setQuestion, saveCurrentQuestion} = props;
 
     let refForm;
+
+    useEffect(()=>{
+        clearTimeout(timerSave);
+        timerSave = setTimeout(() => {
+            saveCurrentQuestion();
+        }, 2000);
+
+        return () => {
+            clearTimeout(timerSave);
+        }
+    }, [question, saveCurrentQuestion])
 
     function setCQName (value) {
         setQuestion({
@@ -14,6 +27,8 @@ function CurrentQuestion(props) {
             question: value,
             isValid: refForm.checkValidity(),
         })
+        
+        
     }
 
     function setCQAnswer (index ,value) {

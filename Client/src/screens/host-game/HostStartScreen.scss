@@ -8,6 +8,7 @@
 
             .code-pin {
                 width: max-content;
+                min-width: 600px;
                 padding: 10px 100px;
                 background-color: #fff;
                 border-radius: 10px;
@@ -23,9 +24,52 @@
 
                 h1 {
                     font-weight: 900;
-                    font-size: 50px;
+                    font-size: 60px;
                 }
             }
+
+            .qr-code {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                .text-url {
+                    width: max-content;
+                    font-size: 14px;
+                    position: relative;
+                    text-align: center;
+                    margin-left: -30px;
+                    
+                    svg {
+                        width: 25px;
+                        color: #000 !important;
+                        position: absolute;
+                        right: -30px;
+                        top: -20px;
+                        cursor: pointer;
+                    }
+
+                    
+                }
+
+                .copied {
+                    &::after {
+                        content: 'copied!';
+                        position: absolute;
+                        right: -85px;
+                        top: -20px;
+                        background-color: #000;
+                        color: #fff;
+                        padding: 4px 6px;
+                        font-size: 12px;
+                        border-radius: 5px;
+                    }
+                }
+
+            }
+
+            
         }
         .h-main {
             width: 100%;

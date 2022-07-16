@@ -18,22 +18,11 @@ import GetReadyScreen from "./GameScreens/GetReadyScreen";
 
 import { io } from "socket.io-client";
 import api from "../service/api"
+import AutoPassCode from "./GameScreens/AutoPassCode";
 
 let socket;
 let myAnswer = null;
 
-// const ANSWER_DATA = [
-//   { question: "fuck you?", answer: "triangle" },
-//   { question: "fuck you?", answer: "triangle" },
-//   { question: "fuck you?", answer: "triangle" },
-//   { question: "fuck you?", answer: "square" },
-//   { question: "fuck you?", answer: "square" },
-//   { question: "fuck you?", answer: "diamond" },
-//   { question: "fuck you?", answer: "diamond" },
-//   { question: "fuck you?", answer: "circle" },
-//   { question: "fuck you?", answer: "circle" },
-//   { question: "fuck you?", answer: "circle" },
-// ];
 
 function PlayGameScreen() {
   let { path, url } = useRouteMatch();
@@ -93,14 +82,7 @@ function PlayGameScreen() {
       socket.emit('player-joined', {pin: value})
 
       history.push(`${url}/join`);
-
-      
-
-    });
-
-
-
-    
+    });    
   }
 
   // Type name
@@ -208,6 +190,7 @@ function PlayGameScreen() {
     >
       <Switch>
         <Route exact path={path} component={PassCodeScreen} />
+
         <ProtectedRoute
           path={`${path}/join`}
           component={LoginScreen}
@@ -247,6 +230,8 @@ function PlayGameScreen() {
             playerId={playerId}
           />
         </ProtectedRoute>
+
+        <Route exact path={`${path}/:id`} component={AutoPassCode} />
       </Switch>
     </PlayContext.Provider>
   );
