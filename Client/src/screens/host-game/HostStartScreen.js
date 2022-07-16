@@ -7,7 +7,7 @@ import {VscCopy} from "react-icons/vsc";
 import { Button, Form } from 'react-bootstrap';
 
 import QRCode from 'qrcode'
-const host = 'http://localhost:5000/play/'
+const host = 'https://kahoot-play.web.app/play/'
 
 let timerShow = null;
 

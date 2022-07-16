@@ -1,10 +1,10 @@
 import axios from "axios";
-const domain = "http://localhost:3000";
+const domain = "https://kahootserverd.herokuapp.com";
 let token = localStorage.getItem("x-access-token");
 
 let Api = {
   apiDomain: domain,
-  socketDomain: 'http://localhost:3001'
+  socketDomain: domain
 };
 
 function request(params) {
