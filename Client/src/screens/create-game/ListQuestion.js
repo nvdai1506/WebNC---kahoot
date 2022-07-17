@@ -47,6 +47,9 @@ function ListQuestion(props) {
             return {...el, index: i};
         });
         setListQuestion(_list);
+
+        let currentIndex = index < _list.length ? index : _list.length - 1;
+        setCurrentQuestion(_list[currentIndex]);
     }
 
     function openModalLayout () {

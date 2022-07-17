@@ -16,7 +16,7 @@ function Header(props) {
   return (
     <div className="header card">
         <div className="card-header d-flex justify-content-between px-5">
-            <Link className="d-flex" to="/">
+            <Link className="d-flex align-items-center" to="/">
                 <img src={logo} style={{ height: "2.4rem" }} alt="" />
                 <h3>Kahoot</h3>
             </Link>

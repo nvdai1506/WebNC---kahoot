@@ -12,14 +12,20 @@ function CurrentQuestion(props) {
 
     useEffect(()=>{
         clearTimeout(timerSave);
-        timerSave = setTimeout(() => {
-            saveCurrentQuestion();
-        }, 2000);
+        
+        if (question.question) {
+            timerSave = setTimeout(() => {
+                console.log(question);
+                saveCurrentQuestion();
+            }, 2000);
+        }
 
         return () => {
             clearTimeout(timerSave);
         }
-    }, [question, saveCurrentQuestion])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [question])
+
 
     function setCQName (value) {
         setQuestion({

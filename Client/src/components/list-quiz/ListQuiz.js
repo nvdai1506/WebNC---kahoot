@@ -45,7 +45,7 @@ function ListQuiz(props) {
                     listQuiz.map((item, index) => {
                         let _theme = THEME[index % THEME.length].toLowerCase();
                         return (
-                            <Card border={_theme} className='quiz-item mx-5 my-3' key={index}>
+                            <Card border={_theme} className='quiz-item mx-md-5 my-3' key={index}>
                                 <Card.Body className='row'>
                                     <div className='left-area col-3'>
                                         <img className='cover-img' src={coverKahoot} alt=''/>

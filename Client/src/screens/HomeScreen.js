@@ -16,7 +16,7 @@ function HomeScreen(props) {
     return (
         <div id='home-screen'>
             <div className='row justify-content-between mt-5'>
-                <div className='col-3 select-item'>
+                <div className='col-md-3 mt-4 select-item'>
                     <div className='image-item'>
                         <div className='image-wrap'>
                             <img src={imgPlayGame} alt="" />
@@ -29,7 +29,7 @@ function HomeScreen(props) {
                     </div>
                 </div>
 
-                <div className='col-3 select-item'>
+                <div className='col-md-3 mt-4 select-item'>
                     <div className='image-item'>
                         <div className='image-wrap'>
                             <img src={imgCreateGame} alt="" />
@@ -42,7 +42,7 @@ function HomeScreen(props) {
                     </div>
                 </div>
 
-                <div className='col-3 select-item'>
+                <div className='col-md-3 mt-4 select-item'>
                     <div className='image-item'>
                         <div className='image-wrap'>
                             <img src={imgDeployGame} alt="" />

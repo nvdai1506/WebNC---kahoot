@@ -34,12 +34,12 @@ function LoginForm({ type, name, id, placeholder, buttonContent }) {
   return (
     <div>
       <form
-        className="col-4 mx-auto border border-dark rounded p-3"
+        className="col-md-4 col-11 mx-auto border border-dark rounded p-3"
         onSubmit={submitHandler}
       >
         <div className="mb-1">
           <input
-            type={type}
+            type="text"
             name={name}
             className="form-control text-center"
             id={id}
